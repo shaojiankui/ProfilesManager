@@ -43,7 +43,7 @@
     }
    
     _profileDir = [NSString stringWithFormat:@"%@/Library/MobileDevice/Provisioning Profiles/", NSHomeDirectory()];
-    _profileNames =  [[[NSFileManager defaultManager] subpathsAtPath:_profileDir]  pathsMatchingExtensions:@[@"mobileprovision"]];
+    _profileNames =  [[[NSFileManager defaultManager] subpathsAtPath:_profileDir]  pathsMatchingExtensions:@[@"mobileprovision",@"MOBILEPROVISION"]];
     
     
     NSMutableDictionary *provisions = [NSMutableDictionary dictionary];
