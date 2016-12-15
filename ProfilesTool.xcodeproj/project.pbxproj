@@ -18,6 +18,7 @@
 		A244DCBB1AFA0A2E00EB7E61 /* ProfilesToolViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A244DCB41AFA0A2E00EB7E61 /* ProfilesToolViewController.xib */; };
 		A244DCBC1AFA0A2E00EB7E61 /* ProfilesNode.m in Sources */ = {isa = PBXBuildFile; fileRef = A244DCB71AFA0A2E00EB7E61 /* ProfilesNode.m */; };
 		A2A8FA8A1AFA43E10087DD68 /* DragOutlineView.m in Sources */ = {isa = PBXBuildFile; fileRef = A2A8FA881AFA43E10087DD68 /* DragOutlineView.m */; };
+		B8C823BE1E0288D9004BEAEF /* NSData+JKBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = B8C823BD1E0288D8004BEAEF /* NSData+JKBase64.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,8 @@
 		A244DCB71AFA0A2E00EB7E61 /* ProfilesNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfilesNode.m; sourceTree = "<group>"; };
 		A2A8FA881AFA43E10087DD68 /* DragOutlineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DragOutlineView.m; sourceTree = "<group>"; };
 		A2A8FA891AFA43E10087DD68 /* DragOutlineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DragOutlineView.h; sourceTree = "<group>"; };
+		B8C823BC1E0288D8004BEAEF /* NSData+JKBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+JKBase64.h"; sourceTree = "<group>"; };
+		B8C823BD1E0288D8004BEAEF /* NSData+JKBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+JKBase64.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +110,8 @@
 		A244DCAC1AFA0A2E00EB7E61 /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				B8C823BC1E0288D8004BEAEF /* NSData+JKBase64.h */,
+				B8C823BD1E0288D8004BEAEF /* NSData+JKBase64.m */,
 				A244DCAD1AFA0A2E00EB7E61 /* NSFileManager+Trash.h */,
 				A244DCAE1AFA0A2E00EB7E61 /* NSFileManager+Trash.m */,
 				A244DCAF1AFA0A2E00EB7E61 /* NSOutlineView+Menu.h */,
@@ -217,6 +222,7 @@
 				A2A8FA8A1AFA43E10087DD68 /* DragOutlineView.m in Sources */,
 				A244DCB81AFA0A2E00EB7E61 /* NSFileManager+Trash.m in Sources */,
 				A21193221AF1CA5B0064CA7D /* main.m in Sources */,
+				B8C823BE1E0288D9004BEAEF /* NSData+JKBase64.m in Sources */,
 				A21193201AF1CA5B0064CA7D /* AppDelegate.m in Sources */,
 				A244DCB91AFA0A2E00EB7E61 /* NSOutlineView+Menu.m in Sources */,
 				A244DCBC1AFA0A2E00EB7E61 /* ProfilesNode.m in Sources */,

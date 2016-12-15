@@ -7,7 +7,7 @@
 //
 
 #import "ProfilesNode.h"
-
+#import "NSData+JKBase64.h"
 @implementation ProfilesNode
 
 - (id)initWithParentNode:(ProfilesNode *)parentNote originInfo:(id)info
@@ -66,6 +66,13 @@
             }
             else {
                 _type = @"Data";
+                _detail = [info jk_base64EncodedString];
+//                [info writeToFile:[@"/Users/Jakey/Downloads/" stringByAppendingPathComponent:@"info.cer"] atomically:YES];
+//                -----BEGIN CERTIFICATE-----
+//                  _detail
+//                -----END CERTIFICATE-----
+
+
             }
         }
         
