@@ -150,13 +150,18 @@
 
 - (void)outlineView:(NSOutlineView *)outlineView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn item:(id)item
 {
+
     if ([outlineView parentForItem:item] == nil)
     {
         [cell setMenu:[self itemMenu]];
 
     }else{
-        [cell setMenu:nil];
-
+        ProfilesNode *realItem = item;
+        if([realItem.parentNode.key isEqualToString:@"DeveloperCertificates"]){
+            [cell setMenu:[self certificateMenu]];
+        }else{
+            [cell setMenu:nil];
+        }
     }
     
 }
@@ -169,6 +174,14 @@
     //    NSInteger i =  [self.treeView rowAtPoint:pt];
 
     [[self mainMenu] popUpMenuPositioningItem:nil atLocation:location inView:self.treeView];
+}
+
+-(NSMenu*)certificateMenu{
+    if(!_certificateMenu){
+        _certificateMenu = [[NSMenu alloc]init];
+        _certificateMenu.delegate = self;
+    }
+    return _certificateMenu;
 }
 -(NSMenu*)itemMenu{
     if(!_itemMenu){
@@ -239,6 +252,16 @@
             [menu addItem:importItem];
         }
     }
+    if (menu  == _certificateMenu) {
+        NSMenuItem *exportItem = [menu itemWithTag:3001];
+        if (!exportItem)
+        {
+            exportItem = [[NSMenuItem alloc] initWithTitle:@"导出证书Cer" action:@selector(exportCerItemClick:) keyEquivalent:@""];
+            [exportItem setTarget:self];
+            [exportItem setTag:3001];
+            [menu addItem:exportItem];
+        }
+    }
 }
 #pragma mark -
 #pragma mark Operation
@@ -303,7 +326,7 @@
         //打开文件
        //[[NSWorkspace sharedWorkspace] openFile:node.filePath];
        // 打开文件夹
-       [[NSWorkspace sharedWorkspace] selectFile:node.filePath inFileViewerRootedAtPath:node.filePath];
+       [[NSWorkspace sharedWorkspace] selectFile:node.filePath inFileViewerRootedAtPath:@""];
     }
 }
 //export Item to file
@@ -313,7 +336,6 @@
 //main
 - (void)refreshItemClick:(id)sender {
     [self loadProfileFiles];
-
 }
 //import
 - (void)importItemClick:(id)sender{
@@ -336,6 +358,32 @@
     }
     [self loadProfileFiles];
 
+}
+- (void)exportCerItemClick:(id)sender
+{
+    NSInteger index = [self.treeView clickedRow];
+    if (index == -1) return;
+    ProfilesNode *node = [self.treeView itemAtRow:index];
+    if ([node.detail length] > 0)
+    {
+        
+        NSOpenPanel *oPanel = [NSOpenPanel openPanel];
+        [oPanel setCanChooseDirectories:YES];
+        [oPanel setCanChooseFiles:NO];
+        [oPanel setDirectoryURL:[NSURL URLWithString:NSHomeDirectory()]];
+        if ([oPanel runModal] == NSOKButton) {
+            NSString *path =[[[oPanel URLs] objectAtIndex:0] path];
+            NSString *savePath = [[path stringByAppendingPathComponent:[node.extra objectForKey:@"summary"] ]stringByAppendingPathExtension:@"cer"];
+                                  
+            NSString *formaterCer = [NSString stringWithFormat:@"-----BEGIN CERTIFICATE-----\n%@\n-----END CERTIFICATE-----",node.detail];
+            
+            BOOL haveCreate =  [[NSFileManager defaultManager]createFileAtPath:savePath contents:[formaterCer dataUsingEncoding:NSUTF8StringEncoding] attributes:nil];
+            if(haveCreate){
+                [[NSWorkspace sharedWorkspace] selectFile:savePath inFileViewerRootedAtPath:@""];
+            }
+        }
+       
+    }
 }
 #pragma mark --alert
 -(void)showMessage:(NSString*)message{

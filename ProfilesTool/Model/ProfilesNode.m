@@ -68,10 +68,10 @@
                 _detail = [info jk_base64EncodedString];
                 if ([self.parentNode.key isEqualToString:@"DeveloperCertificates"]) {
                    NSDictionary *cerInfo =  [self parseCertificate:info];
-                    _key  = [NSString stringWithFormat:@"%@",[cerInfo  objectForKey:@"summary"]];
+                    _extra = cerInfo;
+                    _key  = [NSString stringWithFormat:@"%@",[cerInfo objectForKey:@"summary"]];
                     _name = [cerInfo  objectForKey:@"invalidity"];
                     _type = @".cer";
-
                 }
 //                [info writeToFile:[@"/Users/Jakey/Downloads/" stringByAppendingPathComponent:@"info.cer"] atomically:YES];
 //                -----BEGIN CERTIFICATE-----

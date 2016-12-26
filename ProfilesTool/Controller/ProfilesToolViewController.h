@@ -20,11 +20,11 @@
     NSMutableArray *_profileDatas;
     
     NSMenu *_itemMenu;
+    NSMenu *_certificateMenu;
     NSMenu *_mainMenu;
     ProfilesNode *_rootNode;
 
 }
-
 @property (weak) IBOutlet DragOutlineView *treeView;
 
 @end
