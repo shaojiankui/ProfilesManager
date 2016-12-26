@@ -18,6 +18,6 @@
 @property (nonatomic, copy)NSString *type;
 @property (nonatomic, copy)NSString *uuid;
 @property (nonatomic, copy)NSString *filePath;
-- (id)initWithParentNode:(ProfilesNode *)parentNote originInfo:(id)info;
+- (id)initWithParentNode:(ProfilesNode *)parentNote originInfo:(id)info key:(NSString*)key;
 
 @end

@@ -61,8 +61,7 @@
     }
     
     
-    ProfilesNode *node = [[ProfilesNode alloc]initWithParentNode:nil originInfo:provisions];
-    node.key = @"Mobile Provisions";
+    ProfilesNode *node = [[ProfilesNode alloc]initWithParentNode:nil originInfo:provisions key:@"Mobile Provisions"];
     _rootNode = node;
     [self.treeView reloadData];
     
