@@ -17,9 +17,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do view setup here.
+    //当拖拽窗口大小，NSOutlineView frame自动更改时，Column宽等比增减
+    [self.treeView setColumnAutoresizingStyle:NSTableViewUniformColumnAutoresizingStyle];
+    //最后一行自动宽等比增减
+//    [self.treeView sizeLastColumnToFit];
+    //app第一次运行Column 最后一行自动宽等比增减，否则会有滚动条
+    [self.treeView sizeToFit];
+
     [self loadProfileFiles];
     //drag file
-    
     [self.treeView didDragEndBlock:^(NSString *result, NSOutlineView *view) {
         if (result && ( [result hasSuffix:@"mobileprovision"] || [result hasSuffix:@"MOBILEPROVISION"])) {
             NSError *error;
@@ -165,7 +171,6 @@
     }
     
 }
-
 #pragma mark -
 #pragma mark NSMenuDelegate
 - (void)rightMouseDown:(NSEvent *)theEvent {

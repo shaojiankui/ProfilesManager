@@ -20,6 +20,7 @@
     // Insert code here to initialize your application
     tool = [[ProfilesToolViewController alloc] initWithNibName:@"ProfilesToolViewController" bundle:[NSBundle bundleForClass:[self class]]];
     [self.window.contentView addSubview:tool.view];
+    tool.view.frame = self.window.contentView.bounds;
 }
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)theApplication hasVisibleWindows:(BOOL)flag
 {
