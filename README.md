@@ -1,11 +1,11 @@
-# ProfilesTool
+# ProfilesManager
 iOS Provisioning Profiles, .mobileprovision files manager tool for mac
 
 ##Download APP
-https://github.com/shaojiankui/ProfilesTool/releases
+https://github.com/shaojiankui/ProfilesManager/releases
 
 ##Screenshot
-![](https://raw.githubusercontent.com/shaojiankui/ProfilesTool/master/demo.png)
+![](https://raw.githubusercontent.com/shaojiankui/ProfilesManager/master/demo.png)
 
 ## Provisioning Profile 的构成
 以下为典型供应配置文件*.mobileprovision的构成简析：
@@ -48,4 +48,4 @@ https://github.com/shaojiankui/ProfilesTool/releases
 
 ##License
 
-ProfilesTool is available under the MIT license.
+ProfilesManager is available under the MIT license.

@@ -18,7 +18,7 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     // Insert code here to initialize your application
-    tool = [[ProfilesToolViewController alloc] initWithNibName:@"ProfilesToolViewController" bundle:[NSBundle bundleForClass:[self class]]];
+    tool = [[ProfilesManagerViewController alloc] initWithNibName:@"ProfilesManagerViewController" bundle:[NSBundle bundleForClass:[self class]]];
     [self.window.contentView addSubview:tool.view];
     tool.view.frame = self.window.contentView.bounds;
 }

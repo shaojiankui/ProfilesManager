@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:ProfilesTool.xcodeproj">
+      location = "self:/Volumes/files/private/Project/ProfilesTool/ProfilesManager.xcodeproj">
    </FileRef>
 </Workspace>

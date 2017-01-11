@@ -7,10 +7,10 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "ProfilesToolViewController.h"
+#import "ProfilesManagerViewController.h"
 @interface AppDelegate : NSObject <NSApplicationDelegate>
 {
-    ProfilesToolViewController *tool;
+    ProfilesManagerViewController *tool;
 }
 @end
 

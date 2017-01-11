@@ -6,7 +6,7 @@
 //  Copyright (c) 2015年 Jakey. All rights reserved.
 //
 
-#import "ProfilesToolViewController.h"
+#import "ProfilesManagerViewController.h"
 #import "ProfilesNode.h"
 #import "NSOutlineView+Menu.h"
 #import "NSFileManager+Trash.h"
@@ -17,7 +17,7 @@
 //#include <assert.h>
 
 
-@implementation ProfilesToolViewController
+@implementation ProfilesManagerViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];

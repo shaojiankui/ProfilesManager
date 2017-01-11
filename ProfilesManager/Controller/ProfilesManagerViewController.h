@@ -12,7 +12,7 @@
 #import "DragOutlineView.h"
 #import "ProfilesNode.h"
 
-@interface ProfilesToolViewController : NSViewController<NSOutlineViewDataSource,NSOutlineViewDelegate,NSMenuDelegate>
+@interface ProfilesManagerViewController : NSViewController<NSOutlineViewDataSource,NSOutlineViewDelegate,NSMenuDelegate>
 {
     NSString *_profileDir;
     NSArray *_profileNames;
