@@ -10,22 +10,74 @@
 #import "NSData+JKBase64.h"
 @implementation ProfilesNode
 
-- (id)initWithParentNode:(ProfilesNode *)parentNote originInfo:(id)info key:(NSString*)key
+- (id)initWithRootNode:(ProfilesNode *)rootNode originInfo:(id)info key:(NSString*)key
 {
     self = [super init];
     if (self) {
-        _parentNode = parentNote;
+        _rootNode = rootNode;
         _key = key;
+        if([info isKindOfClass:[NSDictionary class]] && [info objectForKey:@"AppIDName"]){
+            NSMutableDictionary *dict = [info mutableCopy];
+            // determine the profile type
+            // https://github.com/chockenberry/Provisioning
+            BOOL getTaskAllow = NO;
+            NSString *value = [info objectForKey:@"Entitlements"];
+            if ([value isKindOfClass:[NSDictionary class]]) {
+                NSDictionary *dictionary = (NSDictionary *)value;
+                getTaskAllow = [[dictionary valueForKey:@"get-task-allow"] boolValue];
+            }
+            
+            BOOL hasDevices = NO;
+            value = [info objectForKey:@"ProvisionedDevices"];
+            if ([value isKindOfClass:[NSArray class]]) {
+                hasDevices = YES;
+            }
+            
+            BOOL isEnterprise = [[info objectForKey:@"ProvisionsAllDevices"] boolValue];
+            
+            if ([[[[dict objectForKey:@"filePath"] description] pathExtension] isEqualToString:@"provisionprofile"]) {
+                
+                [dict setObject:@"Mac" forKey:@"ProfilePlatform"];
+                if (hasDevices) {
+                    [dict setObject:@"Development" forKey:@"ProfileType"];
+                }
+                else {
+                    [dict setObject:@"Distribution (App Store)" forKey:@"ProfileType"];
+                }
+            }
+            else {
+                
+                [dict setObject:@"iOS" forKey:@"ProfilePlatform"];
+                if (hasDevices) {
+                    if (getTaskAllow) {
+                        [dict setObject:@"Development" forKey:@"ProfileType"];
+                    }
+                    else {
+                        [dict setObject:@"Distribution (Ad Hoc)" forKey:@"ProfileType"];
+                    }
+                }
+                else {
+                    if (isEnterprise) {
+                        [dict setObject:@"Enterprise" forKey:@"ProfileType"];
+                    }
+                    else {
+                        [dict setObject:@"Distribution (App Store)" forKey:@"ProfileType"];
+                    }
+                }
+            }
+            info = [dict copy];
 
+        }
         if ([info isKindOfClass:[NSDictionary class]]) {
             _type = @"Dictionary";
+            
             
             NSMutableArray *children = [NSMutableArray array];
             NSDictionary *dict = info;
             _detail = [NSString stringWithFormat:@"%lu items", (unsigned long)[dict count]];
-            _uuid = [info objectForKey:@"UUID"];
-            _filePath = [info objectForKey:@"filePath"];
-            _name  =  [info objectForKey:@"Name"];
+            _uuid = [dict objectForKey:@"UUID"];
+            _filePath = [dict objectForKey:@"filePath"];
+//            _name  =  [dict objectForKey:@"Name"];
             
             if(_uuid){
                 NSDate *expiration = [dict objectForKey:@"ExpirationDate"];
@@ -33,7 +85,7 @@
             }
             
             for (NSString *key in dict) {
-                ProfilesNode *child = [[ProfilesNode alloc]initWithParentNode:self originInfo:dict[key] key:key];
+                ProfilesNode *child = [[ProfilesNode alloc]initWithRootNode:self originInfo:dict[key] key:key];
                 [children addObject:child];
             }
             _childrenNodes = [NSArray arrayWithArray:children];
@@ -46,7 +98,7 @@
             _detail = [NSString stringWithFormat:@"%lu items", (unsigned long)[array count]];
             
             for (int i=0; i<[array count]; i++) {
-                ProfilesNode *child = [[ProfilesNode alloc]initWithParentNode:self originInfo:array[i] key:[NSString stringWithFormat:@"%d", i]];
+                ProfilesNode *child = [[ProfilesNode alloc]initWithRootNode:self originInfo:array[i] key:[NSString stringWithFormat:@"%d", i]];
                 [children addObject:child];
             }
             _childrenNodes = [NSArray arrayWithArray:children];
@@ -66,11 +118,11 @@
             else {
                 _type = @"Data";
                 _detail = [info jk_base64EncodedString];
-                if ([self.parentNode.key isEqualToString:@"DeveloperCertificates"]) {
+                if ([self.rootNode.key isEqualToString:@"DeveloperCertificates"]) {
                    NSDictionary *cerInfo =  [self parseCertificate:info];
                     _extra = cerInfo;
                     _key  = [NSString stringWithFormat:@"%@",[cerInfo objectForKey:@"summary"]];
-                    _name = [cerInfo  objectForKey:@"invalidity"];
+//                    _name = [cerInfo  objectForKey:@"invalidity"];
                     _type = @".cer";
                 }
 //                [info writeToFile:[@"/Users/Jakey/Downloads/" stringByAppendingPathComponent:@"info.cer"] atomically:YES];
@@ -80,7 +132,7 @@
             }
         }
         
-        if (!parentNote) {
+        if (!rootNode && !key) {
             _key = @"Root";
         }
     }

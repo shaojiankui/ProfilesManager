@@ -10,16 +10,16 @@
 
 @interface ProfilesNode : NSObject
 
-@property (nonatomic, weak)ProfilesNode *parentNode;
+@property (nonatomic, weak)ProfilesNode *rootNode;
 @property (nonatomic, strong)NSArray *childrenNodes;
 @property (nonatomic, copy)NSString *key;
-@property (nonatomic, copy)NSString *name;
+//@property (nonatomic, copy)NSString *name;
 @property (nonatomic, copy)NSString *detail;
 @property (nonatomic, copy)NSString *type;
 @property (nonatomic, copy)NSString *uuid;
 @property (nonatomic, copy)NSString *filePath;
 @property (nonatomic, strong)NSDictionary *extra;
 
-- (id)initWithParentNode:(ProfilesNode *)parentNote originInfo:(id)info key:(NSString*)key;
+- (id)initWithRootNode:(ProfilesNode *)rootNote originInfo:(id)info key:(NSString*)key;
 
 @end

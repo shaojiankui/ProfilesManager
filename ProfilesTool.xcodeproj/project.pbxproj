@@ -179,6 +179,11 @@
 				TargetAttributes = {
 					A21193181AF1CA5B0064CA7D = {
 						CreatedOnToolsVersion = 6.2;
+						SystemCapabilities = {
+							com.apple.Sandbox = {
+								enabled = 0;
+							};
+						};
 					};
 				};
 			};
@@ -328,6 +333,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "23382ca3-83fd-4b02-ad73-7dc1d4a1413e";
+				PROVISIONING_PROFILE_SPECIFIER = ProfilesTool_Mac_Production;
 			};
 			name = Debug;
 		};
@@ -340,6 +347,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "23382ca3-83fd-4b02-ad73-7dc1d4a1413e";
+				PROVISIONING_PROFILE_SPECIFIER = ProfilesTool_Mac_Production;
 			};
 			name = Release;
 		};

@@ -9,11 +9,8 @@
 #import <Cocoa/Cocoa.h>
 #import "ProfilesToolViewController.h"
 @interface AppDelegate : NSObject <NSApplicationDelegate>
-
 {
     ProfilesToolViewController *tool;
-    
 }
-
 @end
 

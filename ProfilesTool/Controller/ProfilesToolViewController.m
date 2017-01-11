@@ -11,6 +11,11 @@
 #import "NSOutlineView+Menu.h"
 #import "NSFileManager+Trash.h"
 
+#include <unistd.h>
+#include <sys/types.h>
+#include <pwd.h>
+#include <assert.h>
+
 
 @implementation ProfilesToolViewController
 
@@ -23,11 +28,11 @@
 //    [self.treeView sizeLastColumnToFit];
     //app第一次运行Column 最后一行自动宽等比增减，否则会有滚动条
     [self.treeView sizeToFit];
-
+    
     [self loadProfileFiles];
     //drag file
     [self.treeView didDragEndBlock:^(NSString *result, NSOutlineView *view) {
-        if (result && ( [result hasSuffix:@"mobileprovision"] || [result hasSuffix:@"MOBILEPROVISION"])) {
+        if (result && ( [[result lowercaseString] hasSuffix:@"mobileprovision"] || [[result lowercaseString] hasSuffix:@"provisionprofile"])) {
             NSError *error;
             [[NSFileManager defaultManager]copyItemAtPath:result toPath:[_profileDir stringByAppendingString:[result lastPathComponent]?:@""] error:&error];
             if(error)
@@ -39,7 +44,11 @@
     }];
  
 }
-
+NSString *RealHomeDirectory() {
+    struct passwd *pw = getpwuid(getuid());
+    assert(pw);
+    return [NSString stringWithUTF8String:pw->pw_dir];
+}
 -(void)loadProfileFiles{
     if (!_profilePaths) {
         _profilePaths = [NSMutableArray array];
@@ -50,7 +59,7 @@
     }
    
     _profileDir = [NSString stringWithFormat:@"%@/Library/MobileDevice/Provisioning Profiles/", NSHomeDirectory()];
-    _profileNames =  [[[NSFileManager defaultManager] subpathsAtPath:_profileDir]  pathsMatchingExtensions:@[@"mobileprovision",@"MOBILEPROVISION"]];
+    _profileNames =  [[[NSFileManager defaultManager] subpathsAtPath:_profileDir]  pathsMatchingExtensions:@[@"mobileprovision",@"MOBILEPROVISION",@"provisionprofile",@"PROVISIONPROFILE"]];
     
     
     NSMutableDictionary *provisions = [NSMutableDictionary dictionary];
@@ -67,7 +76,7 @@
     }
     
     
-    ProfilesNode *node = [[ProfilesNode alloc]initWithParentNode:nil originInfo:provisions key:@"Mobile Provisions"];
+    ProfilesNode *node = [[ProfilesNode alloc]initWithRootNode:nil originInfo:provisions key:@"Mobile Provisions"];
     _rootNode = node;
     [self.treeView reloadData];
     
@@ -125,23 +134,16 @@
     ProfilesNode *realItem = item ?: _rootNode;
     
     static NSString *kColumnIdentifierKey = @"key";
-    static NSString *kColumnIdentifierName = @"name";
-
+//    static NSString *kColumnIdentifierName = @"name";
     static NSString *kColumnIdentifierType = @"type";
     //static NSString *kColumnIdentifierDetal = @"detail";
-    static NSString *kColumnIdentifierUUID = @"uuid";
+//    static NSString *kColumnIdentifierUUID = @"uuid";
 
     if ([[tableColumn identifier] isEqualToString:kColumnIdentifierKey]) {
         return realItem.key;
     }
-    else if([[tableColumn identifier] isEqualToString:kColumnIdentifierName]){
-        return realItem.name;
-    }
     else if([[tableColumn identifier] isEqualToString:kColumnIdentifierType]){
         return realItem.type;
-    }
-    else if([[tableColumn identifier] isEqualToString:kColumnIdentifierUUID]){
-        return realItem.uuid;
     }
     else {
         return realItem.detail;
@@ -154,21 +156,28 @@
     return YES;
 }
 
-- (void)outlineView:(NSOutlineView *)outlineView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn item:(id)item
+- (void)outlineView:(NSOutlineView *)outlineView willDisplayCell:(NSTextFieldCell*)cell forTableColumn:(NSTableColumn *)tableColumn item:(id)item
 {
-
     if ([outlineView parentForItem:item] == nil)
     {
         [cell setMenu:[self itemMenu]];
-
     }else{
         ProfilesNode *realItem = item;
-        if([realItem.parentNode.key isEqualToString:@"DeveloperCertificates"]){
+        if([realItem.rootNode.key isEqualToString:@"DeveloperCertificates"]){
             [cell setMenu:[self certificateMenu]];
         }else{
             [cell setMenu:nil];
         }
     }
+
+}
+
+-(void)updateRowViewBackColorforItem:(id)customItem {
+
+    NSInteger row = [self.treeView rowForItem:customItem];
+   if (row < 0) return;
+    NSTableRowView *view = [self.treeView rowViewAtRow:row makeIfNecessary:YES];
+    [view setBackgroundColor:[NSColor redColor]];
     
 }
 #pragma mark -
@@ -177,7 +186,6 @@
 
     NSPoint location = [self.treeView convertPoint:[theEvent locationInWindow] fromView:nil];
     //    NSInteger i =  [self.treeView rowAtPoint:pt];
-
     [[self mainMenu] popUpMenuPositioningItem:nil atLocation:location inView:self.treeView];
 }
 
