@@ -11,10 +11,10 @@
 #import "NSOutlineView+Menu.h"
 #import "NSFileManager+Trash.h"
 
-#include <unistd.h>
-#include <sys/types.h>
-#include <pwd.h>
-#include <assert.h>
+//#include <unistd.h>
+//#include <sys/types.h>
+//#include <pwd.h>
+//#include <assert.h>
 
 
 @implementation ProfilesToolViewController
@@ -44,10 +44,19 @@
     }];
  
 }
+//获取sandbox之外的路径
 NSString *RealHomeDirectory() {
-    struct passwd *pw = getpwuid(getuid());
-    assert(pw);
-    return [NSString stringWithUTF8String:pw->pw_dir];
+//    struct passwd *pw = getpwuid(getuid());
+//    assert(pw);
+//    return [NSString stringWithUTF8String:pw->pw_dir];
+//    
+    NSString *home = NSHomeDirectory();
+    NSArray *pathArray = [home componentsSeparatedByString:@"/"];
+    NSString *absolutePath;
+    if ([pathArray count] > 2) {
+        absolutePath = [NSString stringWithFormat:@"/%@/%@", [pathArray objectAtIndex:1], [pathArray objectAtIndex:2]];
+    }
+    return absolutePath;
 }
 -(void)loadProfileFiles{
     if (!_profilePaths) {
@@ -58,7 +67,7 @@ NSString *RealHomeDirectory() {
 
     }
    
-    _profileDir = [NSString stringWithFormat:@"%@/Library/MobileDevice/Provisioning Profiles/", NSHomeDirectory()];
+    _profileDir = [NSString stringWithFormat:@"%@/Library/MobileDevice/Provisioning Profiles/", RealHomeDirectory()];
     _profileNames =  [[[NSFileManager defaultManager] subpathsAtPath:_profileDir]  pathsMatchingExtensions:@[@"mobileprovision",@"MOBILEPROVISION",@"provisionprofile",@"PROVISIONPROFILE"]];
     
     
