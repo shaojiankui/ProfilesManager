@@ -77,11 +77,12 @@
             _detail = [NSString stringWithFormat:@"%lu items", (unsigned long)[dict count]];
             _uuid = [dict objectForKey:@"UUID"];
             _filePath = [dict objectForKey:@"filePath"];
-//            _name  =  [dict objectForKey:@"Name"];
+           
             
             if(_uuid){
                 NSDate *expiration = [dict objectForKey:@"ExpirationDate"];
                 _detail =  [[NSDate date] compare:expiration] == NSOrderedDescending ?@"过期(expire)":@"有效(valid)";
+                _type  =  [dict objectForKey:@"Name"];
             }
             
             for (NSString *key in dict) {
