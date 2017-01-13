@@ -39,7 +39,7 @@
     NSPasteboard *zPasteboard = [sender draggingPasteboard];
     NSArray *list = [zPasteboard propertyListForType:NSFilenamesPboardType];
     if(_didDragEnd){
-        _didDragEnd([list firstObject],self);
+        _didDragEnd(list,self);
     }
 
 }

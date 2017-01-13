@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-typedef void (^DidDragEnd)(NSString *result,NSOutlineView *view);
+typedef void (^DidDragEnd)(NSArray *result,NSOutlineView *view);
 typedef void (^DidEnterDraging)();
 @interface DragOutlineView : NSOutlineView
 {

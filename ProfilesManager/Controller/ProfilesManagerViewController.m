@@ -22,6 +22,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do view setup here.
+    _profileDir = [NSString stringWithFormat:@"%@/Library/MobileDevice/Provisioning Profiles/", RealHomeDirectory()];
+
     //当拖拽窗口大小，NSOutlineView frame自动更改时，Column宽等比增减
     [self.treeView setColumnAutoresizingStyle:NSTableViewUniformColumnAutoresizingStyle];
     //最后一行自动宽等比增减
@@ -31,13 +33,15 @@
     
     [self loadProfileFiles];
     //drag file
-    [self.treeView didDragEndBlock:^(NSString *result, NSOutlineView *view) {
-        if (result && ( [[result lowercaseString] hasSuffix:@"mobileprovision"] || [[result lowercaseString] hasSuffix:@"provisionprofile"])) {
-            NSError *error;
-            [[NSFileManager defaultManager]copyItemAtPath:result toPath:[_profileDir stringByAppendingString:[result lastPathComponent]?:@""] error:&error];
-            if(error)
-            {
-                [self showMessage:[error localizedDescription]];
+    [self.treeView didDragEndBlock:^(NSArray *list, NSOutlineView *view) {
+        for(NSString *result in list){
+            if (result && ( [[result lowercaseString] hasSuffix:@"mobileprovision"] || [[result lowercaseString] hasSuffix:@"provisionprofile"])) {
+                NSError *error;
+                [[NSFileManager defaultManager]copyItemAtPath:result toPath:[_profileDir stringByAppendingString:[result lastPathComponent]?:@""] error:&error];
+                if(error)
+                {
+                    [self showMessage:[error localizedDescription]];
+                }
             }
             [self loadProfileFiles];
         }
@@ -66,8 +70,6 @@ NSString *RealHomeDirectory() {
         _profileDatas = [NSMutableArray array];
 
     }
-   
-    _profileDir = [NSString stringWithFormat:@"%@/Library/MobileDevice/Provisioning Profiles/", RealHomeDirectory()];
     _profileNames =  [[[NSFileManager defaultManager] subpathsAtPath:_profileDir]  pathsMatchingExtensions:@[@"mobileprovision",@"MOBILEPROVISION",@"provisionprofile",@"PROVISIONPROFILE"]];
     
     
