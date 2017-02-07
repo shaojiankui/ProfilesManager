@@ -5,7 +5,7 @@ iOS Provisioning Profiles, .mobileprovision files manager tool for mac
 https://github.com/shaojiankui/ProfilesManager/releases
 
 ##Screenshot
-![](https://raw.githubusercontent.com/shaojiankui/ProfilesManager/master/demo.png)
+![](https://raw.githubusercontent.com/shaojiankui/ProfilesManager/master/demo.jpg)
 
 ## Provisioning Profile 的构成
 以下为典型供应配置文件*.mobileprovision的构成简析：

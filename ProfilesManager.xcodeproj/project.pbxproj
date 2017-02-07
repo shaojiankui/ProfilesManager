@@ -344,8 +344,8 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_BUNDLE_IDENTIFIER = org.skyfox.ProfilesManager;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "23382ca3-83fd-4b02-ad73-7dc1d4a1413e";
-				PROVISIONING_PROFILE_SPECIFIER = ProfilesManager_Mac_Production;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
@@ -360,8 +360,8 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_BUNDLE_IDENTIFIER = org.skyfox.ProfilesManager;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "23382ca3-83fd-4b02-ad73-7dc1d4a1413e";
-				PROVISIONING_PROFILE_SPECIFIER = ProfilesManager_Mac_Production;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};
