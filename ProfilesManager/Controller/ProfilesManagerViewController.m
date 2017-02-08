@@ -40,7 +40,9 @@
                 [[NSFileManager defaultManager]copyItemAtPath:result toPath:[_profileDir stringByAppendingString:[result lastPathComponent]?:@""] error:&error];
                 if(error)
                 {
-                    [self showMessage:[error localizedDescription]];
+                    [self showMessage:[error localizedDescription] completionHandler:^(NSModalResponse returnCode) {
+                        
+                    }];
                 }
             }
             [self loadProfileFiles];
@@ -228,7 +230,7 @@ NSString *RealHomeDirectory() {
         NSMenuItem *moveTrashItem = [menu itemWithTag:1000];
         if (!moveTrashItem)
         {
-            moveTrashItem = [[NSMenuItem alloc] initWithTitle:@"移动到废纸篓" action:@selector(moveTrashItemClick:) keyEquivalent:@""];
+            moveTrashItem = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"move to trash",nil) action:@selector(moveTrashItemClick:) keyEquivalent:@""];
             [moveTrashItem setTarget:self];
             [moveTrashItem setTag:1000];
             [menu addItem:moveTrashItem];
@@ -236,7 +238,7 @@ NSString *RealHomeDirectory() {
         NSMenuItem *deleteItem = [menu itemWithTag:1001];
         if (!deleteItem)
         {
-            deleteItem = [[NSMenuItem alloc] initWithTitle:@"完全删除" action:@selector(deleteItemClick:) keyEquivalent:@""];
+            deleteItem = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"delete",nil) action:@selector(deleteItemClick:) keyEquivalent:@""];
             [deleteItem setTarget:self];
             [deleteItem setTag:1001];
             [menu addItem:deleteItem];
@@ -244,7 +246,7 @@ NSString *RealHomeDirectory() {
         NSMenuItem *gotoItemName = [menu itemWithTag:1002];
         if (!gotoItemName)
         {
-            gotoItemName = [[NSMenuItem alloc] initWithTitle:@"定位" action:@selector(gotoClick:) keyEquivalent:@""];
+            gotoItemName = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"show in finder",nil) action:@selector(gotoClick:) keyEquivalent:@""];
             [gotoItemName setTarget:self];
             [gotoItemName setTag:1002];
             [menu addItem:gotoItemName];
@@ -262,7 +264,7 @@ NSString *RealHomeDirectory() {
         NSMenuItem *refreshItem = [menu itemWithTag:2000];
         if (!refreshItem)
         {
-            refreshItem = [[NSMenuItem alloc] initWithTitle:@"刷新列表" action:@selector(refreshItemClick:) keyEquivalent:@""];
+            refreshItem = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"refresh table",nil) action:@selector(refreshItemClick:) keyEquivalent:@""];
             [refreshItem setTarget:self];
             [refreshItem setTag:2000];
             [menu addItem:refreshItem];
@@ -270,7 +272,7 @@ NSString *RealHomeDirectory() {
         NSMenuItem *importItem = [menu itemWithTag:2001];
         if (!importItem)
         {
-            importItem = [[NSMenuItem alloc] initWithTitle:@"导入" action:@selector(importItemClick:) keyEquivalent:@""];
+            importItem = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"import profile",nil) action:@selector(importItemClick:) keyEquivalent:@""];
             [importItem setTarget:self];
             [importItem setTag:2001];
             [menu addItem:importItem];
@@ -280,7 +282,7 @@ NSString *RealHomeDirectory() {
         NSMenuItem *exportItem = [menu itemWithTag:3001];
         if (!exportItem)
         {
-            exportItem = [[NSMenuItem alloc] initWithTitle:@"导出证书Cer" action:@selector(exportCerItemClick:) keyEquivalent:@""];
+            exportItem = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"export certificate file",nil) action:@selector(exportCerItemClick:) keyEquivalent:@""];
             [exportItem setTarget:self];
             [exportItem setTag:3001];
             [menu addItem:exportItem];
@@ -291,8 +293,23 @@ NSString *RealHomeDirectory() {
 #pragma mark Operation
 - (void)deleteItemClick:(id)sender
 {
-    
     NSInteger index = [self.treeView clickedRow];
+
+    NSAlert *alert = [[NSAlert alloc]init];
+    [alert addButtonWithTitle:NSLocalizedString(@"Ok",nil)];
+    [alert addButtonWithTitle:NSLocalizedString(@"Cancel",nil)];
+    alert.messageText = NSLocalizedString(@"Confirm Delete Opration",nil);
+    alert.informativeText = NSLocalizedString(@"Delete this profie item permanently,can't rollback!",nil);
+    [alert setAlertStyle:NSAlertStyleCritical];
+    [alert beginSheetModalForWindow:[self.view window] completionHandler:^(NSModalResponse returnCode) {
+        if (returnCode == NSAlertFirstButtonReturn ) {
+            [self totalDelteItem:index];
+        }else if (returnCode == NSAlertSecondButtonReturn){
+            NSLog(@"this is Cancel Button tap");
+        }
+    }];
+}
+- (void)totalDelteItem:(NSInteger)index{
     ProfilesNode *node = [self.treeView itemAtRow:index];
     
     NSLog(@"deleteItem inde%zd",index);
@@ -304,7 +321,6 @@ NSString *RealHomeDirectory() {
     
     [self deleteProfile:node.filePath option:YES];
     [self loadProfileFiles];
-    
 }
 - (void)moveTrashItemClick:(id)sender{
     NSInteger index = [self.treeView clickedRow];
@@ -333,7 +349,9 @@ NSString *RealHomeDirectory() {
     }
     if(error)
     {
-        [self showMessage:[error localizedDescription]];
+        [self showMessage:[error localizedDescription] completionHandler:^(NSModalResponse returnCode) {
+            
+        }];
 
     }
     return result;
@@ -377,7 +395,9 @@ NSString *RealHomeDirectory() {
     }
     if(error)
     {
-        [self showMessage:[error localizedDescription]];
+        [self showMessage:[error localizedDescription] completionHandler:^(NSModalResponse returnCode) {
+            
+        }];
         
     }
     [self loadProfileFiles];
@@ -410,11 +430,11 @@ NSString *RealHomeDirectory() {
     }
 }
 #pragma mark --alert
--(void)showMessage:(NSString*)message{
+-(void)showMessage:(NSString*)message completionHandler:(void (^)(NSModalResponse returnCode))handler{
     NSAlert *alert = [[NSAlert alloc] init];
     [alert setMessageText:message];
     [alert beginSheetModalForWindow:self.view.window completionHandler:^(NSModalResponse returnCode) {
-        
+        handler(returnCode);
     }];
     
 }

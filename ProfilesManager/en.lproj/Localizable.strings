@@ -1,0 +1,22 @@
+/* 
+  Localizable.strings
+  ProfilesManager
+
+  Created by Jakey on 2017/2/8.
+  Copyright © 2017年 Jakey. All rights reserved.
+*/
+
+"move to trash" = "move to trash";
+"delete" = "delete";
+"show in finder"  = "show in finder";
+"refresh table" = "refresh";
+"import profile"  = "import profile";
+"export certificate file"   = "export certificate file";
+"expired"   = "expired";
+"valid"   = "valid";
+"OK"   = "OK";
+"Cancel"   = "Cancel";
+"Confirm Delete Opration"   = "Confirm Delete Opration";
+"Delete this profie item permanently,can't rollback!"   = "Delete this profie item permanently,can't rollback!";
+
+

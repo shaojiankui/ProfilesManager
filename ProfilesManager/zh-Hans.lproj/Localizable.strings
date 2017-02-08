@@ -1,0 +1,21 @@
+/* 
+  Localizable.strings
+  ProfilesManager
+
+  Created by Jakey on 2017/2/8.
+  Copyright © 2017年 Jakey. All rights reserved.
+*/
+
+"move to trash" = "移动到废纸篓";
+"delete" = "完全删除";
+"show in finder"  = "定位文件";
+"refresh table" = "刷新列表";
+"import profile" = "导入profile";
+"export certificate file"   = "导出证书文件";
+"expired"   = "过期";
+"valid"   = "有效";
+"OK"   = "确定";
+"Cancel"   = "取消";
+"Confirm Delete Opration"   = "确认删除操作";
+"Delete this profie item permanently,can't rollback!"   = "完全删除这个profie文件,不可回滚!";
+

@@ -18,6 +18,7 @@
 		A244DCBB1AFA0A2E00EB7E61 /* ProfilesManagerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A244DCB41AFA0A2E00EB7E61 /* ProfilesManagerViewController.xib */; };
 		A244DCBC1AFA0A2E00EB7E61 /* ProfilesNode.m in Sources */ = {isa = PBXBuildFile; fileRef = A244DCB71AFA0A2E00EB7E61 /* ProfilesNode.m */; };
 		A2A8FA8A1AFA43E10087DD68 /* DragOutlineView.m in Sources */ = {isa = PBXBuildFile; fileRef = A2A8FA881AFA43E10087DD68 /* DragOutlineView.m */; };
+		B80FCFC31E4AAE480044098D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B80FCFC51E4AAE480044098D /* Localizable.strings */; };
 		B8C823BE1E0288D9004BEAEF /* NSData+JKBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = B8C823BD1E0288D8004BEAEF /* NSData+JKBase64.m */; };
 /* End PBXBuildFile section */
 
@@ -41,6 +42,9 @@
 		A244DCB71AFA0A2E00EB7E61 /* ProfilesNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfilesNode.m; sourceTree = "<group>"; };
 		A2A8FA881AFA43E10087DD68 /* DragOutlineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DragOutlineView.m; sourceTree = "<group>"; };
 		A2A8FA891AFA43E10087DD68 /* DragOutlineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DragOutlineView.h; sourceTree = "<group>"; };
+		B80FCFC41E4AAE480044098D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		B80FCFC61E4AAE560044098D /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/MainMenu.strings"; sourceTree = "<group>"; };
+		B80FCFC71E4AAE560044098D /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		B856B7801E25EDC800060107 /* ProfilesManager.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ProfilesManager.entitlements; sourceTree = "<group>"; };
 		B8C823BC1E0288D8004BEAEF /* NSData+JKBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+JKBase64.h"; sourceTree = "<group>"; };
 		B8C823BD1E0288D8004BEAEF /* NSData+JKBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+JKBase64.m"; sourceTree = "<group>"; };
@@ -96,6 +100,7 @@
 			isa = PBXGroup;
 			children = (
 				A211931D1AF1CA5B0064CA7D /* Info.plist */,
+				B80FCFC51E4AAE480044098D /* Localizable.strings */,
 				A21193211AF1CA5B0064CA7D /* main.m */,
 			);
 			name = "Supporting Files";
@@ -196,6 +201,7 @@
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hans",
 			);
 			mainGroup = A21193101AF1CA5B0064CA7D;
 			productRefGroup = A211931A1AF1CA5B0064CA7D /* Products */;
@@ -213,6 +219,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A244DCBB1AFA0A2E00EB7E61 /* ProfilesManagerViewController.xib in Resources */,
+				B80FCFC31E4AAE480044098D /* Localizable.strings in Resources */,
 				A21193241AF1CA5B0064CA7D /* Images.xcassets in Resources */,
 				A21193271AF1CA5B0064CA7D /* MainMenu.xib in Resources */,
 			);
@@ -243,8 +250,18 @@
 			isa = PBXVariantGroup;
 			children = (
 				A21193261AF1CA5B0064CA7D /* Base */,
+				B80FCFC61E4AAE560044098D /* zh-Hans */,
 			);
 			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		B80FCFC51E4AAE480044098D /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B80FCFC41E4AAE480044098D /* en */,
+				B80FCFC71E4AAE560044098D /* zh-Hans */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -254,6 +271,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -288,7 +306,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -299,6 +317,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -327,7 +346,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
 			};
