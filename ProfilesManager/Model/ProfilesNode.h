@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
+#define JKLocalizedString(key, comment) \
+(([[[NSLocale preferredLanguages] objectAtIndex:0] isEqual:@"zh-Hans"])?([[NSBundle mainBundle] localizedStringForKey:(key) value:@"" table:nil]):([[NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"en" ofType:@"lproj"]] localizedStringForKey:key value:@"" table:nil]))
+
 @interface ProfilesNode : NSObject
 
 @property (nonatomic, weak)ProfilesNode *rootNode;

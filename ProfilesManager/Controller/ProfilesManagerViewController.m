@@ -230,7 +230,7 @@ NSString *RealHomeDirectory() {
         NSMenuItem *moveTrashItem = [menu itemWithTag:1000];
         if (!moveTrashItem)
         {
-            moveTrashItem = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"move to trash",nil) action:@selector(moveTrashItemClick:) keyEquivalent:@""];
+            moveTrashItem = [[NSMenuItem alloc] initWithTitle:JKLocalizedString(@"move to trash",nil) action:@selector(moveTrashItemClick:) keyEquivalent:@""];
             [moveTrashItem setTarget:self];
             [moveTrashItem setTag:1000];
             [menu addItem:moveTrashItem];
@@ -238,7 +238,7 @@ NSString *RealHomeDirectory() {
         NSMenuItem *deleteItem = [menu itemWithTag:1001];
         if (!deleteItem)
         {
-            deleteItem = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"delete",nil) action:@selector(deleteItemClick:) keyEquivalent:@""];
+            deleteItem = [[NSMenuItem alloc] initWithTitle:JKLocalizedString(@"delete",nil) action:@selector(deleteItemClick:) keyEquivalent:@""];
             [deleteItem setTarget:self];
             [deleteItem setTag:1001];
             [menu addItem:deleteItem];
@@ -246,7 +246,7 @@ NSString *RealHomeDirectory() {
         NSMenuItem *gotoItemName = [menu itemWithTag:1002];
         if (!gotoItemName)
         {
-            gotoItemName = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"show in finder",nil) action:@selector(gotoClick:) keyEquivalent:@""];
+            gotoItemName = [[NSMenuItem alloc] initWithTitle:JKLocalizedString(@"show in finder",nil) action:@selector(gotoClick:) keyEquivalent:@""];
             [gotoItemName setTarget:self];
             [gotoItemName setTag:1002];
             [menu addItem:gotoItemName];
@@ -264,7 +264,7 @@ NSString *RealHomeDirectory() {
         NSMenuItem *refreshItem = [menu itemWithTag:2000];
         if (!refreshItem)
         {
-            refreshItem = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"refresh table",nil) action:@selector(refreshItemClick:) keyEquivalent:@""];
+            refreshItem = [[NSMenuItem alloc] initWithTitle:JKLocalizedString(@"refresh table",nil) action:@selector(refreshItemClick:) keyEquivalent:@""];
             [refreshItem setTarget:self];
             [refreshItem setTag:2000];
             [menu addItem:refreshItem];
@@ -272,7 +272,7 @@ NSString *RealHomeDirectory() {
         NSMenuItem *importItem = [menu itemWithTag:2001];
         if (!importItem)
         {
-            importItem = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"import profile",nil) action:@selector(importItemClick:) keyEquivalent:@""];
+            importItem = [[NSMenuItem alloc] initWithTitle:JKLocalizedString(@"import profile",nil) action:@selector(importItemClick:) keyEquivalent:@""];
             [importItem setTarget:self];
             [importItem setTag:2001];
             [menu addItem:importItem];
@@ -282,7 +282,7 @@ NSString *RealHomeDirectory() {
         NSMenuItem *exportItem = [menu itemWithTag:3001];
         if (!exportItem)
         {
-            exportItem = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"export certificate file",nil) action:@selector(exportCerItemClick:) keyEquivalent:@""];
+            exportItem = [[NSMenuItem alloc] initWithTitle:JKLocalizedString(@"export certificate file",nil) action:@selector(exportCerItemClick:) keyEquivalent:@""];
             [exportItem setTarget:self];
             [exportItem setTag:3001];
             [menu addItem:exportItem];
@@ -296,10 +296,10 @@ NSString *RealHomeDirectory() {
     NSInteger index = [self.treeView clickedRow];
 
     NSAlert *alert = [[NSAlert alloc]init];
-    [alert addButtonWithTitle:NSLocalizedString(@"Ok",nil)];
-    [alert addButtonWithTitle:NSLocalizedString(@"Cancel",nil)];
-    alert.messageText = NSLocalizedString(@"Confirm Delete Opration",nil);
-    alert.informativeText = NSLocalizedString(@"Delete this profie item permanently,can't rollback!",nil);
+    [alert addButtonWithTitle:JKLocalizedString(@"Ok",nil)];
+    [alert addButtonWithTitle:JKLocalizedString(@"Cancel",nil)];
+    alert.messageText = JKLocalizedString(@"Confirm Delete Opration",nil);
+    alert.informativeText = JKLocalizedString(@"Delete this profie item permanently,can't rollback!",nil);
     [alert setAlertStyle:NSAlertStyleCritical];
     [alert beginSheetModalForWindow:[self.view window] completionHandler:^(NSModalResponse returnCode) {
         if (returnCode == NSAlertFirstButtonReturn ) {

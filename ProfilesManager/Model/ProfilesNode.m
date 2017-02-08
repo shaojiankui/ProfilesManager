@@ -81,7 +81,7 @@
             
             if(_uuid){
                 NSDate *expiration = [dict objectForKey:@"ExpirationDate"];
-                _detail =  [[NSDate date] compare:expiration] == NSOrderedDescending ?NSLocalizedString(@"expired",nil):NSLocalizedString(@"valid",nil);
+                _detail =  [[NSDate date] compare:expiration] == NSOrderedDescending ?JKLocalizedString(@"expired",nil):JKLocalizedString(@"valid",nil);
                 _type  =  [dict objectForKey:@"Name"];
             }
             

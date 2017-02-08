@@ -43,8 +43,10 @@
 		A2A8FA881AFA43E10087DD68 /* DragOutlineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DragOutlineView.m; sourceTree = "<group>"; };
 		A2A8FA891AFA43E10087DD68 /* DragOutlineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DragOutlineView.h; sourceTree = "<group>"; };
 		B80FCFC41E4AAE480044098D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		B80FCFC61E4AAE560044098D /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/MainMenu.strings"; sourceTree = "<group>"; };
 		B80FCFC71E4AAE560044098D /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		B8329CA91E4B1F7900D589F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		B833BA561E4B1C36003FF745 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/MainMenu.strings; sourceTree = "<group>"; };
+		B833BA571E4B1C5C003FF745 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/MainMenu.strings"; sourceTree = "<group>"; };
 		B856B7801E25EDC800060107 /* ProfilesManager.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ProfilesManager.entitlements; sourceTree = "<group>"; };
 		B8C823BC1E0288D8004BEAEF /* NSData+JKBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+JKBase64.h"; sourceTree = "<group>"; };
 		B8C823BD1E0288D8004BEAEF /* NSData+JKBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+JKBase64.m"; sourceTree = "<group>"; };
@@ -250,7 +252,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				A21193261AF1CA5B0064CA7D /* Base */,
-				B80FCFC61E4AAE560044098D /* zh-Hans */,
+				B833BA561E4B1C36003FF745 /* en */,
+				B833BA571E4B1C5C003FF745 /* zh-Hans */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";
@@ -260,6 +263,7 @@
 			children = (
 				B80FCFC41E4AAE480044098D /* en */,
 				B80FCFC71E4AAE560044098D /* zh-Hans */,
+				B8329CA91E4B1F7900D589F6 /* Base */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
