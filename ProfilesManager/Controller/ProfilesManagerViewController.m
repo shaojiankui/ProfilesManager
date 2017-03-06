@@ -10,7 +10,7 @@
 #import "ProfilesNode.h"
 #import "NSOutlineView+Menu.h"
 #import "NSFileManager+Trash.h"
-
+#import "iAlert.h"
 //#include <unistd.h>
 //#include <sys/types.h>
 //#include <pwd.h>
@@ -74,7 +74,6 @@ NSString *RealHomeDirectory() {
     }
     _profileNames =  [[[NSFileManager defaultManager] subpathsAtPath:_profileDir]  pathsMatchingExtensions:@[@"mobileprovision",@"MOBILEPROVISION",@"provisionprofile",@"PROVISIONPROFILE"]];
     
-    
     NSMutableDictionary *provisions = [NSMutableDictionary dictionary];
     for(NSString *fileName in _profileNames){
         [_profilePaths addObject:[_profileDir stringByAppendingString:fileName?:@""]];
@@ -88,11 +87,9 @@ NSString *RealHomeDirectory() {
         
     }
     
-    
     ProfilesNode *node = [[ProfilesNode alloc]initWithRootNode:nil originInfo:provisions key:@"Mobile Provisions"];
     _rootNode = node;
     [self.treeView reloadData];
-    
 }
 
 -(NSDictionary*)readPlist:(NSString *)filePath
@@ -182,16 +179,13 @@ NSString *RealHomeDirectory() {
             [cell setMenu:nil];
         }
     }
-
 }
 
 -(void)updateRowViewBackColorforItem:(id)customItem {
-
     NSInteger row = [self.treeView rowForItem:customItem];
    if (row < 0) return;
     NSTableRowView *view = [self.treeView rowViewAtRow:row makeIfNecessary:YES];
     [view setBackgroundColor:[NSColor redColor]];
-    
 }
 #pragma mark -
 #pragma mark NSMenuDelegate
@@ -227,6 +221,14 @@ NSString *RealHomeDirectory() {
 {
     
     if(menu == _itemMenu){
+        NSMenuItem *gotoItemName = [menu itemWithTag:1002];
+        if (!gotoItemName)
+        {
+            gotoItemName = [[NSMenuItem alloc] initWithTitle:JKLocalizedString(@"show in finder",nil) action:@selector(gotoClick:) keyEquivalent:@""];
+            [gotoItemName setTarget:self];
+            [gotoItemName setTag:1002];
+            [menu addItem:gotoItemName];
+        }
         NSMenuItem *moveTrashItem = [menu itemWithTag:1000];
         if (!moveTrashItem)
         {
@@ -243,22 +245,14 @@ NSString *RealHomeDirectory() {
             [deleteItem setTag:1001];
             [menu addItem:deleteItem];
         }
-        NSMenuItem *gotoItemName = [menu itemWithTag:1002];
-        if (!gotoItemName)
+        NSMenuItem *exportItem = [menu itemWithTag:1003];
+        if (!exportItem)
         {
-            gotoItemName = [[NSMenuItem alloc] initWithTitle:JKLocalizedString(@"show in finder",nil) action:@selector(gotoClick:) keyEquivalent:@""];
-            [gotoItemName setTarget:self];
-            [gotoItemName setTag:1002];
-            [menu addItem:gotoItemName];
+            exportItem = [[NSMenuItem alloc] initWithTitle:JKLocalizedString(@"export",nil) action:@selector(exportItemClick:) keyEquivalent:@""];
+            [exportItem setTarget:self];
+            [exportItem setTag:1003];
+            [menu addItem:exportItem];
         }
-//        NSMenuItem *exportItem = [menu itemWithTag:1003];
-//        if (!exportItem)
-//        {
-//            exportItem = [[NSMenuItem alloc] initWithTitle:@"导出" action:@selector(exportItemClick:) keyEquivalent:@""];
-//            [exportItem setTarget:self];
-//            [exportItem setTag:1003];
-//            [menu addItem:exportItem];
-//        }
     }
     if(menu == _mainMenu){
         NSMenuItem *refreshItem = [menu itemWithTag:2000];
@@ -294,48 +288,43 @@ NSString *RealHomeDirectory() {
 - (void)deleteItemClick:(id)sender
 {
     NSInteger index = [self.treeView clickedRow];
-
-    NSAlert *alert = [[NSAlert alloc]init];
-    [alert addButtonWithTitle:JKLocalizedString(@"Ok",nil)];
-    [alert addButtonWithTitle:JKLocalizedString(@"Cancel",nil)];
-    alert.messageText = JKLocalizedString(@"Confirm Delete Opration",nil);
-    alert.informativeText = JKLocalizedString(@"Delete this profie item permanently,can't rollback!",nil);
-    [alert setAlertStyle:NSAlertStyleCritical];
-    [alert beginSheetModalForWindow:[self.view window] completionHandler:^(NSModalResponse returnCode) {
-        if (returnCode == NSAlertFirstButtonReturn ) {
-            [self totalDelteItem:index];
-        }else if (returnCode == NSAlertSecondButtonReturn){
-            NSLog(@"this is Cancel Button tap");
-        }
-    }];
-}
-- (void)totalDelteItem:(NSInteger)index{
     ProfilesNode *node = [self.treeView itemAtRow:index];
     
-    NSLog(@"deleteItem inde%zd",index);
-    if (index == -1) return;
-    
-    [self.treeView beginUpdates];
-    [self.treeView removeItemsAtIndexes:[NSIndexSet indexSetWithIndex:index]  inParent:nil withAnimation:NSTableViewAnimationEffectFade];
-    [self.treeView endUpdates];
-    
-    [self deleteProfile:node.filePath option:YES];
-    [self loadProfileFiles];
+    iAlert *alert = [iAlert alertWithTitle:JKLocalizedString(@"Confirm Delete Opration",nil) message:JKLocalizedString(@"Delete this profie item permanently,can't rollback!",nil) style:NSAlertStyleWarning];
+    [alert addCommonButtonWithTitle:JKLocalizedString(@"Ok", nil) handler:^(iAlertItem *item) {
+        NSLog(@"deleteItem inde%zd",index);
+        if (index == -1) return;
+        
+        [self.treeView beginUpdates];
+        [self.treeView removeItemsAtIndexes:[NSIndexSet indexSetWithIndex:index]  inParent:nil withAnimation:NSTableViewAnimationEffectFade];
+        [self.treeView endUpdates];
+        
+        [self deleteProfile:node.filePath option:YES];
+        [self loadProfileFiles];
+    }];
+    [alert addButtonWithTitle:JKLocalizedString(@"Cancle", nil)];
+    [alert show:self.view.window];
 }
+
 - (void)moveTrashItemClick:(id)sender{
     NSInteger index = [self.treeView clickedRow];
     ProfilesNode *node = [self.treeView itemAtRow:index];
-    
-    NSLog(@"move to trash inde%zd",index);
-    if (index == -1) return;
-    
-    [self.treeView beginUpdates];
-    [self.treeView removeItemsAtIndexes:[NSIndexSet indexSetWithIndex:index]  inParent:nil withAnimation:NSTableViewAnimationEffectFade];
-    [self.treeView endUpdates];
-    
-    [self deleteProfile:node.filePath option:NO];
-    [self loadProfileFiles];
 
+    iAlert *alert = [iAlert alertWithTitle:JKLocalizedString(@"Warning",nil) message:JKLocalizedString(@"are you sure move item to trash?",nil) style:NSAlertStyleWarning];
+    [alert addCommonButtonWithTitle:JKLocalizedString(@"Ok", nil) handler:^(iAlertItem *item) {
+      
+        NSLog(@"move to trash inde%zd",index);
+        if (index == -1) return;
+        
+        [self.treeView beginUpdates];
+        [self.treeView removeItemsAtIndexes:[NSIndexSet indexSetWithIndex:index]  inParent:nil withAnimation:NSTableViewAnimationEffectFade];
+        [self.treeView endUpdates];
+        
+        [self deleteProfile:node.filePath option:NO];
+        [self loadProfileFiles];
+    }];
+    [alert addButtonWithTitle:JKLocalizedString(@"Cancle", nil)];
+    [alert show:self.view.window];
 }
 //delete and move
 -(BOOL)deleteProfile:(NSString*)filePath option:(BOOL)totle{
@@ -352,10 +341,8 @@ NSString *RealHomeDirectory() {
         [self showMessage:[error localizedDescription] completionHandler:^(NSModalResponse returnCode) {
             
         }];
-
     }
     return result;
-    
 }
 //goto
 - (void)gotoClick:(id)sender
@@ -373,7 +360,22 @@ NSString *RealHomeDirectory() {
 }
 //export Item to file
 - (void)exportItemClick:(id)sender {
+    NSInteger index = [self.treeView clickedRow];
+    if (index == -1) return;
+    ProfilesNode *node = [self.treeView itemAtRow:index];
     
+    NSSavePanel *savePanel = [NSSavePanel savePanel];
+    savePanel.allowedFileTypes = @[@"mobileprovision",@"provisionprofile"];
+    savePanel.nameFieldStringValue = node.key;
+    [savePanel beginSheetModalForWindow:self.view.window completionHandler:^(NSInteger result) {
+        NSString *savePath = savePanel.URL.path;
+        if (result == NSFileHandlingPanelOKButton) {
+            if ([[NSFileManager defaultManager] fileExistsAtPath:savePath]) {
+                [[NSFileManager defaultManager] removeItemAtPath:savePath error:nil];
+            }
+            [[NSFileManager defaultManager] copyItemAtPath:node.filePath toPath:savePath error:nil];
+        }
+    }];
 }
 //main
 - (void)refreshItemClick:(id)sender {

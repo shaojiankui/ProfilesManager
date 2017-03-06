@@ -14,8 +14,10 @@
 "export certificate file"   = "导出证书文件";
 "expired"   = "过期";
 "valid"   = "有效";
-"OK"   = "确定";
+"Ok"   = "确定";
 "Cancel"   = "取消";
 "Confirm Delete Opration"   = "确认删除操作";
 "Delete this profie item permanently,can't rollback!"   = "完全删除这个profie文件,不可回滚!";
-
+"Warning" = "警告";
+"are you sure move item to trash?" = "确定将此profie文件移动到废纸篓么?";
+"export" = "导出";

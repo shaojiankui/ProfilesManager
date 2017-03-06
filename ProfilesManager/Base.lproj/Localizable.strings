@@ -1,10 +1,10 @@
-/* 
-  Localizable.strings
-  ProfilesManager
-
-  Created by Jakey on 2017/2/8.
-  Copyright © 2017年 Jakey. All rights reserved.
-*/
+/*
+ Localizable.strings
+ ProfilesManager
+ 
+ Created by Jakey on 2017/2/8.
+ Copyright © 2017年 Jakey. All rights reserved.
+ */
 
 "move to trash" = "move to trash";
 "delete" = "delete";
@@ -14,9 +14,10 @@
 "export certificate file"   = "export certificate file";
 "expired"   = "expired";
 "valid"   = "valid";
-"OK"   = "OK";
+"Ok"   = "Ok";
 "Cancel"   = "Cancel";
 "Confirm Delete Opration"   = "Confirm Delete Opration";
 "Delete this profie item permanently,can't rollback!"   = "Delete this profie item permanently,can't rollback!";
-
-
+"Warning" = "Warning";
+"are you sure move item to trash?" = "are you sure move item to trash?";
+"export" = "export";

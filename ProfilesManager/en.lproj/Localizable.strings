@@ -14,9 +14,10 @@
 "export certificate file"   = "export certificate file";
 "expired"   = "expired";
 "valid"   = "valid";
-"OK"   = "OK";
+"Ok"   = "Ok";
 "Cancel"   = "Cancel";
 "Confirm Delete Opration"   = "Confirm Delete Opration";
 "Delete this profie item permanently,can't rollback!"   = "Delete this profie item permanently,can't rollback!";
-
-
+"Warning" = "Warning";
+"are you sure move item to trash?" = "are you sure move item to trash?";
+"export" = "export";
