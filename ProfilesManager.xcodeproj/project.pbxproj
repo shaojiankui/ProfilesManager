@@ -21,6 +21,9 @@
 		B80FCFC31E4AAE480044098D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B80FCFC51E4AAE480044098D /* Localizable.strings */; };
 		B8BCD2401E6CEFCB00ABD2A6 /* iAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = B8BCD23F1E6CEFCB00ABD2A6 /* iAlert.m */; };
 		B8C823BE1E0288D9004BEAEF /* NSData+JKBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = B8C823BD1E0288D8004BEAEF /* NSData+JKBase64.m */; };
+		B8F694BB204D3ADF0048F3E6 /* PreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B8F694B9204D3ADF0048F3E6 /* PreviewViewController.m */; };
+		B8F694BC204D3ADF0048F3E6 /* PreviewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8F694BA204D3ADF0048F3E6 /* PreviewViewController.xib */; };
+		B8F694C0204D40380048F3E6 /* PlistManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B8F694BF204D40380048F3E6 /* PlistManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,6 +56,11 @@
 		B8BCD23F1E6CEFCB00ABD2A6 /* iAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iAlert.m; sourceTree = "<group>"; };
 		B8C823BC1E0288D8004BEAEF /* NSData+JKBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+JKBase64.h"; sourceTree = "<group>"; };
 		B8C823BD1E0288D8004BEAEF /* NSData+JKBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+JKBase64.m"; sourceTree = "<group>"; };
+		B8F694B8204D3ADF0048F3E6 /* PreviewViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PreviewViewController.h; sourceTree = "<group>"; };
+		B8F694B9204D3ADF0048F3E6 /* PreviewViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PreviewViewController.m; sourceTree = "<group>"; };
+		B8F694BA204D3ADF0048F3E6 /* PreviewViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PreviewViewController.xib; sourceTree = "<group>"; };
+		B8F694BE204D40380048F3E6 /* PlistManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlistManager.h; sourceTree = "<group>"; };
+		B8F694BF204D40380048F3E6 /* PlistManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PlistManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +95,7 @@
 		A211931B1AF1CA5B0064CA7D /* ProfilesManager */ = {
 			isa = PBXGroup;
 			children = (
+				B8F694BD204D40250048F3E6 /* PlistManager */,
 				B8BCD23D1E6CEFC500ABD2A6 /* Vendor */,
 				B856B7801E25EDC800060107 /* ProfilesManager.entitlements */,
 				A2A8FA871AFA43DD0087DD68 /* View */,
@@ -139,6 +148,9 @@
 				A244DCB21AFA0A2E00EB7E61 /* ProfilesManagerViewController.h */,
 				A244DCB31AFA0A2E00EB7E61 /* ProfilesManagerViewController.m */,
 				A244DCB41AFA0A2E00EB7E61 /* ProfilesManagerViewController.xib */,
+				B8F694B8204D3ADF0048F3E6 /* PreviewViewController.h */,
+				B8F694B9204D3ADF0048F3E6 /* PreviewViewController.m */,
+				B8F694BA204D3ADF0048F3E6 /* PreviewViewController.xib */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -168,6 +180,15 @@
 				B8BCD23F1E6CEFCB00ABD2A6 /* iAlert.m */,
 			);
 			path = Vendor;
+			sourceTree = "<group>";
+		};
+		B8F694BD204D40250048F3E6 /* PlistManager */ = {
+			isa = PBXGroup;
+			children = (
+				B8F694BE204D40380048F3E6 /* PlistManager.h */,
+				B8F694BF204D40380048F3E6 /* PlistManager.m */,
+			);
+			path = PlistManager;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -234,6 +255,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A244DCBB1AFA0A2E00EB7E61 /* ProfilesManagerViewController.xib in Resources */,
+				B8F694BC204D3ADF0048F3E6 /* PreviewViewController.xib in Resources */,
 				B80FCFC31E4AAE480044098D /* Localizable.strings in Resources */,
 				A21193241AF1CA5B0064CA7D /* Images.xcassets in Resources */,
 				A21193271AF1CA5B0064CA7D /* MainMenu.xib in Resources */,
@@ -254,8 +276,10 @@
 				B8C823BE1E0288D9004BEAEF /* NSData+JKBase64.m in Sources */,
 				B8BCD2401E6CEFCB00ABD2A6 /* iAlert.m in Sources */,
 				A21193201AF1CA5B0064CA7D /* AppDelegate.m in Sources */,
+				B8F694BB204D3ADF0048F3E6 /* PreviewViewController.m in Sources */,
 				A244DCB91AFA0A2E00EB7E61 /* NSOutlineView+Menu.m in Sources */,
 				A244DCBC1AFA0A2E00EB7E61 /* ProfilesNode.m in Sources */,
+				B8F694C0204D40380048F3E6 /* PlistManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

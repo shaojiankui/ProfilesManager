@@ -11,6 +11,8 @@
 #import "NSOutlineView+Menu.h"
 #import "NSFileManager+Trash.h"
 #import "iAlert.h"
+#import "PreviewViewController.h"
+#import "PlistManager.h"
 //#include <unistd.h>
 //#include <sys/types.h>
 //#include <pwd.h>
@@ -47,6 +49,10 @@
             }
             [self loadProfileFiles];
         }
+        if ([list count]==1 && [[[list firstObject]lowercaseString] hasSuffix:@"ipa"]) {
+            PreviewViewController *preview = [[PreviewViewController alloc]initWithIPA:[list firstObject]];
+            [self presentViewControllerAsModalWindow:preview];
+        }
     }];
  
 }
@@ -77,7 +83,7 @@ NSString *RealHomeDirectory() {
     NSMutableDictionary *provisions = [NSMutableDictionary dictionary];
     for(NSString *fileName in _profileNames){
         [_profilePaths addObject:[_profileDir stringByAppendingString:fileName?:@""]];
-        NSMutableDictionary *dic = (NSMutableDictionary*)[self readPlist:[_profileDir stringByAppendingString:fileName?:@""]];
+        NSMutableDictionary *dic = (NSMutableDictionary*)[PlistManager readPlist:[_profileDir stringByAppendingString:fileName?:@""]];
         dic[@"filePath"] = [_profileDir stringByAppendingString:fileName?:@""];
 
         [_profileDatas addObject:dic];
@@ -92,32 +98,6 @@ NSString *RealHomeDirectory() {
     [self.treeView reloadData];
 }
 
--(NSDictionary*)readPlist:(NSString *)filePath
-{
-    if ([[NSFileManager defaultManager]fileExistsAtPath:filePath]) {
-        NSString *startString = @"<?xml version";
-        NSString *endString = @"</plist>";
-        
-        NSData *rawData = [NSData dataWithContentsOfFile:filePath];
-        NSData *startData = [NSData dataWithBytes:[startString UTF8String] length:startString.length];
-        NSData *endData = [NSData dataWithBytes:[endString UTF8String] length:endString.length];
-        
-        NSRange fullRange = {.location = 0, .length = [rawData length]};
-        
-        NSRange startRange = [rawData rangeOfData:startData options:0 range:fullRange];
-        NSRange endRange = [rawData rangeOfData:endData options:0 range:fullRange];
-        
-        NSRange plistRange = {.location = startRange.location, .length = endRange.location + endRange.length - startRange.location};
-        NSData *plistData = [rawData subdataWithRange:plistRange];
-        
-        id obj = [NSPropertyListSerialization propertyListWithData:plistData options:NSPropertyListImmutable format:NULL error:nil];
-        
-        if ([obj isKindOfClass:[NSDictionary class]]) {
-            return obj;
-        }
-    }
-    return nil;
-}
 
 #pragma mark - Outline
 
