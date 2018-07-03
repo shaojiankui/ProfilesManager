@@ -62,7 +62,8 @@
             
             if ([[NSFileManager defaultManager] fileExistsAtPath:[_appPath stringByAppendingPathComponent:@"embedded.mobileprovision"]]) {
                 
-                _profileDict = (NSMutableDictionary*)[PlistManager readPlist:[_appPath stringByAppendingPathComponent:@"embedded.mobileprovision"]];
+                NSString *plistString;
+                _profileDict = (NSMutableDictionary*)[PlistManager readPlist:[_appPath stringByAppendingPathComponent:@"embedded.mobileprovision"] plistString:&plistString];
                 
                 _profileDict[@"filePath"] = _appPath;
             

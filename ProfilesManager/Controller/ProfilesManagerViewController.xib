@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11762" systemVersion="16B2555" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13771" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11762"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13771"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -19,13 +19,13 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <scrollView autohidesScrollers="YES" horizontalLineScroll="22" horizontalPageScroll="10" verticalLineScroll="22" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bQP-D8-T2r">
-                    <rect key="frame" x="0.0" y="0.0" width="920" height="594"/>
+                    <rect key="frame" x="0.0" y="0.0" width="920" height="600"/>
                     <clipView key="contentView" drawsBackground="NO" id="O7w-RX-5YA">
-                        <rect key="frame" x="1" y="0.0" width="918" height="593"/>
+                        <rect key="frame" x="1" y="0.0" width="918" height="599"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <outlineView appearanceType="vibrantLight" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="Ygp-i7-VyR" viewBased="YES" indentationPerLevel="16" outlineTableColumn="FkK-IV-RHo" id="3ki-mw-HE6" customClass="DragOutlineView">
-                                <rect key="frame" x="0.0" y="0.0" width="918" height="570"/>
+                                <rect key="frame" x="0.0" y="0.0" width="918" height="576"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <size key="intercellSpacing" width="3" height="5"/>
                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -97,9 +97,9 @@
                 <constraint firstAttribute="bottom" secondItem="bQP-D8-T2r" secondAttribute="bottom" id="BEA-4M-DjR"/>
                 <constraint firstItem="bQP-D8-T2r" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="Mer-2M-vUR"/>
                 <constraint firstAttribute="trailing" secondItem="bQP-D8-T2r" secondAttribute="trailing" id="Z0B-Ol-du0"/>
-                <constraint firstItem="bQP-D8-T2r" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="6" id="nxd-RY-BEY"/>
+                <constraint firstItem="bQP-D8-T2r" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="nxd-RY-BEY"/>
             </constraints>
-            <point key="canvasLocation" x="426" y="545"/>
+            <point key="canvasLocation" x="114" y="534"/>
         </customView>
     </objects>
 </document>

@@ -19,6 +19,8 @@
 		A244DCBC1AFA0A2E00EB7E61 /* ProfilesNode.m in Sources */ = {isa = PBXBuildFile; fileRef = A244DCB71AFA0A2E00EB7E61 /* ProfilesNode.m */; };
 		A2A8FA8A1AFA43E10087DD68 /* DragOutlineView.m in Sources */ = {isa = PBXBuildFile; fileRef = A2A8FA881AFA43E10087DD68 /* DragOutlineView.m */; };
 		B80FCFC31E4AAE480044098D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B80FCFC51E4AAE480044098D /* Localizable.strings */; };
+		B843F36E20897BAD00C1679C /* ProfilesManagerWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = B843F36C20897BAD00C1679C /* ProfilesManagerWindowController.m */; };
+		B843F36F20897BAD00C1679C /* ProfilesManagerWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B843F36D20897BAD00C1679C /* ProfilesManagerWindowController.xib */; };
 		B8BCD2401E6CEFCB00ABD2A6 /* iAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = B8BCD23F1E6CEFCB00ABD2A6 /* iAlert.m */; };
 		B8C823BE1E0288D9004BEAEF /* NSData+JKBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = B8C823BD1E0288D8004BEAEF /* NSData+JKBase64.m */; };
 		B8F694BB204D3ADF0048F3E6 /* PreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B8F694B9204D3ADF0048F3E6 /* PreviewViewController.m */; };
@@ -51,6 +53,9 @@
 		B8329CA91E4B1F7900D589F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B833BA561E4B1C36003FF745 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/MainMenu.strings; sourceTree = "<group>"; };
 		B833BA571E4B1C5C003FF745 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/MainMenu.strings"; sourceTree = "<group>"; };
+		B843F36B20897BAD00C1679C /* ProfilesManagerWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProfilesManagerWindowController.h; sourceTree = "<group>"; };
+		B843F36C20897BAD00C1679C /* ProfilesManagerWindowController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProfilesManagerWindowController.m; sourceTree = "<group>"; };
+		B843F36D20897BAD00C1679C /* ProfilesManagerWindowController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfilesManagerWindowController.xib; sourceTree = "<group>"; };
 		B856B7801E25EDC800060107 /* ProfilesManager.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ProfilesManager.entitlements; sourceTree = "<group>"; };
 		B8BCD23E1E6CEFCB00ABD2A6 /* iAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iAlert.h; sourceTree = "<group>"; };
 		B8BCD23F1E6CEFCB00ABD2A6 /* iAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iAlert.m; sourceTree = "<group>"; };
@@ -151,6 +156,9 @@
 				B8F694B8204D3ADF0048F3E6 /* PreviewViewController.h */,
 				B8F694B9204D3ADF0048F3E6 /* PreviewViewController.m */,
 				B8F694BA204D3ADF0048F3E6 /* PreviewViewController.xib */,
+				B843F36B20897BAD00C1679C /* ProfilesManagerWindowController.h */,
+				B843F36C20897BAD00C1679C /* ProfilesManagerWindowController.m */,
+				B843F36D20897BAD00C1679C /* ProfilesManagerWindowController.xib */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -259,6 +267,7 @@
 				B80FCFC31E4AAE480044098D /* Localizable.strings in Resources */,
 				A21193241AF1CA5B0064CA7D /* Images.xcassets in Resources */,
 				A21193271AF1CA5B0064CA7D /* MainMenu.xib in Resources */,
+				B843F36F20897BAD00C1679C /* ProfilesManagerWindowController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -278,6 +287,7 @@
 				A21193201AF1CA5B0064CA7D /* AppDelegate.m in Sources */,
 				B8F694BB204D3ADF0048F3E6 /* PreviewViewController.m in Sources */,
 				A244DCB91AFA0A2E00EB7E61 /* NSOutlineView+Menu.m in Sources */,
+				B843F36E20897BAD00C1679C /* ProfilesManagerWindowController.m in Sources */,
 				A244DCBC1AFA0A2E00EB7E61 /* ProfilesNode.m in Sources */,
 				B8F694C0204D40380048F3E6 /* PlistManager.m in Sources */,
 			);

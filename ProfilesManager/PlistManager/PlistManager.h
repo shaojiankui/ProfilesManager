@@ -9,5 +9,5 @@
 #import <Foundation/Foundation.h>
 
 @interface PlistManager : NSObject
-+ (NSDictionary*)readPlist:(NSString *)filePath;
++ (NSDictionary*)readPlist:(NSString *)filePath plistString:(NSString**)plistString;
 @end

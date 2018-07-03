@@ -7,26 +7,26 @@
 //
 
 #import "AppDelegate.h"
-
+#import "ProfilesManagerWindowController.h"
 @interface AppDelegate ()
-
-@property (weak) IBOutlet NSWindow *window;
+{
+    ProfilesManagerWindowController *_window;
+}
 @end
 
 @implementation AppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    // Insert code here to initialize your application
-    tool = [[ProfilesManagerViewController alloc] initWithNibName:@"ProfilesManagerViewController" bundle:[NSBundle bundleForClass:[self class]]];
-    [self.window.contentView addSubview:tool.view];
-    tool.view.frame = self.window.contentView.bounds;
+    _window = [[ProfilesManagerWindowController alloc] initWithWindowNibName:@"ProfilesManagerWindowController"];
+    _window.contentViewController = [[ProfilesManagerViewController alloc] initWithNibName:@"ProfilesManagerViewController" bundle:[NSBundle bundleForClass:[self class]]];
+    [_window.window orderFront:nil];
 }
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)theApplication hasVisibleWindows:(BOOL)flag
 {
     if (!flag)
     {
-        [self.window makeKeyAndOrderFront:self];
+      [_window.window makeKeyAndOrderFront:self];
     }
     return YES;
 }

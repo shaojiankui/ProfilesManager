@@ -9,7 +9,7 @@
 #import "PlistManager.h"
 
 @implementation PlistManager
-+ (NSDictionary*)readPlist:(NSString *)filePath
++ (NSDictionary*)readPlist:(NSString *)filePath plistString:(NSString**)plistString
 {
     if ([[NSFileManager defaultManager]fileExistsAtPath:filePath]) {
         NSString *startString = @"<?xml version";
@@ -27,6 +27,8 @@
         NSRange plistRange = {.location = startRange.location, .length = endRange.location + endRange.length - startRange.location};
         NSData *plistData = [rawData subdataWithRange:plistRange];
         
+        *plistString = [[NSString alloc] initWithData:plistData encoding:NSUTF8StringEncoding];
+
         id obj = [NSPropertyListSerialization propertyListWithData:plistData options:NSPropertyListImmutable format:NULL error:nil];
         
         if ([obj isKindOfClass:[NSDictionary class]]) {

@@ -15,15 +15,14 @@
 @interface ProfilesManagerViewController : NSViewController<NSOutlineViewDataSource,NSOutlineViewDelegate,NSMenuDelegate>
 {
     NSString *_profileDir;
-    NSArray *_profileNames;
-    NSMutableArray *_profilePaths;
-    NSMutableArray *_profileDatas;
     
     NSMenu *_itemMenu;
     NSMenu *_certificateMenu;
     NSMenu *_mainMenu;
+    
     ProfilesNode *_rootNode;
+    NSString *_searchWord;
 }
 @property (weak) IBOutlet DragOutlineView *treeView;
-
+- (void)loadProfileFilesWithSearchWord:(NSString*)searchWord;
 @end

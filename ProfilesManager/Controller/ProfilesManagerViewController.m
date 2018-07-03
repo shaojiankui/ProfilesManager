@@ -13,6 +13,7 @@
 #import "iAlert.h"
 #import "PreviewViewController.h"
 #import "PlistManager.h"
+
 //#include <unistd.h>
 //#include <sys/types.h>
 //#include <pwd.h>
@@ -25,15 +26,15 @@
     [super viewDidLoad];
     // Do view setup here.
     _profileDir = [NSString stringWithFormat:@"%@/Library/MobileDevice/Provisioning Profiles/", RealHomeDirectory()];
-
+    
     //当拖拽窗口大小，NSOutlineView frame自动更改时，Column宽等比增减
     [self.treeView setColumnAutoresizingStyle:NSTableViewUniformColumnAutoresizingStyle];
     //最后一行自动宽等比增减
-//    [self.treeView sizeLastColumnToFit];
+    //    [self.treeView sizeLastColumnToFit];
     //app第一次运行Column 最后一行自动宽等比增减，否则会有滚动条
     [self.treeView sizeToFit];
     
-    [self loadProfileFiles];
+    [self loadProfileFilesWithSearchWord:_searchWord];
     //drag file
     [self.treeView didDragEndBlock:^(NSArray *list, NSOutlineView *view) {
         for(NSString *result in list){
@@ -47,21 +48,21 @@
                     }];
                 }
             }
-            [self loadProfileFiles];
+            [self loadProfileFilesWithSearchWord:_searchWord];
         }
         if ([list count]==1 && [[[list firstObject]lowercaseString] hasSuffix:@"ipa"]) {
             PreviewViewController *preview = [[PreviewViewController alloc]initWithIPA:[list firstObject]];
             [self presentViewControllerAsModalWindow:preview];
         }
     }];
- 
+    
 }
 //获取sandbox之外的路径
 NSString *RealHomeDirectory() {
-//    struct passwd *pw = getpwuid(getuid());
-//    assert(pw);
-//    return [NSString stringWithUTF8String:pw->pw_dir];
-//    
+    //    struct passwd *pw = getpwuid(getuid());
+    //    assert(pw);
+    //    return [NSString stringWithUTF8String:pw->pw_dir];
+    //
     NSString *home = NSHomeDirectory();
     NSArray *pathArray = [home componentsSeparatedByString:@"/"];
     NSString *absolutePath;
@@ -70,27 +71,27 @@ NSString *RealHomeDirectory() {
     }
     return absolutePath;
 }
--(void)loadProfileFiles{
-    if (!_profilePaths) {
-        _profilePaths = [NSMutableArray array];
-    }
-    if (!_profileDatas) {
-        _profileDatas = [NSMutableArray array];
 
-    }
-    _profileNames =  [[[NSFileManager defaultManager] subpathsAtPath:_profileDir]  pathsMatchingExtensions:@[@"mobileprovision",@"MOBILEPROVISION",@"provisionprofile",@"PROVISIONPROFILE"]];
+- (void)loadProfileFilesWithSearchWord:(NSString*)searchWord {
+    _searchWord = searchWord;
+    
+    NSArray  *profileNames =  [[[NSFileManager defaultManager] subpathsAtPath:_profileDir]  pathsMatchingExtensions:@[@"mobileprovision",@"MOBILEPROVISION",@"provisionprofile",@"PROVISIONPROFILE"]];
     
     NSMutableDictionary *provisions = [NSMutableDictionary dictionary];
-    for(NSString *fileName in _profileNames){
-        [_profilePaths addObject:[_profileDir stringByAppendingString:fileName?:@""]];
-        NSMutableDictionary *dic = (NSMutableDictionary*)[PlistManager readPlist:[_profileDir stringByAppendingString:fileName?:@""]];
+    for(NSString *fileName in profileNames){
+        NSString *plistString;
+        NSMutableDictionary *dic = (NSMutableDictionary*)[PlistManager readPlist:[_profileDir stringByAppendingString:fileName?:@""] plistString:&plistString];
         dic[@"filePath"] = [_profileDir stringByAppendingString:fileName?:@""];
-
-        [_profileDatas addObject:dic];
-        if (dic && fileName) {
-            provisions[fileName] = dic;
-        }
         
+        if (dic && fileName) {
+            if (searchWord && searchWord.length>0) {
+                if ([plistString rangeOfString:searchWord].location != NSNotFound) {
+                    provisions[fileName] = dic;
+                }
+            }else{
+                provisions[fileName] = dic;
+            }
+        }
     }
     
     ProfilesNode *node = [[ProfilesNode alloc]initWithRootNode:nil originInfo:provisions key:@"Mobile Provisions"];
@@ -101,34 +102,30 @@ NSString *RealHomeDirectory() {
 
 #pragma mark - Outline
 
-- (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item
-{
+- (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item{
     ProfilesNode *realItem = item ?: _rootNode;
     return [realItem.childrenNodes count];
 }
 
-- (BOOL)outlineView:(NSOutlineView *)outlineView isItemExpandable:(id)item
-{
+- (BOOL)outlineView:(NSOutlineView *)outlineView isItemExpandable:(id)item{
     ProfilesNode *realItem = item ?: _rootNode;
     return realItem.childrenNodes != nil;
 }
 
-- (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(id)item
-{
+- (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(id)item{
     ProfilesNode *realItem = item ?: _rootNode;
     return realItem.childrenNodes[index];
 }
 
-- (id)outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(NSTableColumn *)tableColumn byItem:(id)item
-{
+- (id)outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(NSTableColumn *)tableColumn byItem:(id)item{
     ProfilesNode *realItem = item ?: _rootNode;
     
     static NSString *kColumnIdentifierKey = @"key";
-//    static NSString *kColumnIdentifierName = @"name";
+    //    static NSString *kColumnIdentifierName = @"name";
     static NSString *kColumnIdentifierType = @"type";
     //static NSString *kColumnIdentifierDetal = @"detail";
-//    static NSString *kColumnIdentifierUUID = @"uuid";
-
+    //    static NSString *kColumnIdentifierUUID = @"uuid";
+    
     if ([[tableColumn identifier] isEqualToString:kColumnIdentifierKey]) {
         return realItem.key;
     }
@@ -146,8 +143,7 @@ NSString *RealHomeDirectory() {
     return YES;
 }
 
-- (void)outlineView:(NSOutlineView *)outlineView willDisplayCell:(NSTextFieldCell*)cell forTableColumn:(NSTableColumn *)tableColumn item:(id)item
-{
+- (void)outlineView:(NSOutlineView *)outlineView willDisplayCell:(NSTextFieldCell*)cell forTableColumn:(NSTableColumn *)tableColumn item:(id)item {
     if ([outlineView parentForItem:item] == nil)
     {
         [cell setMenu:[self itemMenu]];
@@ -161,42 +157,45 @@ NSString *RealHomeDirectory() {
     }
 }
 
--(void)updateRowViewBackColorforItem:(id)customItem {
+- (void)updateRowViewBackColorforItem:(id)customItem {
     NSInteger row = [self.treeView rowForItem:customItem];
-   if (row < 0) return;
+    if (row < 0) return;
     NSTableRowView *view = [self.treeView rowViewAtRow:row makeIfNecessary:YES];
     [view setBackgroundColor:[NSColor redColor]];
 }
 #pragma mark -
 #pragma mark NSMenuDelegate
 - (void)rightMouseDown:(NSEvent *)theEvent {
-
+    
     NSPoint location = [self.treeView convertPoint:[theEvent locationInWindow] fromView:nil];
     //    NSInteger i =  [self.treeView rowAtPoint:pt];
     [[self mainMenu] popUpMenuPositioningItem:nil atLocation:location inView:self.treeView];
 }
 
--(NSMenu*)certificateMenu{
+- (NSMenu*)certificateMenu{
     if(!_certificateMenu){
         _certificateMenu = [[NSMenu alloc]init];
         _certificateMenu.delegate = self;
     }
     return _certificateMenu;
 }
--(NSMenu*)itemMenu{
+
+- (NSMenu*)itemMenu{
     if(!_itemMenu){
         _itemMenu = [[NSMenu alloc]init];
         _itemMenu.delegate = self;
     }
     return _itemMenu;
 }
--(NSMenu*)mainMenu{
+
+- (NSMenu*)mainMenu{
     if(!_mainMenu){
         _mainMenu = [[NSMenu alloc]init];
         _mainMenu.delegate = self;
     }
     return _mainMenu;
 }
+
 - (void)menuWillOpen:(NSMenu *)menu
 {
     
@@ -263,6 +262,7 @@ NSString *RealHomeDirectory() {
         }
     }
 }
+
 #pragma mark -
 #pragma mark Operation
 - (void)deleteItemClick:(id)sender
@@ -280,7 +280,7 @@ NSString *RealHomeDirectory() {
         [self.treeView endUpdates];
         
         [self deleteProfile:node.filePath option:YES];
-        [self loadProfileFiles];
+        [self loadProfileFilesWithSearchWord:_searchWord];
     }];
     [alert addButtonWithTitle:JKLocalizedString(@"Cancle", nil)];
     [alert show:self.view.window];
@@ -289,10 +289,10 @@ NSString *RealHomeDirectory() {
 - (void)moveTrashItemClick:(id)sender{
     NSInteger index = [self.treeView clickedRow];
     ProfilesNode *node = [self.treeView itemAtRow:index];
-
+    
     iAlert *alert = [iAlert alertWithTitle:JKLocalizedString(@"Warning",nil) message:JKLocalizedString(@"are you sure move item to trash?",nil) style:NSAlertStyleWarning];
     [alert addCommonButtonWithTitle:JKLocalizedString(@"Ok", nil) handler:^(iAlertItem *item) {
-      
+        
         NSLog(@"move to trash inde%zd",index);
         if (index == -1) return;
         
@@ -301,20 +301,21 @@ NSString *RealHomeDirectory() {
         [self.treeView endUpdates];
         
         [self deleteProfile:node.filePath option:NO];
-        [self loadProfileFiles];
+        [self loadProfileFilesWithSearchWord:_searchWord];
     }];
     [alert addButtonWithTitle:JKLocalizedString(@"Cancle", nil)];
     [alert show:self.view.window];
 }
+
 //delete and move
--(BOOL)deleteProfile:(NSString*)filePath option:(BOOL)totle{
+- (BOOL)deleteProfile:(NSString*)filePath option:(BOOL)totle{
     NSError *error;
     BOOL result = NO;
     if (totle) {
-       result =  [[NSFileManager defaultManager] removeItemAtPath:filePath error:&error];
-
+        result =  [[NSFileManager defaultManager] removeItemAtPath:filePath error:&error];
+        
     }else{
-         result = [[NSFileManager defaultManager] mr_moveFileAtPathToTrash:filePath error:&error];
+        result = [[NSFileManager defaultManager] mr_moveFileAtPathToTrash:filePath error:&error];
     }
     if(error)
     {
@@ -324,6 +325,7 @@ NSString *RealHomeDirectory() {
     }
     return result;
 }
+
 //goto
 - (void)gotoClick:(id)sender
 {
@@ -333,11 +335,12 @@ NSString *RealHomeDirectory() {
     if ([node.filePath length] > 0)
     {
         //打开文件
-       //[[NSWorkspace sharedWorkspace] openFile:node.filePath];
-       // 打开文件夹
-       [[NSWorkspace sharedWorkspace] selectFile:node.filePath inFileViewerRootedAtPath:@""];
+        //[[NSWorkspace sharedWorkspace] openFile:node.filePath];
+        // 打开文件夹
+        [[NSWorkspace sharedWorkspace] selectFile:node.filePath inFileViewerRootedAtPath:@""];
     }
 }
+
 //export Item to file
 - (void)exportItemClick:(id)sender {
     NSInteger index = [self.treeView clickedRow];
@@ -357,10 +360,12 @@ NSString *RealHomeDirectory() {
         }
     }];
 }
+
 //main
 - (void)refreshItemClick:(id)sender {
-    [self loadProfileFiles];
+    [self loadProfileFilesWithSearchWord:_searchWord];
 }
+
 //import
 - (void)importItemClick:(id)sender{
     NSError *error;
@@ -373,18 +378,16 @@ NSString *RealHomeDirectory() {
         NSString *path =[[[oPanel URLs] objectAtIndex:0] path];
         
         [[NSFileManager defaultManager]copyItemAtPath:path toPath:[_profileDir stringByAppendingString:[path lastPathComponent]?:@""] error:&error];
-
     }
     if(error)
     {
         [self showMessage:[error localizedDescription] completionHandler:^(NSModalResponse returnCode) {
             
         }];
-        
     }
-    [self loadProfileFiles];
-
+    [self loadProfileFilesWithSearchWord:_searchWord];
 }
+
 - (void)exportCerItemClick:(id)sender
 {
     NSInteger index = [self.treeView clickedRow];
@@ -400,7 +403,7 @@ NSString *RealHomeDirectory() {
         if ([oPanel runModal] == NSOKButton) {
             NSString *path =[[[oPanel URLs] objectAtIndex:0] path];
             NSString *savePath = [[path stringByAppendingPathComponent:[node.extra objectForKey:@"summary"] ]stringByAppendingPathExtension:@"cer"];
-                                  
+            
             NSString *formaterCer = [NSString stringWithFormat:@"-----BEGIN CERTIFICATE-----\n%@\n-----END CERTIFICATE-----",node.detail];
             
             BOOL haveCreate =  [[NSFileManager defaultManager]createFileAtPath:savePath contents:[formaterCer dataUsingEncoding:NSUTF8StringEncoding] attributes:nil];
@@ -408,11 +411,12 @@ NSString *RealHomeDirectory() {
                 [[NSWorkspace sharedWorkspace] selectFile:savePath inFileViewerRootedAtPath:@""];
             }
         }
-       
+        
     }
 }
+
 #pragma mark --alert
--(void)showMessage:(NSString*)message completionHandler:(void (^)(NSModalResponse returnCode))handler{
+- (void)showMessage:(NSString*)message completionHandler:(void (^)(NSModalResponse returnCode))handler{
     NSAlert *alert = [[NSAlert alloc] init];
     [alert setMessageText:message];
     [alert beginSheetModalForWindow:self.view.window completionHandler:^(NSModalResponse returnCode) {
@@ -420,6 +424,7 @@ NSString *RealHomeDirectory() {
     }];
     
 }
+
 - (void)showAlert:(NSAlertStyle)style title:(NSString *)title message:(NSString *)message {
     NSAlert *alert = [[NSAlert alloc] init];
     [alert addButtonWithTitle:@"OK"];
@@ -428,6 +433,4 @@ NSString *RealHomeDirectory() {
     [alert setAlertStyle:style];
     [alert runModal];
 }
-
-
 @end
