@@ -84,8 +84,8 @@ NSString *RealHomeDirectory() {
         dic[@"filePath"] = [_profileDir stringByAppendingString:fileName?:@""];
         
         if (dic && fileName) {
-            if (searchWord && searchWord.length>0) {
-                if ([plistString rangeOfString:searchWord].location != NSNotFound) {
+            if ([searchWord lowercaseString] && searchWord.length>0) {
+                if ([[plistString lowercaseString] rangeOfString:[searchWord lowercaseString]].location != NSNotFound) {
                     provisions[fileName] = dic;
                 }
             }else{

@@ -8,7 +8,6 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="ProfilesManagerWindowController">
             <connections>
-                <outlet property="searchButton" destination="aCX-Id-QGg" id="iKU-jQ-jaH"/>
                 <outlet property="searchTextField" destination="t6d-rt-sJV" id="GuX-gI-L3F"/>
                 <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
             </connections>
@@ -28,34 +27,35 @@
             </view>
             <toolbar key="toolbar" implicitIdentifier="D0B8F835-261B-492D-B195-DB0C58068081" autosavesConfiguration="NO" displayMode="iconAndLabel" sizeMode="regular" id="cZP-oM-lQ5">
                 <allowedToolbarItems>
-                    <toolbarItem implicitItemIdentifier="56976E09-94A8-44DA-86EF-CEC8C49AF0C8" label="" paletteLabel="" id="GeI-a5-gRx">
+                    <toolbarItem implicitItemIdentifier="1972B03F-FC30-48F4-B790-CE168BBF5B9D" label="" paletteLabel="" id="RdP-pm-wWl">
                         <nil key="toolTip"/>
-                        <size key="minSize" width="82" height="32"/>
-                        <size key="maxSize" width="82" height="32"/>
-                        <button key="view" verticalHuggingPriority="750" id="aCX-Id-QGg">
-                            <rect key="frame" x="0.0" y="14" width="82" height="32"/>
+                        <size key="minSize" width="38" height="17"/>
+                        <size key="maxSize" width="60" height="17"/>
+                        <textField key="view" horizontalHuggingPriority="251" verticalHuggingPriority="750" id="1Ef-6E-Okw">
+                            <rect key="frame" x="0.0" y="14" width="60" height="17"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <buttonCell key="cell" type="push" title="搜索" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="fM0-TQ-ZkY">
-                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="查找过滤:" id="xoe-JW-DJi">
                                 <font key="font" size="13" name=".PingFangSC-Regular"/>
-                            </buttonCell>
-                            <connections>
-                                <action selector="searchButtonTouched:" target="-2" id="dM5-hi-KHL"/>
-                            </connections>
-                        </button>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
                     </toolbarItem>
                     <toolbarItem implicitItemIdentifier="063C2AD9-E683-468A-8D1F-055105A2C4C4" label="" paletteLabel="" id="TqD-HL-i0O">
                         <nil key="toolTip"/>
                         <size key="minSize" width="96" height="22"/>
-                        <size key="maxSize" width="200" height="22"/>
-                        <textField key="view" verticalHuggingPriority="750" id="t6d-rt-sJV">
-                            <rect key="frame" x="0.0" y="14" width="200" height="22"/>
+                        <size key="maxSize" width="250" height="22"/>
+                        <textField key="view" toolTip="search keyword" verticalHuggingPriority="750" id="t6d-rt-sJV">
+                            <rect key="frame" x="0.0" y="14" width="250" height="22"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="Dgc-Gr-MVo">
+                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="请输入查找关键词" drawsBackground="YES" usesSingleLineMode="YES" id="Dgc-Gr-MVo">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
+                            <connections>
+                                <outlet property="delegate" destination="-2" id="yjj-ea-W1Y"/>
+                            </connections>
                         </textField>
                     </toolbarItem>
                     <toolbarItem implicitItemIdentifier="NSToolbarShowColorsItem" id="jgq-Ge-2NH"/>
@@ -66,14 +66,14 @@
                 </allowedToolbarItems>
                 <defaultToolbarItems>
                     <toolbarItem reference="rz2-bg-kUw"/>
+                    <toolbarItem reference="RdP-pm-wWl"/>
                     <toolbarItem reference="TqD-HL-i0O"/>
-                    <toolbarItem reference="GeI-a5-gRx"/>
                 </defaultToolbarItems>
             </toolbar>
             <connections>
                 <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
             </connections>
-            <point key="canvasLocation" x="141" y="191"/>
+            <point key="canvasLocation" x="95" y="86"/>
         </window>
     </objects>
 </document>
