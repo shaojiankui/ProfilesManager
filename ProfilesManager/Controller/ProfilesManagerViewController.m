@@ -18,6 +18,11 @@
 //#include <sys/types.h>
 //#include <pwd.h>
 //#include <assert.h>
+static NSString *kColumnIdentifierKey = @"key";
+//    static NSString *kColumnIdentifierName = @"name";
+static NSString *kColumnIdentifierType = @"type";
+static NSString *kColumnIdentifierDetal = @"detail";
+//    static NSString *kColumnIdentifierUUID = @"uuid";
 
 
 @implementation ProfilesManagerViewController
@@ -120,12 +125,6 @@ NSString *RealHomeDirectory() {
 - (id)outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(NSTableColumn *)tableColumn byItem:(id)item{
     ProfilesNode *realItem = item ?: _rootNode;
     
-    static NSString *kColumnIdentifierKey = @"key";
-    //    static NSString *kColumnIdentifierName = @"name";
-    static NSString *kColumnIdentifierType = @"type";
-    //static NSString *kColumnIdentifierDetal = @"detail";
-    //    static NSString *kColumnIdentifierUUID = @"uuid";
-    
     if ([[tableColumn identifier] isEqualToString:kColumnIdentifierKey]) {
         return realItem.key;
     }
@@ -144,10 +143,24 @@ NSString *RealHomeDirectory() {
 }
 
 - (void)outlineView:(NSOutlineView *)outlineView willDisplayCell:(NSTextFieldCell*)cell forTableColumn:(NSTableColumn *)tableColumn item:(id)item {
+   
+    ProfilesNode *realItem = item ?: _rootNode;
+
     if ([outlineView parentForItem:item] == nil)
     {
+        if ([[tableColumn identifier] isEqualToString:kColumnIdentifierType]) {
+            cell.textColor = [NSColor blackColor];
+        }else{
+            cell.textColor = [NSColor darkGrayColor];
+            if ([[tableColumn identifier] isEqualToString:kColumnIdentifierDetal]) {
+                if ([realItem.detail isEqualToString:@"expired"]) {
+                    cell.textColor = [NSColor redColor];
+                }
+            }
+        }
         [cell setMenu:[self itemMenu]];
     }else{
+        cell.textColor = [NSColor darkGrayColor];
         ProfilesNode *realItem = item;
         if([realItem.rootNode.key isEqualToString:@"DeveloperCertificates"]){
             [cell setMenu:[self certificateMenu]];
