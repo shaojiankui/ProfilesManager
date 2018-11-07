@@ -23,7 +23,7 @@ static NSString *kColumnIdentifierKey = @"key";
 static NSString *kColumnIdentifierType = @"type";
 static NSString *kColumnIdentifierDetal = @"detail";
 //    static NSString *kColumnIdentifierUUID = @"uuid";
-
+static NSString *kColumnIdentifierExpirationDate = @"expirationDate";
 
 @implementation ProfilesManagerViewController
 
@@ -38,6 +38,8 @@ static NSString *kColumnIdentifierDetal = @"detail";
     //    [self.treeView sizeLastColumnToFit];
     //app第一次运行Column 最后一行自动宽等比增减，否则会有滚动条
     [self.treeView sizeToFit];
+
+    
     
     [self loadProfileFilesWithSearchWord:_searchWord];
     //drag file
@@ -102,6 +104,15 @@ NSString *RealHomeDirectory() {
     ProfilesNode *node = [[ProfilesNode alloc]initWithRootNode:nil originInfo:provisions key:@"Mobile Provisions"];
     _rootNode = node;
     [self.treeView reloadData];
+    
+    for (NSTableColumn *tableColumn in self.treeView.tableColumns ) {
+        NSSortDescriptor *sortStates = [NSSortDescriptor sortDescriptorWithKey:tableColumn.identifier
+                     ascending:NO comparator:^(id obj1, id obj2) {
+                         return [obj1 compare:obj2];
+                    }];
+        [tableColumn setSortDescriptorPrototype:sortStates];
+    }
+   
 }
 
 
@@ -131,9 +142,12 @@ NSString *RealHomeDirectory() {
     else if([[tableColumn identifier] isEqualToString:kColumnIdentifierType]){
         return realItem.type;
     }
-    else {
+    else if([[tableColumn identifier] isEqualToString:kColumnIdentifierDetal]){
         return realItem.detail;
+    } else if([[tableColumn identifier] isEqualToString:kColumnIdentifierExpirationDate]){
+        return realItem.expirationDate;
     }
+    return @"";
 }
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView shouldSelectItem:(id)item{
@@ -170,12 +184,32 @@ NSString *RealHomeDirectory() {
     }
 }
 
-- (void)updateRowViewBackColorforItem:(id)customItem {
-    NSInteger row = [self.treeView rowForItem:customItem];
-    if (row < 0) return;
-    NSTableRowView *view = [self.treeView rowViewAtRow:row makeIfNecessary:YES];
-    [view setBackgroundColor:[NSColor redColor]];
+
+- (void)outlineView:(NSOutlineView *)outlineView sortDescriptorsDidChange:(NSArray<NSSortDescriptor *> *)oldDescriptors{
+    NSSortDescriptor *sortDescriptor  = [[outlineView sortDescriptors] objectAtIndex:0];
+    
+    NSArray *sortedArray;
+    NSMutableArray *currChildren= [_rootNode.childrenNodes mutableCopy];
+    sortedArray = [currChildren sortedArrayUsingDescriptors:@[sortDescriptor]];
+    _rootNode.childrenNodes = sortedArray;
+    [outlineView reloadData];
+    //    NSSortDescriptor *sortDescriptor;
+    //
+    //    NSString *key=[[[outlineView sortDescriptors] objectAtIndex:0] key];
+    //    BOOL isAscending=[[[outlineView sortDescriptors] objectAtIndex:0] ascending];
+    //
+    //    sortDescriptor = [[NSSortDescriptor alloc] initWithKey:key ascending:isAscending] ;
+    //    NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+    //    NSArray *sortedArray;
+    //
+    //    NSMutableArray *currChildren= [_rootNode.childrenNodes mutableCopy];
+    //    sortedArray = [currChildren sortedArrayUsingDescriptors:sortDescriptors];
+    //    _rootNode.childrenNodes = sortedArray;
+    //    [outlineView reloadData];
+//}
+
 }
+
 #pragma mark -
 #pragma mark NSMenuDelegate
 - (void)rightMouseDown:(NSEvent *)theEvent {

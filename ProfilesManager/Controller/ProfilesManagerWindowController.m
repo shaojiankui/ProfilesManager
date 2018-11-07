@@ -8,15 +8,20 @@
 
 #import "ProfilesManagerWindowController.h"
 #import "ProfilesManagerViewController.h"
+#import "GitHubUpdater.h"
 @interface ProfilesManagerWindowController ()
-
+@property( atomic, readwrite, strong, nullable ) IBOutlet GitHubUpdater * updater;
 @end
 
 @implementation ProfilesManagerWindowController
 
 - (void)windowDidLoad {
     [super windowDidLoad];
-    
+    self.updater            = [[ GitHubUpdater alloc] init];
+    self.updater.user       = @"shaojiankui";
+    self.updater.repository = @"ProfilesManager";
+    [self.updater checkForUpdatesInBackground];
+
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
 }
 
@@ -56,5 +61,9 @@
     ProfilesManagerViewController *manger =  (ProfilesManagerViewController*)self.contentViewController;
     [manger loadProfileFilesWithSearchWord:self.searchTextField.stringValue];
     
+}
+- (IBAction)refreshButtonTouched:(id)sender {
+    ProfilesManagerViewController *manger =  (ProfilesManagerViewController*)self.contentViewController;
+    [manger loadProfileFilesWithSearchWord:self.searchTextField.stringValue];
 }
 @end

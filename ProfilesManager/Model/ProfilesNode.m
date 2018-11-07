@@ -8,6 +8,7 @@
 
 #import "ProfilesNode.h"
 #import "NSData+JKBase64.h"
+#import "DateManager.h"
 @implementation ProfilesNode
 
 - (id)initWithRootNode:(ProfilesNode *)rootNode originInfo:(id)info key:(NSString*)key
@@ -77,7 +78,7 @@
             _detail = [NSString stringWithFormat:@"%lu items", (unsigned long)[dict count]];
             _uuid = [dict objectForKey:@"UUID"];
             _filePath = [dict objectForKey:@"filePath"];
-           
+            _expirationDate = [[DateManager sharedManager] stringConvert_YMDHM_FromDate:[dict objectForKey:@"ExpirationDate"]];
             
             if(_uuid){
                 NSDate *expiration = [dict objectForKey:@"ExpirationDate"];
@@ -112,6 +113,7 @@
             }
             else if([info isKindOfClass:[NSDate class]]){
                 _type = @"Date";
+                _detail = [[DateManager sharedManager] stringConvert_YMDHM_FromDate:info];
             }
             else if([info isKindOfClass:[NSNumber class]]) {
                 _type = @"Number";

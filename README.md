@@ -10,11 +10,12 @@ iOS Provisioning Profiles, .mobileprovision files manager tool for mac
 - export profile 导出描述文件
 - drag into and look ipa profile or plist directly 拖入ipa快速查看描述文件与info.plist信息
 - simple full text search filter 全文搜索后过滤描述文件
+- click header sort 点击头部排序
 
-##Download APP
+## Download APP
 https://github.com/shaojiankui/ProfilesManager/releases
 
-##Screenshot
+## Screenshot
 ![](https://raw.githubusercontent.com/shaojiankui/ProfilesManager/master/demo.jpg)
 
 ## Provisioning Profile 的构成
@@ -56,6 +57,6 @@ https://github.com/shaojiankui/ProfilesManager/releases
 > Provisioning Profile被配置到【XcodeTarget|Build Settings|Code Signing|Provisioning Profile】下，然后在Code Signing Identity下拉可选择Identities from Profile "..."（即Provisioning Profile中包含的Certificates）。
 
 
-##License
+## License
 
 ProfilesManager is available under the MIT license.

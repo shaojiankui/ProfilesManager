@@ -15,4 +15,5 @@
 
 - (IBAction)searchTypePopUpButtonTouched:(id)sender;
 - (IBAction)searchButtonTouched:(id)sender;
+- (IBAction)refreshButtonTouched:(id)sender;
 @end
