@@ -439,10 +439,10 @@ NS_ASSUME_NONNULL_END
                         goto end;
                     }
                     
-                    if( [ self checkCodeSigning: appURL ] == NO )
-                    {
-                        goto end;
-                    }
+//                    if( [ self checkCodeSigning: appURL ] == NO )
+//                    {
+//                        goto end;
+//                    }
                     
                     if( [ self replaceApp: appURL ] == NO )
                     {

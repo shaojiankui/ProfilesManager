@@ -151,9 +151,9 @@
 		A211931B1AF1CA5B0064CA7D /* ProfilesManager */ = {
 			isa = PBXGroup;
 			children = (
+				B856B7801E25EDC800060107 /* ProfilesManager.entitlements */,
 				B8FF31C021929EA40022C658 /* Manager */,
 				B8BCD23D1E6CEFC500ABD2A6 /* Vendor */,
-				B856B7801E25EDC800060107 /* ProfilesManager.entitlements */,
 				A2A8FA871AFA43DD0087DD68 /* View */,
 				A244DCAC1AFA0A2E00EB7E61 /* Category */,
 				A244DCB11AFA0A2E00EB7E61 /* Controller */,
@@ -356,7 +356,7 @@
 						CreatedOnToolsVersion = 6.2;
 						SystemCapabilities = {
 							com.apple.Sandbox = {
-								enabled = 1;
+								enabled = 0;
 							};
 						};
 					};
