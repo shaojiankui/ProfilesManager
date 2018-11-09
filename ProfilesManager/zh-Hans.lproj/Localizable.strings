@@ -6,18 +6,19 @@
   Copyright © 2017年 Jakey. All rights reserved.
 */
 
-"move to trash" = "移动到废纸篓";
-"delete" = "完全删除";
-"show in finder"  = "定位文件";
-"refresh table" = "刷新列表";
-"import profile" = "导入profile";
-"export certificate file"   = "导出证书文件";
-"expired"   = "过期";
-"valid"   = "有效";
+"Move to Trash" = "移动到废纸篓";
+"Delete" = "完全删除";
+"Show in Finder"  = "定位文件";
+"Refresh Table" = "刷新列表";
+"Import Profile" = "导入Profile";
+"Export Certificate File"   = "导出证书文件";
+"Expired"   = "过期";
+"Valid"   = "有效";
 "Ok"   = "确定";
-"Cancel"   = "取消";
+"Cancle"   = "取消";
 "Confirm Delete Opration"   = "确认删除操作";
 "Delete this profie item permanently,can't rollback!"   = "完全删除这个profie文件,不可回滚!";
 "Warning" = "警告";
 "are you sure move item to trash?" = "确定将此profie文件移动到废纸篓么?";
-"export" = "导出";
+"Export" = "导出";
+"Beautify Filename" = "美化文件名";

@@ -1,0 +1,18 @@
+
+/* Class = "NSTextFieldCell"; placeholderString = "input search keyword"; ObjectID = "Dgc-Gr-MVo"; */
+"Dgc-Gr-MVo.placeholderString" = "输入搜索过滤关键词";
+
+/* Class = "NSWindow"; title = "ProfileManager"; ObjectID = "F0z-JX-Cv5"; */
+"F0z-JX-Cv5.title" = "ProfileManager";
+
+/* Class = "NSToolbarItem"; label = "Refresh"; ObjectID = "RbJ-X4-SVv"; */
+"RbJ-X4-SVv.label" = "刷新";
+
+/* Class = "NSToolbarItem"; paletteLabel = "Refresh"; ObjectID = "RbJ-X4-SVv"; */
+"RbJ-X4-SVv.paletteLabel" = "刷新";
+
+/* Class = "NSTextField"; ibShadowedToolTip = "search keyword"; ObjectID = "t6d-rt-sJV"; */
+"t6d-rt-sJV.ibShadowedToolTip" = "搜索关键词";
+
+/* Class = "NSTextFieldCell"; title = "Search & Filter:"; ObjectID = "xoe-JW-DJi"; */
+"xoe-JW-DJi.title" = "搜索 & 过滤:";

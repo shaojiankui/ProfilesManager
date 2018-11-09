@@ -167,7 +167,7 @@ NSString *RealHomeDirectory() {
         }else{
             cell.textColor = [NSColor darkGrayColor];
             if ([[tableColumn identifier] isEqualToString:kColumnIdentifierDetal]) {
-                if ([realItem.detail isEqualToString:@"expired"]) {
+                if ([realItem.detail isEqualToString:@"Expired"] ||[realItem.detail isEqualToString:@"过期"] ) {
                     cell.textColor = [NSColor redColor];
                 }
             }
@@ -250,7 +250,7 @@ NSString *RealHomeDirectory() {
         NSMenuItem *gotoItemName = [menu itemWithTag:1002];
         if (!gotoItemName)
         {
-            gotoItemName = [[NSMenuItem alloc] initWithTitle:JKLocalizedString(@"show in finder",nil) action:@selector(gotoClick:) keyEquivalent:@""];
+            gotoItemName = [[NSMenuItem alloc] initWithTitle:JKLocalizedString(@"Show in Finder",nil) action:@selector(gotoClick:) keyEquivalent:@""];
             [gotoItemName setTarget:self];
             [gotoItemName setTag:1002];
             [menu addItem:gotoItemName];
@@ -258,7 +258,7 @@ NSString *RealHomeDirectory() {
         NSMenuItem *moveTrashItem = [menu itemWithTag:1000];
         if (!moveTrashItem)
         {
-            moveTrashItem = [[NSMenuItem alloc] initWithTitle:JKLocalizedString(@"move to trash",nil) action:@selector(moveTrashItemClick:) keyEquivalent:@""];
+            moveTrashItem = [[NSMenuItem alloc] initWithTitle:JKLocalizedString(@"Move to Trash",nil) action:@selector(moveTrashItemClick:) keyEquivalent:@""];
             [moveTrashItem setTarget:self];
             [moveTrashItem setTag:1000];
             [menu addItem:moveTrashItem];
@@ -266,7 +266,7 @@ NSString *RealHomeDirectory() {
         NSMenuItem *deleteItem = [menu itemWithTag:1001];
         if (!deleteItem)
         {
-            deleteItem = [[NSMenuItem alloc] initWithTitle:JKLocalizedString(@"delete",nil) action:@selector(deleteItemClick:) keyEquivalent:@""];
+            deleteItem = [[NSMenuItem alloc] initWithTitle:JKLocalizedString(@"Delete",nil) action:@selector(deleteItemClick:) keyEquivalent:@""];
             [deleteItem setTarget:self];
             [deleteItem setTag:1001];
             [menu addItem:deleteItem];
@@ -274,17 +274,25 @@ NSString *RealHomeDirectory() {
         NSMenuItem *exportItem = [menu itemWithTag:1003];
         if (!exportItem)
         {
-            exportItem = [[NSMenuItem alloc] initWithTitle:JKLocalizedString(@"export",nil) action:@selector(exportItemClick:) keyEquivalent:@""];
+            exportItem = [[NSMenuItem alloc] initWithTitle:JKLocalizedString(@"Export",nil) action:@selector(exportItemClick:) keyEquivalent:@""];
             [exportItem setTarget:self];
             [exportItem setTag:1003];
             [menu addItem:exportItem];
         }
+//        NSMenuItem *renameItem = [menu itemWithTag:1004];
+//        if (!renameItem)
+//        {
+//            renameItem = [[NSMenuItem alloc] initWithTitle:JKLocalizedString(@"Beautify Filename",nil) action:@selector(renameItemClick:) keyEquivalent:@""];
+//            [renameItem setTarget:self];
+//            [renameItem setTag:1004];
+//            [menu addItem:renameItem];
+//        }
     }
     if(menu == _mainMenu){
         NSMenuItem *refreshItem = [menu itemWithTag:2000];
         if (!refreshItem)
         {
-            refreshItem = [[NSMenuItem alloc] initWithTitle:JKLocalizedString(@"refresh table",nil) action:@selector(refreshItemClick:) keyEquivalent:@""];
+            refreshItem = [[NSMenuItem alloc] initWithTitle:JKLocalizedString(@"Refresh Table",nil) action:@selector(refreshItemClick:) keyEquivalent:@""];
             [refreshItem setTarget:self];
             [refreshItem setTag:2000];
             [menu addItem:refreshItem];
@@ -292,7 +300,7 @@ NSString *RealHomeDirectory() {
         NSMenuItem *importItem = [menu itemWithTag:2001];
         if (!importItem)
         {
-            importItem = [[NSMenuItem alloc] initWithTitle:JKLocalizedString(@"import profile",nil) action:@selector(importItemClick:) keyEquivalent:@""];
+            importItem = [[NSMenuItem alloc] initWithTitle:JKLocalizedString(@"Import Profile",nil) action:@selector(importItemClick:) keyEquivalent:@""];
             [importItem setTarget:self];
             [importItem setTag:2001];
             [menu addItem:importItem];
@@ -302,7 +310,7 @@ NSString *RealHomeDirectory() {
         NSMenuItem *exportItem = [menu itemWithTag:3001];
         if (!exportItem)
         {
-            exportItem = [[NSMenuItem alloc] initWithTitle:JKLocalizedString(@"export certificate file",nil) action:@selector(exportCerItemClick:) keyEquivalent:@""];
+            exportItem = [[NSMenuItem alloc] initWithTitle:JKLocalizedString(@"Export Certificate File",nil) action:@selector(exportCerItemClick:) keyEquivalent:@""];
             [exportItem setTarget:self];
             [exportItem setTag:3001];
             [menu addItem:exportItem];
@@ -317,7 +325,7 @@ NSString *RealHomeDirectory() {
     NSInteger index = [self.treeView clickedRow];
     ProfilesNode *node = [self.treeView itemAtRow:index];
     
-    iAlert *alert = [iAlert alertWithTitle:JKLocalizedString(@"Confirm Delete Opration",nil) message:JKLocalizedString(@"Delete this profie item permanently,can't rollback!",nil) style:NSAlertStyleWarning];
+    iAlert *alert = [iAlert alertWithTitle:[NSString stringWithFormat:@"%@,%@",JKLocalizedString(@"Confirm Delete Opration",nil),node.type] message:JKLocalizedString(@"Delete this profie item permanently,can't rollback!",nil) style:NSAlertStyleWarning];
     [alert addCommonButtonWithTitle:JKLocalizedString(@"Ok", nil) handler:^(iAlertItem *item) {
         NSLog(@"deleteItem inde%zd",index);
         if (index == -1) return;
@@ -327,7 +335,7 @@ NSString *RealHomeDirectory() {
         [self.treeView endUpdates];
         
         [self deleteProfile:node.filePath option:YES];
-        [self loadProfileFilesWithSearchWord:_searchWord];
+//        [self loadProfileFilesWithSearchWord:_searchWord];
     }];
     [alert addButtonWithTitle:JKLocalizedString(@"Cancle", nil)];
     [alert show:self.view.window];
@@ -350,28 +358,11 @@ NSString *RealHomeDirectory() {
         [self deleteProfile:node.filePath option:NO];
         [self loadProfileFilesWithSearchWord:_searchWord];
     }];
+    
     [alert addButtonWithTitle:JKLocalizedString(@"Cancle", nil)];
     [alert show:self.view.window];
 }
 
-//delete and move
-- (BOOL)deleteProfile:(NSString*)filePath option:(BOOL)totle{
-    NSError *error;
-    BOOL result = NO;
-    if (totle) {
-        result =  [[NSFileManager defaultManager] removeItemAtPath:filePath error:&error];
-        
-    }else{
-        result = [[NSFileManager defaultManager] mr_moveFileAtPathToTrash:filePath error:&error];
-    }
-    if(error)
-    {
-        [self showMessage:[error localizedDescription] completionHandler:^(NSModalResponse returnCode) {
-            
-        }];
-    }
-    return result;
-}
 
 //goto
 - (void)gotoClick:(id)sender
@@ -387,7 +378,25 @@ NSString *RealHomeDirectory() {
         [[NSWorkspace sharedWorkspace] selectFile:node.filePath inFileViewerRootedAtPath:@""];
     }
 }
-
+////beautify filename
+//- (void)renameItemClick:(id)sender{
+//    NSInteger index = [self.treeView clickedRow];
+//    ProfilesNode *node = [self.treeView itemAtRow:index];
+//    
+//    iAlert *alert = [iAlert alertWithTitle:JKLocalizedString(@"Warning",nil) message:JKLocalizedString(@"are you sure rename profile filename ?",nil) style:NSAlertStyleWarning];
+//    [alert addCommonButtonWithTitle:JKLocalizedString(@"Ok", nil) handler:^(iAlertItem *item) {
+//        
+//        if (index == -1) return;
+//        if ([self renameFileAtPath:node.filePath toName:node.type]) {
+//            [self.treeView beginUpdates];
+//            [self.treeView reloadItem:node];
+//            [self.treeView endUpdates];
+//        }
+//    }];
+//    
+//    [alert addButtonWithTitle:JKLocalizedString(@"Cancle", nil)];
+//    [alert show:self.view.window];
+//}
 //export Item to file
 - (void)exportItemClick:(id)sender {
     NSInteger index = [self.treeView clickedRow];
@@ -461,7 +470,47 @@ NSString *RealHomeDirectory() {
         
     }
 }
+#pragma mark --filemanager
 
+//delete and move
+- (BOOL)deleteProfile:(NSString*)filePath option:(BOOL)totle{
+    NSError *error;
+    BOOL result = NO;
+    if (totle) {
+        result =  [[NSFileManager defaultManager] removeItemAtPath:filePath error:&error];
+        
+    }else{
+        result = [[NSFileManager defaultManager] mr_moveFileAtPathToTrash:filePath error:&error];
+    }
+    if(error)
+    {
+        [self showMessage:[error localizedDescription] completionHandler:^(NSModalResponse returnCode) {
+            
+        }];
+    }
+    return result;
+}
+
+//-(BOOL)renameFileAtPath:(NSString *)oldPath toName:(NSString *)toName {
+//    BOOL result = NO;
+//    NSError * error = nil;
+//    NSString *toPath = [[[oldPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:toName] stringByAppendingPathExtension:@"mobileprovision"];
+//
+//    NSString *tempFolder = [[oldPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:@"temp"];
+//    if (![[NSFileManager defaultManager] fileExistsAtPath:tempFolder]) {
+//        [[NSFileManager defaultManager] createDirectoryAtPath:tempFolder withIntermediateDirectories:YES attributes:nil error:nil];
+//    }
+//    NSString *tempPath =  [tempFolder stringByAppendingPathComponent:oldPath.lastPathComponent];
+//
+//     result = [[NSFileManager defaultManager] copyItemAtURL:[NSURL fileURLWithPath:oldPath] toURL:[NSURL fileURLWithPath:tempPath] error:&error];
+//
+//    result = [[NSFileManager defaultManager] copyItemAtURL:[NSURL fileURLWithPath:tempPath] toURL:[NSURL fileURLWithPath:toPath] error:&error];
+//
+//    if (error){ NSLog(@"重命名失败：%@",[error localizedDescription]);
+//
+//    }
+//    return result;
+//}
 #pragma mark --alert
 - (void)showMessage:(NSString*)message completionHandler:(void (^)(NSModalResponse returnCode))handler{
     NSAlert *alert = [[NSAlert alloc] init];

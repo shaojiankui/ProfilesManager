@@ -36,8 +36,8 @@
 		B804236A2192BD9100AD899F /* GitHubInstallWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = B80423542192BD9000AD899F /* GitHubInstallWindowController.m */; };
 		B804236B2192BD9100AD899F /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B80423592192BD9000AD899F /* Info.plist */; };
 		B80FCFC31E4AAE480044098D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B80FCFC51E4AAE480044098D /* Localizable.strings */; };
+		B81B6A782195470500A8580F /* ProfilesManagerWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B81B6A7A2195470500A8580F /* ProfilesManagerWindowController.xib */; };
 		B843F36E20897BAD00C1679C /* ProfilesManagerWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = B843F36C20897BAD00C1679C /* ProfilesManagerWindowController.m */; };
-		B843F36F20897BAD00C1679C /* ProfilesManagerWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B843F36D20897BAD00C1679C /* ProfilesManagerWindowController.xib */; };
 		B8BCD2401E6CEFCB00ABD2A6 /* iAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = B8BCD23F1E6CEFCB00ABD2A6 /* iAlert.m */; };
 		B8C823BE1E0288D9004BEAEF /* NSData+JKBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = B8C823BD1E0288D8004BEAEF /* NSData+JKBase64.m */; };
 		B8F694BB204D3ADF0048F3E6 /* PreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B8F694B9204D3ADF0048F3E6 /* PreviewViewController.m */; };
@@ -99,12 +99,14 @@
 		B804235A2192BD9000AD899F /* GitHubRelease.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GitHubRelease.h; sourceTree = "<group>"; };
 		B80FCFC41E4AAE480044098D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B80FCFC71E4AAE560044098D /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		B81B6A7B2195470A00A8580F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ProfilesManagerWindowController.xib; sourceTree = "<group>"; };
+		B81B6A7D2195471400A8580F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ProfilesManagerWindowController.strings; sourceTree = "<group>"; };
+		B81B6A7E2195472500A8580F /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/ProfilesManagerWindowController.strings"; sourceTree = "<group>"; };
 		B8329CA91E4B1F7900D589F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B833BA561E4B1C36003FF745 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/MainMenu.strings; sourceTree = "<group>"; };
 		B833BA571E4B1C5C003FF745 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/MainMenu.strings"; sourceTree = "<group>"; };
 		B843F36B20897BAD00C1679C /* ProfilesManagerWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProfilesManagerWindowController.h; sourceTree = "<group>"; };
 		B843F36C20897BAD00C1679C /* ProfilesManagerWindowController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProfilesManagerWindowController.m; sourceTree = "<group>"; };
-		B843F36D20897BAD00C1679C /* ProfilesManagerWindowController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfilesManagerWindowController.xib; sourceTree = "<group>"; };
 		B856B7801E25EDC800060107 /* ProfilesManager.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ProfilesManager.entitlements; sourceTree = "<group>"; };
 		B8BCD23E1E6CEFCB00ABD2A6 /* iAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iAlert.h; sourceTree = "<group>"; };
 		B8BCD23F1E6CEFCB00ABD2A6 /* iAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iAlert.m; sourceTree = "<group>"; };
@@ -209,7 +211,7 @@
 				B8F694BA204D3ADF0048F3E6 /* PreviewViewController.xib */,
 				B843F36B20897BAD00C1679C /* ProfilesManagerWindowController.h */,
 				B843F36C20897BAD00C1679C /* ProfilesManagerWindowController.m */,
-				B843F36D20897BAD00C1679C /* ProfilesManagerWindowController.xib */,
+				B81B6A7A2195470500A8580F /* ProfilesManagerWindowController.xib */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -396,7 +398,7 @@
 				B804235C2192BD9100AD899F /* Install.pdf in Resources */,
 				B804236B2192BD9100AD899F /* Info.plist in Resources */,
 				A21193271AF1CA5B0064CA7D /* MainMenu.xib in Resources */,
-				B843F36F20897BAD00C1679C /* ProfilesManagerWindowController.xib in Resources */,
+				B81B6A782195470500A8580F /* ProfilesManagerWindowController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -472,6 +474,16 @@
 				B8329CA91E4B1F7900D589F6 /* Base */,
 			);
 			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		B81B6A7A2195470500A8580F /* ProfilesManagerWindowController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B81B6A7B2195470A00A8580F /* Base */,
+				B81B6A7D2195471400A8580F /* en */,
+				B81B6A7E2195472500A8580F /* zh-Hans */,
+			);
+			name = ProfilesManagerWindowController.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

@@ -6,18 +6,19 @@
  Copyright © 2017年 Jakey. All rights reserved.
  */
 
-"move to trash" = "move to trash";
-"delete" = "delete";
-"show in finder"  = "show in finder";
-"refresh table" = "refresh";
-"import profile"  = "import profile";
-"export certificate file"   = "export certificate file";
-"expired"   = "expired";
-"valid"   = "valid";
+"Move to trash" = "Move to trash";
+"Delete" = "Delete";
+"Show in finder"  = "Show in finder";
+"Refresh table" = "Refresh";
+"Import profile"  = "Import Profile";
+"Export Certificate File"   = "Export Certificate File";
+"Expired"   = "Expired";
+"Valid"   = "Valid";
 "Ok"   = "Ok";
-"Cancel"   = "Cancel";
+"Cancle"   = "Cancle";
 "Confirm Delete Opration"   = "Confirm Delete Opration";
 "Delete this profie item permanently,can't rollback!"   = "Delete this profie item permanently,can't rollback!";
 "Warning" = "Warning";
 "are you sure move item to trash?" = "are you sure move item to trash?";
-"export" = "export";
+"Export" = "Export";
+"Beautify Filename" = "Beautify Filename";

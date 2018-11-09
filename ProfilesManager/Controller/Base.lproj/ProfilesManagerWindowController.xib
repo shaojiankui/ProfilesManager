@@ -41,20 +41,6 @@
                             </textFieldCell>
                         </textField>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="70E91DEC-358C-4E92-B3C3-750F0C3199B0" label="" paletteLabel="" id="7K3-qP-Fsk">
-                        <nil key="toolTip"/>
-                        <size key="minSize" width="38" height="17"/>
-                        <size key="maxSize" width="100" height="17"/>
-                        <textField key="view" horizontalHuggingPriority="251" verticalHuggingPriority="750" id="0Ux-9r-7iC">
-                            <rect key="frame" x="0.0" y="14" width="100" height="17"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Order By:" id="aPR-eb-uj1">
-                                <font key="font" size="13" name=".PingFangSC-Regular"/>
-                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                        </textField>
-                    </toolbarItem>
                     <toolbarItem implicitItemIdentifier="063C2AD9-E683-468A-8D1F-055105A2C4C4" label="" paletteLabel="" id="TqD-HL-i0O">
                         <nil key="toolTip"/>
                         <size key="minSize" width="96" height="22"/>

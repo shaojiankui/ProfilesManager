@@ -18,6 +18,7 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+
     _window = [[ProfilesManagerWindowController alloc] initWithWindowNibName:@"ProfilesManagerWindowController"];
     _window.contentViewController = [[ProfilesManagerViewController alloc] initWithNibName:@"ProfilesManagerViewController" bundle:[NSBundle bundleForClass:[self class]]];
     [_window.window orderFront:nil];
