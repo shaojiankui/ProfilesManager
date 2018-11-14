@@ -66,4 +66,10 @@
     ProfilesManagerViewController *manger =  (ProfilesManagerViewController*)self.contentViewController;
     [manger loadProfileFilesWithSearchWord:self.searchTextField.stringValue];
 }
+- (IBAction)resetButtonTouched:(id)sender {
+//    rm ~/Library/Preferences/myapp.plist; sudo killall cfprefsd
+//    defaults delete ~/Library/Preferences/myapp.plist
+    [self.window setFrame:NSMakeRect(0, 0, 1000, 600) display:YES];
+    [self.window center];
+}
 @end

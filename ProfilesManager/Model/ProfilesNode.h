@@ -23,6 +23,7 @@
 @property (nonatomic, copy)NSString *filePath;
 @property (nonatomic, strong)NSDictionary *extra;
 @property (nonatomic, copy)NSString *expirationDate;
+@property (nonatomic, copy)NSString *creationDate;
 
 - (id)initWithRootNode:(ProfilesNode *)rootNote originInfo:(id)info key:(NSString*)key;
 

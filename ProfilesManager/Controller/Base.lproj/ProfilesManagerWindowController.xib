@@ -16,13 +16,11 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <window title="ProfileManager" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="F0z-JX-Cv5">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
-            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="196" y="240" width="800" height="500"/>
+            <rect key="contentRect" x="543" y="266" width="1000" height="600"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
-            <value key="minSize" type="size" width="800" height="200"/>
-            <value key="maxSize" type="size" width="1600" height="1200"/>
+            <value key="minSize" type="size" width="490" height="600"/>
             <view key="contentView" wantsLayer="YES" id="se5-gp-TjO">
-                <rect key="frame" x="0.0" y="0.0" width="800" height="500"/>
+                <rect key="frame" x="0.0" y="0.0" width="1000" height="600"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             </view>
             <toolbar key="toolbar" implicitIdentifier="D0B8F835-261B-492D-B195-DB0C58068081" autosavesConfiguration="NO" displayMode="iconAndLabel" sizeMode="small" id="cZP-oM-lQ5">
@@ -68,9 +66,15 @@
                             <action selector="refreshButtonTouched:" target="-2" id="0HH-yv-p7C"/>
                         </connections>
                     </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="CC576DE0-526F-4887-BB82-165F4724BCB7" label="Reset" paletteLabel="Reset" tag="-1" image="NSActionTemplate" sizingBehavior="auto" id="YQD-l5-tAa">
+                        <connections>
+                            <action selector="resetButtonTouched:" target="-2" id="Uy0-gz-nl2"/>
+                        </connections>
+                    </toolbarItem>
                 </allowedToolbarItems>
                 <defaultToolbarItems>
                     <toolbarItem reference="RbJ-X4-SVv"/>
+                    <toolbarItem reference="YQD-l5-tAa"/>
                     <toolbarItem reference="rz2-bg-kUw"/>
                     <toolbarItem reference="RdP-pm-wWl"/>
                     <toolbarItem reference="TqD-HL-i0O"/>
@@ -83,6 +87,7 @@
         </window>
     </objects>
     <resources>
+        <image name="NSActionTemplate" width="14" height="14"/>
         <image name="NSRefreshFreestandingTemplate" width="14" height="14"/>
     </resources>
 </document>

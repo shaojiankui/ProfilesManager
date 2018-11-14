@@ -13,7 +13,7 @@
 #import "iAlert.h"
 #import "PreviewViewController.h"
 #import "PlistManager.h"
-
+#import "DragOutlineRowView.h"
 //#include <unistd.h>
 //#include <sys/types.h>
 //#include <pwd.h>
@@ -24,6 +24,7 @@ static NSString *kColumnIdentifierType = @"type";
 static NSString *kColumnIdentifierDetal = @"detail";
 //    static NSString *kColumnIdentifierUUID = @"uuid";
 static NSString *kColumnIdentifierExpirationDate = @"expirationDate";
+static NSString *kColumnIdentifierCreateDate = @"creationDate";
 
 @implementation ProfilesManagerViewController
 
@@ -38,8 +39,6 @@ static NSString *kColumnIdentifierExpirationDate = @"expirationDate";
     //    [self.treeView sizeLastColumnToFit];
     //app第一次运行Column 最后一行自动宽等比增减，否则会有滚动条
     [self.treeView sizeToFit];
-
-    
     
     [self loadProfileFilesWithSearchWord:_searchWord];
     //drag file
@@ -117,7 +116,11 @@ NSString *RealHomeDirectory() {
 
 
 #pragma mark - Outline
-
+- (nullable NSTableRowView *)outlineView:(NSOutlineView *)outlineView rowViewForItem:(id)item{
+    DragOutlineRowView *row   = [[DragOutlineRowView alloc] init];
+    row.identifier = @"row";
+    return row;
+}
 - (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item{
     ProfilesNode *realItem = item ?: _rootNode;
     return [realItem.childrenNodes count];
@@ -146,13 +149,16 @@ NSString *RealHomeDirectory() {
         return realItem.detail;
     } else if([[tableColumn identifier] isEqualToString:kColumnIdentifierExpirationDate]){
         return realItem.expirationDate;
+    }else if([[tableColumn identifier] isEqualToString:kColumnIdentifierCreateDate]){
+        return realItem.creationDate;
     }
     return @"";
 }
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView shouldSelectItem:(id)item{
-    NSInteger row = [outlineView clickedRow];
-    NSLog(@"select is %zd",row);
+    NSInteger selectedRow = [outlineView clickedRow];
+//    [outlineView setNeedsDisplayInRect:[outlineView rectOfRow:selectedRow]];
+    NSLog(@"select is %zd",selectedRow);
     return YES;
 }
 
@@ -182,6 +188,7 @@ NSString *RealHomeDirectory() {
             [cell setMenu:nil];
         }
     }
+   
 }
 
 

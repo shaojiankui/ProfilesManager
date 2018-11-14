@@ -10,7 +10,10 @@
 
 /* Class = "NSToolbarItem"; paletteLabel = "Refresh"; ObjectID = "RbJ-X4-SVv"; */
 "RbJ-X4-SVv.paletteLabel" = "Refresh";
- 
+
+"YQD-l5-tAa.paletteLabel" = "Reset";
+"YQD-l5-tAa.label" = "Reset";
+
 /* Class = "NSTextField"; ibShadowedToolTip = "search keyword"; ObjectID = "t6d-rt-sJV"; */
 "t6d-rt-sJV.ibShadowedToolTip" = "search keyword";
 

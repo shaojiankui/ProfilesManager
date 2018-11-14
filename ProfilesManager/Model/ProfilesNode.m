@@ -79,6 +79,8 @@
             _uuid = [dict objectForKey:@"UUID"];
             _filePath = [dict objectForKey:@"filePath"];
             _expirationDate = [[DateManager sharedManager] stringConvert_YMDHM_FromDate:[dict objectForKey:@"ExpirationDate"]];
+            _expirationDate = [[DateManager sharedManager] stringConvert_YMDHM_FromDate:[dict objectForKey:@"ExpirationDate"]];
+            _creationDate= [[DateManager sharedManager] stringConvert_YMDHM_FromDate:[dict objectForKey:@"CreationDate"]];
             
             if(_uuid){
                 NSDate *expiration = [dict objectForKey:@"ExpirationDate"];

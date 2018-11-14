@@ -15,23 +15,23 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="Hz6-mo-xeY">
-            <rect key="frame" x="0.0" y="0.0" width="920" height="600"/>
+            <rect key="frame" x="0.0" y="0.0" width="1000" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <scrollView autohidesScrollers="YES" horizontalLineScroll="22" horizontalPageScroll="10" verticalLineScroll="22" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bQP-D8-T2r">
-                    <rect key="frame" x="0.0" y="0.0" width="920" height="600"/>
+                    <rect key="frame" x="0.0" y="0.0" width="1000" height="600"/>
                     <clipView key="contentView" drawsBackground="NO" id="O7w-RX-5YA">
-                        <rect key="frame" x="1" y="0.0" width="918" height="599"/>
+                        <rect key="frame" x="1" y="0.0" width="998" height="599"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <outlineView appearanceType="vibrantLight" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="Ygp-i7-VyR" viewBased="YES" indentationPerLevel="16" outlineTableColumn="FkK-IV-RHo" id="3ki-mw-HE6" customClass="DragOutlineView">
-                                <rect key="frame" x="0.0" y="0.0" width="918" height="576"/>
+                                <rect key="frame" x="0.0" y="0.0" width="998" height="576"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <size key="intercellSpacing" width="3" height="5"/>
                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                 <tableColumns>
-                                    <tableColumn identifier="key" width="245" minWidth="40" maxWidth="1000" id="FkK-IV-RHo">
+                                    <tableColumn identifier="key" width="245" minWidth="40" maxWidth="400" id="FkK-IV-RHo">
                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Filename or Key">
                                             <font key="font" metaFont="smallSystem"/>
                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -44,7 +44,7 @@
                                         </textFieldCell>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                     </tableColumn>
-                                    <tableColumn identifier="type" width="229" minWidth="11" maxWidth="3.4028234663852886e+38" id="ggW-Oi-DM3" userLabel="type">
+                                    <tableColumn identifier="type" width="229" minWidth="140" maxWidth="280" id="ggW-Oi-DM3" userLabel="type">
                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Name or Type">
                                             <font key="font" metaFont="smallSystem"/>
                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -57,7 +57,7 @@
                                         </textFieldCell>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                     </tableColumn>
-                                    <tableColumn identifier="detail" width="313" minWidth="11" maxWidth="3.4028234663852886e+38" id="4N6-rc-Q65" userLabel="detail">
+                                    <tableColumn identifier="detail" width="250" minWidth="40" maxWidth="3.4028234663852886e+38" id="4N6-rc-Q65" userLabel="detail">
                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Status or Detail">
                                             <font key="font" metaFont="smallSystem"/>
                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -70,13 +70,26 @@
                                         </textFieldCell>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                     </tableColumn>
-                                    <tableColumn identifier="expirationDate" width="119" minWidth="11" maxWidth="3.4028234663852886e+38" id="PQW-JJ-FJD" userLabel="expirationDate">
-                                        <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="ExpirationDate">
+                                    <tableColumn identifier="creationDate" width="135" minWidth="135" maxWidth="135" id="PQW-JJ-FJD" userLabel="creationDate">
+                                        <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="CreateDate">
                                             <font key="font" metaFont="smallSystem"/>
                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                         </tableHeaderCell>
                                         <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="tP3-5j-5G4">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                        <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                    </tableColumn>
+                                    <tableColumn identifier="expirationDate" width="135" minWidth="135" maxWidth="135" id="Mf9-vb-Si1" userLabel="expirationDate">
+                                        <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="ExpirationDate">
+                                            <font key="font" metaFont="smallSystem"/>
+                                            <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                        </tableHeaderCell>
+                                        <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="tuT-NQ-v4F">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -101,7 +114,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <tableHeaderView key="headerView" id="Ygp-i7-VyR">
-                        <rect key="frame" x="0.0" y="0.0" width="918" height="23"/>
+                        <rect key="frame" x="0.0" y="0.0" width="998" height="23"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </tableHeaderView>
                 </scrollView>
@@ -112,7 +125,7 @@
                 <constraint firstAttribute="trailing" secondItem="bQP-D8-T2r" secondAttribute="trailing" id="Z0B-Ol-du0"/>
                 <constraint firstItem="bQP-D8-T2r" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="nxd-RY-BEY"/>
             </constraints>
-            <point key="canvasLocation" x="114" y="534"/>
+            <point key="canvasLocation" x="168.5" y="534"/>
         </customView>
     </objects>
 </document>
