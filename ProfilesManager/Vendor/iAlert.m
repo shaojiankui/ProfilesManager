@@ -88,4 +88,23 @@
     }];
     [window becomeKeyWindow];
 }
+
+#pragma mark --alert
++ (void)showMessage:(NSString*)message window:(NSWindow*)window completionHandler:(void (^)(NSModalResponse returnCode))handler{
+    NSAlert *alert = [[NSAlert alloc] init];
+    [alert setMessageText:message];
+    [alert beginSheetModalForWindow:window completionHandler:^(NSModalResponse returnCode) {
+        handler(returnCode);
+    }];
+    
+}
+
++ (void)showAlert:(NSAlertStyle)style title:(NSString *)title message:(NSString *)message {
+    NSAlert *alert = [[NSAlert alloc] init];
+    [alert addButtonWithTitle:@"OK"];
+    [alert setMessageText:title];
+    [alert setInformativeText:message];
+    [alert setAlertStyle:style];
+    [alert runModal];
+}
 @end

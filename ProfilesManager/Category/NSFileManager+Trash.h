@@ -9,5 +9,6 @@
 
 - (NSString *)mr_uniqueFileNameWithPath:(NSString *)aPath;
 - (BOOL)mr_moveFileAtPathToTrash:(NSString *)aPath error:(NSError **)outError;
-
+//获取sandbox之外的路径
+- (NSString *)realHomeDirectory;
 @end

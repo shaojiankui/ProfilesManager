@@ -28,7 +28,20 @@
 //       3. This notice may not be removed or altered from any source
 //       distribution.
 //
-
+//获取sandbox之外的路径
+- (NSString *)realHomeDirectory{
+    //    struct passwd *pw = getpwuid(getuid());
+    //    assert(pw);
+    //    return [NSString stringWithUTF8String:pw->pw_dir];
+    //
+    NSString *home = NSHomeDirectory();
+    NSArray *pathArray = [home componentsSeparatedByString:@"/"];
+    NSString *absolutePath;
+    if ([pathArray count] > 2) {
+        absolutePath = [NSString stringWithFormat:@"/%@/%@", [pathArray objectAtIndex:1], [pathArray objectAtIndex:2]];
+    }
+    return absolutePath;
+}
 // Adapted from UliKit by Uli Kusterer (thanks):
 // http://github.com/uliwitness/UliKit/blob/master/NSFileManager+NameForTempFile.m
 NSString *Trash_RealHomeDirectory() {

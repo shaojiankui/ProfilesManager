@@ -14,6 +14,9 @@
 "YQD-l5-tAa.label" = "重置";
 "YQD-l5-tAa.paletteLabel" = "重置";
 
+"OYD-Cz-Amx.paletteLabel" = "快速查看";
+"OYD-Cz-Amx.label" = "快速查看";
+
 /* Class = "NSTextField"; ibShadowedToolTip = "search keyword"; ObjectID = "t6d-rt-sJV"; */
 "t6d-rt-sJV.ibShadowedToolTip" = "搜索关键词";
 

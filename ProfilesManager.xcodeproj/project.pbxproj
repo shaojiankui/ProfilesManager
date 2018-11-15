@@ -38,7 +38,7 @@
 		B80FCFC31E4AAE480044098D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B80FCFC51E4AAE480044098D /* Localizable.strings */; };
 		B81B6A782195470500A8580F /* ProfilesManagerWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B81B6A7A2195470500A8580F /* ProfilesManagerWindowController.xib */; };
 		B843F36E20897BAD00C1679C /* ProfilesManagerWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = B843F36C20897BAD00C1679C /* ProfilesManagerWindowController.m */; };
-		B8B8EE1B219C1BCA00F75DC4 /* DragOutlineRowView.m in Sources */ = {isa = PBXBuildFile; fileRef = B8B8EE1A219C1BCA00F75DC4 /* DragOutlineRowView.m */; };
+		B84700C9219D4B33007CDAE2 /* ProvisionQL.qlgenerator in Resources */ = {isa = PBXBuildFile; fileRef = B84700C8219D4B33007CDAE2 /* ProvisionQL.qlgenerator */; };
 		B8BCD2401E6CEFCB00ABD2A6 /* iAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = B8BCD23F1E6CEFCB00ABD2A6 /* iAlert.m */; };
 		B8C823BE1E0288D9004BEAEF /* NSData+JKBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = B8C823BD1E0288D8004BEAEF /* NSData+JKBase64.m */; };
 		B8F694BB204D3ADF0048F3E6 /* PreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B8F694B9204D3ADF0048F3E6 /* PreviewViewController.m */; };
@@ -108,9 +108,8 @@
 		B833BA571E4B1C5C003FF745 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/MainMenu.strings"; sourceTree = "<group>"; };
 		B843F36B20897BAD00C1679C /* ProfilesManagerWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProfilesManagerWindowController.h; sourceTree = "<group>"; };
 		B843F36C20897BAD00C1679C /* ProfilesManagerWindowController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProfilesManagerWindowController.m; sourceTree = "<group>"; };
+		B84700C8219D4B33007CDAE2 /* ProvisionQL.qlgenerator */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ProvisionQL.qlgenerator; sourceTree = "<group>"; };
 		B856B7801E25EDC800060107 /* ProfilesManager.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ProfilesManager.entitlements; sourceTree = "<group>"; };
-		B8B8EE19219C1BCA00F75DC4 /* DragOutlineRowView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DragOutlineRowView.h; sourceTree = "<group>"; };
-		B8B8EE1A219C1BCA00F75DC4 /* DragOutlineRowView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DragOutlineRowView.m; sourceTree = "<group>"; };
 		B8BCD23E1E6CEFCB00ABD2A6 /* iAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iAlert.h; sourceTree = "<group>"; };
 		B8BCD23F1E6CEFCB00ABD2A6 /* iAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iAlert.m; sourceTree = "<group>"; };
 		B8C823BC1E0288D8004BEAEF /* NSData+JKBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+JKBase64.h"; sourceTree = "<group>"; };
@@ -156,6 +155,7 @@
 		A211931B1AF1CA5B0064CA7D /* ProfilesManager */ = {
 			isa = PBXGroup;
 			children = (
+				B84700C8219D4B33007CDAE2 /* ProvisionQL.qlgenerator */,
 				B856B7801E25EDC800060107 /* ProfilesManager.entitlements */,
 				B8FF31C021929EA40022C658 /* Manager */,
 				B8BCD23D1E6CEFC500ABD2A6 /* Vendor */,
@@ -233,8 +233,6 @@
 			children = (
 				A2A8FA881AFA43E10087DD68 /* DragOutlineView.m */,
 				A2A8FA891AFA43E10087DD68 /* DragOutlineView.h */,
-				B8B8EE19219C1BCA00F75DC4 /* DragOutlineRowView.h */,
-				B8B8EE1A219C1BCA00F75DC4 /* DragOutlineRowView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -396,6 +394,7 @@
 				A244DCBB1AFA0A2E00EB7E61 /* ProfilesManagerViewController.xib in Resources */,
 				B804235D2192BD9100AD899F /* GitHubTemplate.pdf in Resources */,
 				B804235F2192BD9100AD899F /* GitHubInstallWindowController.xib in Resources */,
+				B84700C9219D4B33007CDAE2 /* ProvisionQL.qlgenerator in Resources */,
 				B804235E2192BD9100AD899F /* GitHubProgressWindowController.xib in Resources */,
 				B8F694BC204D3ADF0048F3E6 /* PreviewViewController.xib in Resources */,
 				B80FCFC31E4AAE480044098D /* Localizable.strings in Resources */,
@@ -422,7 +421,6 @@
 				A21193221AF1CA5B0064CA7D /* main.m in Sources */,
 				B8C823BE1E0288D9004BEAEF /* NSData+JKBase64.m in Sources */,
 				B804236A2192BD9100AD899F /* GitHubInstallWindowController.m in Sources */,
-				B8B8EE1B219C1BCA00F75DC4 /* DragOutlineRowView.m in Sources */,
 				B804235B2192BD9100AD899F /* GitHubReleaseAsset.m in Sources */,
 				B8BCD2401E6CEFCB00ABD2A6 /* iAlert.m in Sources */,
 				A21193201AF1CA5B0064CA7D /* AppDelegate.m in Sources */,

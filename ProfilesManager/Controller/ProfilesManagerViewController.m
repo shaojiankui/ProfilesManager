@@ -1,6 +1,6 @@
 //
 //  ProfilesToolViewController.m
-//  ProfilesTool
+//  ProfilesManager
 //
 //  Created by Jakey on 15/4/30.
 //  Copyright (c) 2015年 Jakey. All rights reserved.
@@ -13,7 +13,7 @@
 #import "iAlert.h"
 #import "PreviewViewController.h"
 #import "PlistManager.h"
-#import "DragOutlineRowView.h"
+
 //#include <unistd.h>
 //#include <sys/types.h>
 //#include <pwd.h>
@@ -27,26 +27,12 @@ static NSString *kColumnIdentifierExpirationDate = @"expirationDate";
 static NSString *kColumnIdentifierCreateDate = @"creationDate";
 
 @implementation ProfilesManagerViewController
-//获取sandbox之外的路径
-NSString *RealHomeDirectory() {
-    //    struct passwd *pw = getpwuid(getuid());
-    //    assert(pw);
-    //    return [NSString stringWithUTF8String:pw->pw_dir];
-    //
-    NSString *home = NSHomeDirectory();
-    NSArray *pathArray = [home componentsSeparatedByString:@"/"];
-    NSString *absolutePath;
-    if ([pathArray count] > 2) {
-        absolutePath = [NSString stringWithFormat:@"/%@/%@", [pathArray objectAtIndex:1], [pathArray objectAtIndex:2]];
-    }
-    return absolutePath;
-}
 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do view setup here.
-    _profileDir = [NSString stringWithFormat:@"%@/Library/MobileDevice/Provisioning Profiles/", RealHomeDirectory()];
+    _profileDir = [NSString stringWithFormat:@"%@/Library/MobileDevice/Provisioning Profiles/", [[NSFileManager defaultManager] realHomeDirectory]];
     
     //当拖拽窗口大小，NSOutlineView frame自动更改时，Column宽等比增减
     [self.treeView setColumnAutoresizingStyle:NSTableViewUniformColumnAutoresizingStyle];
@@ -65,7 +51,8 @@ NSString *RealHomeDirectory() {
                 [[NSFileManager defaultManager]copyItemAtPath:result toPath:[_profileDir stringByAppendingString:[result lastPathComponent]?:@""] error:&error];
                 if(error)
                 {
-                    [self showMessage:[error localizedDescription] completionHandler:^(NSModalResponse returnCode) {
+                    [iAlert showMessage:[error localizedDescription]
+                                 window:self.view.window completionHandler:^(NSModalResponse returnCode) {
                         
                     }];
                 }
@@ -118,11 +105,7 @@ NSString *RealHomeDirectory() {
 
 
 #pragma mark - Outline
-- (nullable NSTableRowView *)outlineView:(NSOutlineView *)outlineView rowViewForItem:(id)item{
-    DragOutlineRowView *row   = [[DragOutlineRowView alloc] init];
-    row.identifier = @"row";
-    return row;
-}
+
 - (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item{
     ProfilesNode *realItem = item ?: _rootNode;
     return [realItem.childrenNodes count];
@@ -470,7 +453,9 @@ NSString *RealHomeDirectory() {
     
     NSSavePanel *savePanel = [NSSavePanel savePanel];
     savePanel.allowedFileTypes = @[@"mobileprovision",@"provisionprofile"];
-    savePanel.nameFieldStringValue = node.key;
+    savePanel.nameFieldStringValue = node.type?:node.key;
+    savePanel.extensionHidden = NO;
+
     [savePanel beginSheetModalForWindow:self.view.window completionHandler:^(NSInteger result) {
         NSString *savePath = savePanel.URL.path;
         if (result == NSFileHandlingPanelOKButton) {
@@ -495,14 +480,14 @@ NSString *RealHomeDirectory() {
     [oPanel setDirectoryURL:[NSURL URLWithString:NSHomeDirectory()]];
     [oPanel setAllowedFileTypes:@[@"mobileprovision", @"MOBILEPROVISION"]];
     
-    if ([oPanel runModal] == NSOKButton) {
+    if ([oPanel runModal] == NSModalResponseOK) {
         NSString *path =[[[oPanel URLs] objectAtIndex:0] path];
         
         [[NSFileManager defaultManager]copyItemAtPath:path toPath:[_profileDir stringByAppendingString:[path lastPathComponent]?:@""] error:&error];
     }
     if(error)
     {
-        [self showMessage:[error localizedDescription] completionHandler:^(NSModalResponse returnCode) {
+        [iAlert showMessage:[error localizedDescription] window:self.view.window completionHandler:^(NSModalResponse returnCode) {
             
         }];
     }
@@ -521,7 +506,7 @@ NSString *RealHomeDirectory() {
         [oPanel setCanChooseDirectories:YES];
         [oPanel setCanChooseFiles:NO];
         [oPanel setDirectoryURL:[NSURL URLWithString:NSHomeDirectory()]];
-        if ([oPanel runModal] == NSOKButton) {
+        if ([oPanel runModal] == NSModalResponseOK) {
             NSString *path =[[[oPanel URLs] objectAtIndex:0] path];
             NSString *savePath = [[path stringByAppendingPathComponent:[node.extra objectForKey:@"summary"] ]stringByAppendingPathExtension:@"cer"];
             
@@ -548,7 +533,7 @@ NSString *RealHomeDirectory() {
     }
     if(error)
     {
-        [self showMessage:[error localizedDescription] completionHandler:^(NSModalResponse returnCode) {
+        [iAlert showMessage:[error localizedDescription] window:self.view.window completionHandler:^(NSModalResponse returnCode) {
             
         }];
     }
@@ -575,22 +560,5 @@ NSString *RealHomeDirectory() {
 //    }
 //    return result;
 //}
-#pragma mark --alert
-- (void)showMessage:(NSString*)message completionHandler:(void (^)(NSModalResponse returnCode))handler{
-    NSAlert *alert = [[NSAlert alloc] init];
-    [alert setMessageText:message];
-    [alert beginSheetModalForWindow:self.view.window completionHandler:^(NSModalResponse returnCode) {
-        handler(returnCode);
-    }];
-    
-}
 
-- (void)showAlert:(NSAlertStyle)style title:(NSString *)title message:(NSString *)message {
-    NSAlert *alert = [[NSAlert alloc] init];
-    [alert addButtonWithTitle:@"OK"];
-    [alert setMessageText:title];
-    [alert setInformativeText:message];
-    [alert setAlertStyle:style];
-    [alert runModal];
-}
 @end

@@ -71,10 +71,16 @@
                             <action selector="resetButtonTouched:" target="-2" id="Uy0-gz-nl2"/>
                         </connections>
                     </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="7433B6B3-69C5-49F7-90E0-1EAD36365A2B" label="QuickLook" paletteLabel="QuickLook" tag="-1" image="NSQuickLookTemplate" sizingBehavior="auto" id="OYD-Cz-Amx">
+                        <connections>
+                            <action selector="quickLookTouched:" target="-2" id="vZr-Wc-hDl"/>
+                        </connections>
+                    </toolbarItem>
                 </allowedToolbarItems>
                 <defaultToolbarItems>
                     <toolbarItem reference="RbJ-X4-SVv"/>
                     <toolbarItem reference="YQD-l5-tAa"/>
+                    <toolbarItem reference="OYD-Cz-Amx"/>
                     <toolbarItem reference="rz2-bg-kUw"/>
                     <toolbarItem reference="RdP-pm-wWl"/>
                     <toolbarItem reference="TqD-HL-i0O"/>
@@ -83,11 +89,12 @@
             <connections>
                 <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
             </connections>
-            <point key="canvasLocation" x="-38" y="50"/>
+            <point key="canvasLocation" x="-62" y="41"/>
         </window>
     </objects>
     <resources>
         <image name="NSActionTemplate" width="14" height="14"/>
+        <image name="NSQuickLookTemplate" width="19" height="12"/>
         <image name="NSRefreshFreestandingTemplate" width="14" height="14"/>
     </resources>
 </document>

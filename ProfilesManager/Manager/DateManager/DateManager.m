@@ -2,7 +2,7 @@
 //  DateManager.m
 //  ProfilesManager
 //
-//  Created by runlin on 2018/11/7.
+//  Created by Jakey on 2018/11/7.
 //  Copyright © 2018 Jakey. All rights reserved.
 //
 

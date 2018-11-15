@@ -22,6 +22,10 @@ typedef void(^JKAlertHandler)(iAlertItem *item);
 
 - (void)show:(NSWindow *)window;
 - (void)show;
+
+#pragma mark --alert
++ (void)showMessage:(NSString*)message window:(NSWindow*)window completionHandler:(void (^)(NSModalResponse returnCode))handler;
++ (void)showAlert:(NSAlertStyle)style title:(NSString *)title message:(NSString *)message;
 @end
 
 @interface iAlertItem : NSObject

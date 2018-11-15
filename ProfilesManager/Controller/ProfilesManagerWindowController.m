@@ -9,6 +9,8 @@
 #import "ProfilesManagerWindowController.h"
 #import "ProfilesManagerViewController.h"
 #import "GitHubUpdater.h"
+#import "NSFileManager+Trash.h"
+#import "iAlert.h"
 @interface ProfilesManagerWindowController ()
 @property( atomic, readwrite, strong, nullable ) IBOutlet GitHubUpdater * updater;
 @end
@@ -71,5 +73,75 @@
 //    defaults delete ~/Library/Preferences/myapp.plist
     [self.window setFrame:NSMakeRect(0, 0, 1000, 600) display:YES];
     [self.window center];
+}
+- (IBAction)quickLookTouched:(id)sender {
+    NSString *installURL = [[[NSFileManager defaultManager] realHomeDirectory] stringByAppendingPathComponent:@"/Library/QuickLook/ProvisionQL.qlgenerator"];
+    
+    if([[NSFileManager defaultManager] fileExistsAtPath:installURL]){
+        iAlert *alert = [iAlert alertWithTitle:JKLocalizedString(@"Provision QuickLook Plug-in is already Installed",nil) message:JKLocalizedString(@"What opration do you want?", nil) style:NSAlertStyleWarning];
+        [alert addCommonButtonWithTitle:JKLocalizedString(@"Back", nil) handler:^(iAlertItem *item) {
+           
+        }];
+        [alert addCommonButtonWithTitle:JKLocalizedString(@"Show in Finder", nil) handler:^(iAlertItem *item) {
+            [[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:@[[NSURL fileURLWithPath:installURL?:@""]]];
+        }];
+        [alert addCommonButtonWithTitle:JKLocalizedString(@"Uninstall", nil) handler:^(iAlertItem *item) {
+            if ([[NSFileManager defaultManager] mr_moveFileAtPathToTrash:installURL error:nil]) {
+                NSString *result = [self qlmanageRefresh];
+                [iAlert showMessage:[NSString stringWithFormat:@"%@,%@",JKLocalizedString(@"Uninstall Success", nil),result] window:self.window completionHandler:^(NSModalResponse returnCode) {
+                    
+                }];
+            }else{
+                [iAlert showMessage:JKLocalizedString(@"Uninstall Failure", nil) window:self.window completionHandler:^(NSModalResponse returnCode) {
+                    
+                }];
+            }
+        }];
+     
+        [alert show];
+    }else{
+        [self installProvisionQL];
+    }
+}
+- (void)installProvisionQL{
+    NSString *installURL = [[[NSFileManager defaultManager] realHomeDirectory] stringByAppendingPathComponent:@"/Library/QuickLook/ProvisionQL.qlgenerator"];
+    NSString *provisionQLURL = [[NSBundle mainBundle] pathForResource:@"ProvisionQL" ofType:@"qlgenerator"];
+
+    NSString *function = JKLocalizedString(@"the plug-in can view the .ipa/.xcarchive/.appex/.mobileprovision/.provisionprofile files directly use the the blank space key.", nil);
+    
+    NSString *message = [NSString stringWithFormat:@"%@   %@  https://github.com/ealeksandrov/ProvisionQL",function,JKLocalizedString(@"the plug-in sourcecode can view at", nil)];
+    
+   
+    
+    iAlert *alert = [iAlert alertWithTitle:JKLocalizedString(@"Install Provision QuickLook Plug-in",nil) message:message style:NSAlertStyleWarning];
+  
+    [alert addCommonButtonWithTitle:JKLocalizedString(@"Back", nil) handler:^(iAlertItem *item) {
+        
+    }];
+    [alert addCommonButtonWithTitle:JKLocalizedString(@"Install", nil) handler:^(iAlertItem *item) {
+        if ([[NSFileManager defaultManager] copyItemAtPath:provisionQLURL toPath:installURL error:nil]) {
+            NSString *result = [self  qlmanageRefresh];
+            
+            [iAlert showMessage:[NSString stringWithFormat:@"%@,%@",JKLocalizedString(@"Install Success", nil),result] window:self.window completionHandler:^(NSModalResponse returnCode) {
+                
+            }];
+        }else{
+            [iAlert showMessage:JKLocalizedString(@"Install Failure", nil) window:self.window completionHandler:^(NSModalResponse returnCode) {
+                
+            }];
+        }
+    }];
+    
+    [alert show];
+}
+- (NSString*)qlmanageRefresh{
+    NSTask *task = [[NSTask alloc] init];
+    NSPipe *pipe = [NSPipe pipe];
+    NSFileHandle *file = [pipe fileHandleForReading];
+    [task setLaunchPath: @"/usr/bin/qlmanage"];
+    [task setArguments:@[@"-r"]];
+    [task setStandardOutput: pipe];
+    [task launch];
+    return [[NSString alloc] initWithData:[file readDataToEndOfFile] encoding:NSUTF8StringEncoding];
 }
 @end

@@ -23,3 +23,16 @@
 "Are you sure move selected items to trash?"  = "Are you sure move selected items to trash?"
 "Export" = "Export";
 "Beautify Filename" = "Beautify Filename";
+"Provision QuickLook Plug-in is already Installed" = "Provision QuickLook Plug-in is already Installed";
+"What opration do you want?" = "What opration do you want?";
+"Back"  = "Back";
+"Uninstall" = "Uninstall";
+"Uninstall Success" = "Uninstall Success";
+"Uninstall Failure" = "Uninstall Failure";
+"the plug-in can view the .ipa/.xcarchive/.appex/.mobileprovision/.provisionprofile files directly use the the blank space key." = "the plug-in can view the .ipa/.xcarchive/.appex/.mobileprovision/.provisionprofile files directly use the the blank space key.";
+"the plug-in sourcecode can view at" = "the plug-in sourcecode can view at";
+"Install Provision QuickLook Plug-in" = "Install Provision QuickLook Plug-in";
+"Install" = "Install";
+"Install Success" = "Install Success";
+"Install Failure" = "Install Failure";
+

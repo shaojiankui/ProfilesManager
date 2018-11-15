@@ -14,6 +14,9 @@
 "YQD-l5-tAa.paletteLabel" = "Reset";
 "YQD-l5-tAa.label" = "Reset";
 
+"OYD-Cz-Amx.paletteLabel" = "QuickLook";
+"OYD-Cz-Amx.label" = "QuickLook";
+
 /* Class = "NSTextField"; ibShadowedToolTip = "search keyword"; ObjectID = "t6d-rt-sJV"; */
 "t6d-rt-sJV.ibShadowedToolTip" = "search keyword";
 

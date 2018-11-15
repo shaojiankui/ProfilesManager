@@ -8,7 +8,7 @@
 
 "Move to Trash" = "移动到废纸篓";
 "Delete" = "完全删除";
-"Show in Finder"  = "定位文件";
+"Show in Finder"  = "在访达中显示";
 "Refresh Table" = "刷新列表";
 "Import Profile" = "导入Profile";
 "Export Certificate File"   = "导出证书文件";
@@ -23,3 +23,16 @@
 "Are you sure move selected items to trash?" = "确定将选中的所有文件移动到废纸篓么?";
 "Export" = "导出";
 "Beautify Filename" = "美化文件名";
+"Provision QuickLook Plug-in is already Installed" = "描述文件快速查看插件已经安装";
+"What opration do you want?" = "选择你想继续操作?";
+"Back"  = "返回";
+"Uninstall" = "卸载";
+"Uninstall Success" = "卸载成功";
+"Uninstall Failure" = "卸载失败";
+"the plug-in can view the .ipa/.xcarchive/.appex/.mobileprovision/.provisionprofile files directly use the the blank space key." = "插件可以直接预览后缀为.ipa/.xcarchive/.appex/.mobileprovision/.provisionprofile的文件,在文件上空格即可.";
+"the plug-in sourcecode can view at" = "插件源代码可以在以下地址查看";
+"Install Provision QuickLook Plug-in" = "安装描述文件快速查看插件";
+"Install" = "安装";
+"Install Success" = "安装成功";
+"Install Failure" = "安装失败";
+

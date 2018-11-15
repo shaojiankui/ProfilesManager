@@ -2,7 +2,7 @@
 //  PreviewViewController.m
 //  ProfilesManager
 //
-//  Created by runlin on 2018/3/5.
+//  Created by Jakey on 2018/3/5.
 //  Copyright © 2018年 Jakey. All rights reserved.
 //
 
