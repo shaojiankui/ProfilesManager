@@ -2,6 +2,18 @@
 iOS Provisioning Profiles, .mobileprovision files manager tool for mac
 
 ## Features
+### 2.3
+- onekey uninstall or install quicklook plug-in,support view the .ipa/.xcarchive/.appex/.mobileprovision/.provisionprofile files directly use the the blank space key.   点击左上角的快速预览按钮，安装插件。插件可以直接预览后缀为.ipa/.xcarchive/.appex/.mobileprovision/.provisionprofile的文件,在文件上空格即可.
+
+### 2.2
+- click header sort 点击头部排序
+- multi-select opration such show in finder and delete 多选操作，例如在访达中显示和删除
+- click reset button，reset window frame and position 点击重置按钮重置window大小与位置
+
+### 1.1
+- simple full text search filter 全文搜索后过滤描述文件
+
+### 1.0
 - tree look all profiles 树形查看电脑中所有描述文件
 - export cer from profile 从描述文件中导出cer证书文件
 - move to trash  移动到废纸篓
@@ -9,11 +21,9 @@ iOS Provisioning Profiles, .mobileprovision files manager tool for mac
 - drag muti files install   拖拽描述文件文件直接安装
 - export profile 导出描述文件
 - drag into and look ipa profile or plist directly 拖入ipa快速查看描述文件与info.plist信息
-- simple full text search filter 全文搜索后过滤描述文件
-- click header sort 点击头部排序
-- multi-select opration such show in finder and delete 多选操作，例如在访达中显示和删除
-- click reset button，reset window frame and position 点击重置按钮重置window大小与位置
-- onekey uninstall or install quicklook plug-in,support view the .ipa/.xcarchive/.appex/.mobileprovision/.provisionprofile files directly use the the blank space key.   插件可以直接预览后缀为.ipa/.xcarchive/.appex/.mobileprovision/.provisionprofile的文件,在文件上空格即可.
+
+
+
 
 ## Download APP
 https://github.com/shaojiankui/ProfilesManager/releases
