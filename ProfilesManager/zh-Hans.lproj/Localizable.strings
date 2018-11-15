@@ -19,6 +19,7 @@
 "Confirm Delete Opration"   = "确认删除操作";
 "Delete this profie item permanently,can't rollback!"   = "完全删除这个profie文件,不可回滚!";
 "Warning" = "警告";
-"are you sure move item to trash?" = "确定将此profie文件移动到废纸篓么?";
+"Are you sure delete selected items from disk? After delete operation can't rollback!" = "确定将选中的所有文件从磁盘删除? 删除之后不可回滚!";
+"Are you sure move selected items to trash?" = "确定将选中的所有文件移动到废纸篓么?";
 "Export" = "导出";
 "Beautify Filename" = "美化文件名";

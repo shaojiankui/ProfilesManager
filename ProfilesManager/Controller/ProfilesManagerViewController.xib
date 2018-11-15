@@ -8,6 +8,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="ProfilesManagerViewController">
             <connections>
+                <outlet property="statusLabel" destination="BLd-8B-ILm" id="3ob-VZ-Yag"/>
                 <outlet property="treeView" destination="3ki-mw-HE6" id="tZ2-st-Q7a"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
             </connections>
@@ -19,13 +20,13 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <scrollView autohidesScrollers="YES" horizontalLineScroll="22" horizontalPageScroll="10" verticalLineScroll="22" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bQP-D8-T2r">
-                    <rect key="frame" x="0.0" y="0.0" width="1000" height="600"/>
+                    <rect key="frame" x="0.0" y="20" width="1000" height="580"/>
                     <clipView key="contentView" drawsBackground="NO" id="O7w-RX-5YA">
-                        <rect key="frame" x="1" y="0.0" width="998" height="599"/>
+                        <rect key="frame" x="1" y="0.0" width="998" height="564"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <outlineView appearanceType="vibrantLight" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="Ygp-i7-VyR" viewBased="YES" indentationPerLevel="16" outlineTableColumn="FkK-IV-RHo" id="3ki-mw-HE6" customClass="DragOutlineView">
-                                <rect key="frame" x="0.0" y="0.0" width="998" height="576"/>
+                            <outlineView appearanceType="vibrantLight" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" multipleSelection="NO" autosaveColumns="NO" headerView="Ygp-i7-VyR" indentationPerLevel="16" outlineTableColumn="FkK-IV-RHo" id="3ki-mw-HE6" customClass="DragOutlineView">
+                                <rect key="frame" x="0.0" y="0.0" width="1009" height="541"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <size key="intercellSpacing" width="3" height="5"/>
                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -105,8 +106,8 @@
                         </subviews>
                         <nil key="backgroundColor"/>
                     </clipView>
-                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="94R-Le-I0r">
-                        <rect key="frame" x="1" y="584" width="918" height="15"/>
+                    <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="94R-Le-I0r">
+                        <rect key="frame" x="1" y="564" width="998" height="15"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="Rib-nd-9D3">
@@ -114,16 +115,30 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <tableHeaderView key="headerView" id="Ygp-i7-VyR">
-                        <rect key="frame" x="0.0" y="0.0" width="998" height="23"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1009" height="23"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </tableHeaderView>
                 </scrollView>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="BLd-8B-ILm">
+                    <rect key="frame" x="-2" y="0.0" width="1004" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="20" id="er9-nR-EZ2"/>
+                    </constraints>
+                    <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Label" id="bo7-lY-wgp">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
             </subviews>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="bQP-D8-T2r" secondAttribute="bottom" id="BEA-4M-DjR"/>
-                <constraint firstItem="bQP-D8-T2r" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="Mer-2M-vUR"/>
-                <constraint firstAttribute="trailing" secondItem="bQP-D8-T2r" secondAttribute="trailing" id="Z0B-Ol-du0"/>
-                <constraint firstItem="bQP-D8-T2r" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="nxd-RY-BEY"/>
+                <constraint firstAttribute="trailing" secondItem="bQP-D8-T2r" secondAttribute="trailing" id="Eoz-HS-Lzq"/>
+                <constraint firstItem="BLd-8B-ILm" firstAttribute="top" secondItem="bQP-D8-T2r" secondAttribute="bottom" id="G3h-XL-Ahe"/>
+                <constraint firstItem="BLd-8B-ILm" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="Pcz-OK-BwR"/>
+                <constraint firstItem="bQP-D8-T2r" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="SbX-jH-moX"/>
+                <constraint firstAttribute="bottom" secondItem="BLd-8B-ILm" secondAttribute="bottom" id="rzG-Qs-8se"/>
+                <constraint firstItem="bQP-D8-T2r" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="vgB-2e-9d7"/>
+                <constraint firstAttribute="trailing" secondItem="BLd-8B-ILm" secondAttribute="trailing" id="yR6-dQ-hTF"/>
             </constraints>
             <point key="canvasLocation" x="168.5" y="534"/>
         </customView>

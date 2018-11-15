@@ -24,5 +24,6 @@
     NSString *_searchWord;
 }
 @property (weak) IBOutlet DragOutlineView *treeView;
+@property (weak) IBOutlet NSTextField *statusLabel;
 - (void)loadProfileFilesWithSearchWord:(NSString*)searchWord;
 @end

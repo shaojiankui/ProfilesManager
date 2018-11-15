@@ -19,6 +19,7 @@
 "Confirm Delete Opration"   = "Confirm Delete Opration";
 "Delete this profie item permanently,can't rollback!"   = "Delete this profie item permanently,can't rollback!";
 "Warning" = "Warning";
-"are you sure move item to trash?" = "are you sure move item to trash?";
+"Are you sure delete selected items from disk? After delete operation can't rollback!" = "Are you sure delete selected items from disk? After delete operation can't rollback!";
+"Are you sure move selected items to trash?"  = "Are you sure move selected items to trash?"
 "Export" = "Export";
 "Beautify Filename" = "Beautify Filename";

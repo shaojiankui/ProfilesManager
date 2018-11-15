@@ -27,6 +27,21 @@ static NSString *kColumnIdentifierExpirationDate = @"expirationDate";
 static NSString *kColumnIdentifierCreateDate = @"creationDate";
 
 @implementation ProfilesManagerViewController
+//获取sandbox之外的路径
+NSString *RealHomeDirectory() {
+    //    struct passwd *pw = getpwuid(getuid());
+    //    assert(pw);
+    //    return [NSString stringWithUTF8String:pw->pw_dir];
+    //
+    NSString *home = NSHomeDirectory();
+    NSArray *pathArray = [home componentsSeparatedByString:@"/"];
+    NSString *absolutePath;
+    if ([pathArray count] > 2) {
+        absolutePath = [NSString stringWithFormat:@"/%@/%@", [pathArray objectAtIndex:1], [pathArray objectAtIndex:2]];
+    }
+    return absolutePath;
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -39,6 +54,7 @@ static NSString *kColumnIdentifierCreateDate = @"creationDate";
     //    [self.treeView sizeLastColumnToFit];
     //app第一次运行Column 最后一行自动宽等比增减，否则会有滚动条
     [self.treeView sizeToFit];
+    self.treeView.allowsMultipleSelection = YES;
     
     [self loadProfileFilesWithSearchWord:_searchWord];
     //drag file
@@ -63,20 +79,6 @@ static NSString *kColumnIdentifierCreateDate = @"creationDate";
     }];
     
 }
-//获取sandbox之外的路径
-NSString *RealHomeDirectory() {
-    //    struct passwd *pw = getpwuid(getuid());
-    //    assert(pw);
-    //    return [NSString stringWithUTF8String:pw->pw_dir];
-    //
-    NSString *home = NSHomeDirectory();
-    NSArray *pathArray = [home componentsSeparatedByString:@"/"];
-    NSString *absolutePath;
-    if ([pathArray count] > 2) {
-        absolutePath = [NSString stringWithFormat:@"/%@/%@", [pathArray objectAtIndex:1], [pathArray objectAtIndex:2]];
-    }
-    return absolutePath;
-}
 
 - (void)loadProfileFilesWithSearchWord:(NSString*)searchWord {
     _searchWord = searchWord;
@@ -99,19 +101,19 @@ NSString *RealHomeDirectory() {
             }
         }
     }
-    
     ProfilesNode *node = [[ProfilesNode alloc]initWithRootNode:nil originInfo:provisions key:@"Mobile Provisions"];
     _rootNode = node;
     [self.treeView reloadData];
-    
+    [self updateStatus];
+
     for (NSTableColumn *tableColumn in self.treeView.tableColumns ) {
         NSSortDescriptor *sortStates = [NSSortDescriptor sortDescriptorWithKey:tableColumn.identifier
-                     ascending:NO comparator:^(id obj1, id obj2) {
-                         return [obj1 compare:obj2];
-                    }];
+                                                                     ascending:NO comparator:^(id obj1, id obj2) {
+                                                                         return [obj1 compare:obj2];
+                                                                     }];
         [tableColumn setSortDescriptorPrototype:sortStates];
     }
-   
+    
 }
 
 
@@ -157,17 +159,18 @@ NSString *RealHomeDirectory() {
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView shouldSelectItem:(id)item{
     NSInteger selectedRow = [outlineView clickedRow];
-//    [outlineView setNeedsDisplayInRect:[outlineView rectOfRow:selectedRow]];
+    //    [outlineView setNeedsDisplayInRect:[outlineView rectOfRow:selectedRow]];
     NSLog(@"select is %zd",selectedRow);
     return YES;
 }
 
 - (void)outlineView:(NSOutlineView *)outlineView willDisplayCell:(NSTextFieldCell*)cell forTableColumn:(NSTableColumn *)tableColumn item:(id)item {
-   
+    
     ProfilesNode *realItem = item ?: _rootNode;
-
+    
     if ([outlineView parentForItem:item] == nil)
     {
+        
         if ([[tableColumn identifier] isEqualToString:kColumnIdentifierType]) {
             cell.textColor = [NSColor blackColor];
         }else{
@@ -188,7 +191,18 @@ NSString *RealHomeDirectory() {
             [cell setMenu:nil];
         }
     }
-   
+    
+    if(cell.highlighted){
+        if ([[tableColumn identifier] isEqualToString:kColumnIdentifierDetal]) {
+            if ([realItem.detail isEqualToString:@"Expired"] ||[realItem.detail isEqualToString:@"过期"] ) {
+                cell.textColor = [NSColor redColor];
+            }else{
+                cell.textColor = [NSColor whiteColor];
+            }
+        }else{
+            cell.textColor = [NSColor whiteColor];
+        }
+    }
 }
 
 
@@ -213,10 +227,12 @@ NSString *RealHomeDirectory() {
     //    sortedArray = [currChildren sortedArrayUsingDescriptors:sortDescriptors];
     //    _rootNode.childrenNodes = sortedArray;
     //    [outlineView reloadData];
-//}
-
+    //}
+    
 }
-
+- (void)outlineViewSelectionDidChange:(NSNotification *)notification{
+    [self updateStatus];
+}
 #pragma mark -
 #pragma mark NSMenuDelegate
 - (void)rightMouseDown:(NSEvent *)theEvent {
@@ -257,7 +273,7 @@ NSString *RealHomeDirectory() {
         NSMenuItem *gotoItemName = [menu itemWithTag:1002];
         if (!gotoItemName)
         {
-            gotoItemName = [[NSMenuItem alloc] initWithTitle:JKLocalizedString(@"Show in Finder",nil) action:@selector(gotoClick:) keyEquivalent:@""];
+            gotoItemName = [[NSMenuItem alloc] initWithTitle:JKLocalizedString(@"Show in Finder",nil) action:@selector(showInFinder:) keyEquivalent:@""];
             [gotoItemName setTarget:self];
             [gotoItemName setTag:1002];
             [menu addItem:gotoItemName];
@@ -286,14 +302,14 @@ NSString *RealHomeDirectory() {
             [exportItem setTag:1003];
             [menu addItem:exportItem];
         }
-//        NSMenuItem *renameItem = [menu itemWithTag:1004];
-//        if (!renameItem)
-//        {
-//            renameItem = [[NSMenuItem alloc] initWithTitle:JKLocalizedString(@"Beautify Filename",nil) action:@selector(renameItemClick:) keyEquivalent:@""];
-//            [renameItem setTarget:self];
-//            [renameItem setTag:1004];
-//            [menu addItem:renameItem];
-//        }
+        //        NSMenuItem *renameItem = [menu itemWithTag:1004];
+        //        if (!renameItem)
+        //        {
+        //            renameItem = [[NSMenuItem alloc] initWithTitle:JKLocalizedString(@"Beautify Filename",nil) action:@selector(renameItemClick:) keyEquivalent:@""];
+        //            [renameItem setTarget:self];
+        //            [renameItem setTag:1004];
+        //            [menu addItem:renameItem];
+        //        }
     }
     if(menu == _mainMenu){
         NSMenuItem *refreshItem = [menu itemWithTag:2000];
@@ -327,43 +343,93 @@ NSString *RealHomeDirectory() {
 
 #pragma mark -
 #pragma mark Operation
+- (void)updateStatus{
+    if([self selectedRowIndexes].count >0){
+        self.statusLabel.stringValue = [NSString stringWithFormat:@"%@ of %@ items selected",[@([self selectedRowIndexes].count) stringValue],[@([_rootNode.childrenNodes count]) stringValue]];
+    }else{
+        self.statusLabel.stringValue = [NSString stringWithFormat:@"%@ items",[@([_rootNode.childrenNodes count]) stringValue]];
+    }
+}
+- (NSIndexSet *)selectedRowIndexes{
+    NSIndexSet *selectedRowIndexes = [self.treeView selectedRowIndexes];
+    //多选
+    if (selectedRowIndexes.count == 0) {
+        //直接右键
+        NSInteger index = [self.treeView clickedRow];
+        if (index >-1){
+            selectedRowIndexes = [NSIndexSet indexSetWithIndex:index];
+        }
+    }
+    return selectedRowIndexes;
+}
+- (NSArray *)activateFileURLs{
+    NSArray *selectedItems = [_rootNode.childrenNodes objectsAtIndexes:[self selectedRowIndexes]];
+    NSMutableArray *activateFileURLs = [NSMutableArray array];
+    for (ProfilesNode *node in selectedItems) {
+        if ([node.filePath length] > 0)
+        {
+            [activateFileURLs addObject:[NSURL fileURLWithPath:node.filePath]];
+        }
+    }
+    return activateFileURLs;
+}
 - (void)deleteItemClick:(id)sender
 {
-    NSInteger index = [self.treeView clickedRow];
-    ProfilesNode *node = [self.treeView itemAtRow:index];
+    NSIndexSet *selectedRowIndexes = [self selectedRowIndexes];
+    NSArray *selectedItems = [_rootNode.childrenNodes objectsAtIndexes:selectedRowIndexes];
     
-    iAlert *alert = [iAlert alertWithTitle:[NSString stringWithFormat:@"%@,%@",JKLocalizedString(@"Confirm Delete Opration",nil),node.type] message:JKLocalizedString(@"Delete this profie item permanently,can't rollback!",nil) style:NSAlertStyleWarning];
+    NSMutableArray *selectedItemNames = [NSMutableArray array];
+    for (ProfilesNode *node in selectedItems) {
+        [selectedItemNames addObject:node.type?:node.filePath];
+    }
+    
+    iAlert *alert = [iAlert alertWithTitle:JKLocalizedString(@"Are you sure delete selected items from disk? After delete operation can't rollback!",nil) message:[selectedItemNames componentsJoinedByString:@",\n"] style:NSAlertStyleWarning];
     [alert addCommonButtonWithTitle:JKLocalizedString(@"Ok", nil) handler:^(iAlertItem *item) {
-        NSLog(@"deleteItem inde%zd",index);
-        if (index == -1) return;
-        
+       
         [self.treeView beginUpdates];
-        [self.treeView removeItemsAtIndexes:[NSIndexSet indexSetWithIndex:index]  inParent:nil withAnimation:NSTableViewAnimationEffectFade];
+        [self.treeView removeItemsAtIndexes:selectedRowIndexes  inParent:nil withAnimation:NSTableViewAnimationEffectFade];
         [self.treeView endUpdates];
         
-        [self deleteProfile:node.filePath option:YES];
-//        [self loadProfileFilesWithSearchWord:_searchWord];
+        for (ProfilesNode *node in selectedItems) {
+            if([self deleteProfile:node.filePath option:YES]){
+                NSMutableArray *temp = [_rootNode.childrenNodes mutableCopy];
+                [temp removeObject:node];
+                _rootNode.childrenNodes = temp;
+            }
+        }
+        [self updateStatus];
     }];
     [alert addButtonWithTitle:JKLocalizedString(@"Cancle", nil)];
     [alert show:self.view.window];
 }
 
 - (void)moveTrashItemClick:(id)sender{
-    NSInteger index = [self.treeView clickedRow];
-    ProfilesNode *node = [self.treeView itemAtRow:index];
+    NSIndexSet *selectedRowIndexes = [self selectedRowIndexes];
+    NSArray *selectedItems = [_rootNode.childrenNodes objectsAtIndexes:selectedRowIndexes];
     
-    iAlert *alert = [iAlert alertWithTitle:JKLocalizedString(@"Warning",nil) message:JKLocalizedString(@"are you sure move item to trash?",nil) style:NSAlertStyleWarning];
+    NSMutableArray *selectedItemNames = [NSMutableArray array];
+    for (ProfilesNode *node in selectedItems) {
+        [selectedItemNames addObject:node.type?:node.filePath];
+    }
+    
+    iAlert *alert = [iAlert alertWithTitle:JKLocalizedString(@"Are you sure move selected items to trash?",nil) message:[selectedItemNames componentsJoinedByString:@",\n"] style:NSAlertStyleWarning];
+    
     [alert addCommonButtonWithTitle:JKLocalizedString(@"Ok", nil) handler:^(iAlertItem *item) {
         
-        NSLog(@"move to trash inde%zd",index);
-        if (index == -1) return;
-        
         [self.treeView beginUpdates];
-        [self.treeView removeItemsAtIndexes:[NSIndexSet indexSetWithIndex:index]  inParent:nil withAnimation:NSTableViewAnimationEffectFade];
+        [self.treeView removeItemsAtIndexes:selectedRowIndexes  inParent:nil withAnimation:NSTableViewAnimationEffectFade];
         [self.treeView endUpdates];
         
-        [self deleteProfile:node.filePath option:NO];
-        [self loadProfileFilesWithSearchWord:_searchWord];
+        for (ProfilesNode *node in selectedItems) {
+            if([self deleteProfile:node.filePath option:NO]){
+                NSMutableArray *temp = [_rootNode.childrenNodes mutableCopy];
+                [temp removeObject:node];
+                _rootNode.childrenNodes = temp;
+            }
+         }
+        [self updateStatus];
+
+//        [self loadProfileFilesWithSearchWord:_searchWord];
     }];
     
     [alert addButtonWithTitle:JKLocalizedString(@"Cancle", nil)];
@@ -371,19 +437,11 @@ NSString *RealHomeDirectory() {
 }
 
 
-//goto
-- (void)gotoClick:(id)sender
+//showInFinder
+- (void)showInFinder:(id)sender
 {
-    NSInteger index = [self.treeView clickedRow];
-    if (index == -1) return;
-    ProfilesNode *node = [self.treeView itemAtRow:index];
-    if ([node.filePath length] > 0)
-    {
-        //打开文件
-        //[[NSWorkspace sharedWorkspace] openFile:node.filePath];
-        // 打开文件夹
-        [[NSWorkspace sharedWorkspace] selectFile:node.filePath inFileViewerRootedAtPath:@""];
-    }
+    NSArray *activateFileURLs =[self activateFileURLs];
+    [[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:activateFileURLs];
 }
 ////beautify filename
 //- (void)renameItemClick:(id)sender{
@@ -480,12 +538,11 @@ NSString *RealHomeDirectory() {
 #pragma mark --filemanager
 
 //delete and move
-- (BOOL)deleteProfile:(NSString*)filePath option:(BOOL)totle{
+- (BOOL)deleteProfile:(NSString*)filePath option:(BOOL)completely {
     NSError *error;
     BOOL result = NO;
-    if (totle) {
+    if (completely) {
         result =  [[NSFileManager defaultManager] removeItemAtPath:filePath error:&error];
-        
     }else{
         result = [[NSFileManager defaultManager] mr_moveFileAtPathToTrash:filePath error:&error];
     }
