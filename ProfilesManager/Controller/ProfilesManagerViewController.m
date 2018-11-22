@@ -33,7 +33,9 @@ static NSString *kColumnIdentifierCreateDate = @"creationDate";
     [super viewDidLoad];
     // Do view setup here.
     _profileDir = [NSString stringWithFormat:@"%@/Library/MobileDevice/Provisioning Profiles/", [[NSFileManager defaultManager] realHomeDirectory]];
-    
+    if(![[NSFileManager defaultManager] fileExistsAtPath:_profileDir]){
+        [[NSFileManager defaultManager] createDirectoryAtPath:_profileDir withIntermediateDirectories:YES attributes:nil error:nil];
+    }
     //当拖拽窗口大小，NSOutlineView frame自动更改时，Column宽等比增减
     [self.treeView setColumnAutoresizingStyle:NSTableViewUniformColumnAutoresizingStyle];
     //最后一行自动宽等比增减
