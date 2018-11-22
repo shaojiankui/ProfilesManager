@@ -37,4 +37,8 @@ static DateManager *_dateManager = nil;
     [_dateForrmatter setDateFormat:@"yyyy-MM-dd HH:mm"];
     return [_dateForrmatter stringFromDate:date];
 }
+- (NSString *)stringConvert_Y_M_D_H_M_FromDate:(NSDate *)date{
+    [_dateForrmatter setDateFormat:@"yyyy-MM-dd-HH-mm"];
+    return [_dateForrmatter stringFromDate:date];
+}
 @end

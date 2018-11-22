@@ -15,7 +15,8 @@
 @interface ProfilesManagerViewController : NSViewController<NSOutlineViewDataSource,NSOutlineViewDelegate,NSMenuDelegate>
 {
     NSString *_profileDir;
-    
+    NSString *_backupDir;
+
     NSMenu *_itemMenu;
     NSMenu *_certificateMenu;
     NSMenu *_mainMenu;

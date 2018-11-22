@@ -21,6 +21,8 @@
 "Warning" = "警告";
 "Are you sure delete selected items from disk? After delete operation can't rollback!" = "确定将选中的所有文件从磁盘删除? 删除之后不可回滚!";
 "Are you sure move selected items to trash?" = "确定将选中的所有文件移动到废纸篓么?";
+"The profile installed by double click fileaname format is 'uuid+ext',it‘s very hard identify.\nare you sure rename profile filename? this will take 5 seconds！\nthe new filename is: " = "通过双击安装的Profie文件名格式为'uuid+ext'，很难辨别。\n确定重命名配置文件么? 这将需要5秒！\n新文件名为：";
+"The filename no need beautify" = "文件名不需要美化";
 "Export" = "导出";
 "Beautify Filename" = "美化文件名";
 "Provision QuickLook Plug-in is already Installed" = "描述文件快速查看插件已经安装";

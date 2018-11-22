@@ -2,6 +2,9 @@
 iOS Provisioning Profiles, .mobileprovision files manager tool for mac
 
 ## Features
+### 2.4
+- Right-click Item Beautify Filename 右键美化物理文件名，通过双击安装的描述文件名都是UUID，美化过后与AppStore描述文件名一致。
+ 
 ### 2.3
 - onekey uninstall or install quicklook plug-in,support view the .ipa/.xcarchive/.appex/.mobileprovision/.provisionprofile files directly use the the blank space key.   点击左上角的快速预览按钮，安装插件。插件可以直接预览后缀为.ipa/.xcarchive/.appex/.mobileprovision/.provisionprofile的文件,在文件上空格即可.
 
@@ -15,11 +18,11 @@ iOS Provisioning Profiles, .mobileprovision files manager tool for mac
 
 ### 1.0
 - tree look all profiles 树形查看电脑中所有描述文件
-- export cer from profile 从描述文件中导出cer证书文件
-- move to trash  移动到废纸篓
-- show in finder  在finder中显示
+- Right-click DeveloperCertificates field item export cer from profile 右键DeveloperCertificates字段里的内容从描述文件中导出cer证书文件
+- Right-click Item move to trash  右键移动到废纸篓
+- Right-click Item show in finder  右键在finder中显示
 - drag muti files install   拖拽描述文件文件直接安装
-- export profile 导出描述文件
+- Right-click Item export profile 右键导出描述文件
 - drag into and look ipa profile or plist directly 拖入ipa快速查看描述文件与info.plist信息
 
 

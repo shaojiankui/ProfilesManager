@@ -13,7 +13,7 @@
 #import "iAlert.h"
 #import "PreviewViewController.h"
 #import "PlistManager.h"
-
+#import "DateManager.h"
 //#include <unistd.h>
 //#include <sys/types.h>
 //#include <pwd.h>
@@ -32,10 +32,20 @@ static NSString *kColumnIdentifierCreateDate = @"creationDate";
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do view setup here.
+    [self createDir];
+    [self treeViewBuilder];
+}
+- (void)createDir{
     _profileDir = [NSString stringWithFormat:@"%@/Library/MobileDevice/Provisioning Profiles/", [[NSFileManager defaultManager] realHomeDirectory]];
+    _backupDir = [NSString stringWithFormat:@"%@/Library/MobileDevice/Provisioning Profiles Rename Backup/", [[NSFileManager defaultManager] realHomeDirectory]];
+    if(![[NSFileManager defaultManager] fileExistsAtPath:_backupDir]){
+        [[NSFileManager defaultManager] createDirectoryAtPath:_backupDir withIntermediateDirectories:YES attributes:nil error:nil];
+    }
     if(![[NSFileManager defaultManager] fileExistsAtPath:_profileDir]){
         [[NSFileManager defaultManager] createDirectoryAtPath:_profileDir withIntermediateDirectories:YES attributes:nil error:nil];
     }
+}
+- (void)treeViewBuilder{
     //当拖拽窗口大小，NSOutlineView frame自动更改时，Column宽等比增减
     [self.treeView setColumnAutoresizingStyle:NSTableViewUniformColumnAutoresizingStyle];
     //最后一行自动宽等比增减
@@ -55,8 +65,8 @@ static NSString *kColumnIdentifierCreateDate = @"creationDate";
                 {
                     [iAlert showMessage:[error localizedDescription]
                                  window:self.view.window completionHandler:^(NSModalResponse returnCode) {
-                        
-                    }];
+                                     
+                                 }];
                 }
             }
             [self loadProfileFilesWithSearchWord:_searchWord];
@@ -66,9 +76,7 @@ static NSString *kColumnIdentifierCreateDate = @"creationDate";
             [self presentViewControllerAsModalWindow:preview];
         }
     }];
-    
 }
-
 - (void)loadProfileFilesWithSearchWord:(NSString*)searchWord {
     _searchWord = searchWord;
     
@@ -287,14 +295,14 @@ static NSString *kColumnIdentifierCreateDate = @"creationDate";
             [exportItem setTag:1003];
             [menu addItem:exportItem];
         }
-        //        NSMenuItem *renameItem = [menu itemWithTag:1004];
-        //        if (!renameItem)
-        //        {
-        //            renameItem = [[NSMenuItem alloc] initWithTitle:JKLocalizedString(@"Beautify Filename",nil) action:@selector(renameItemClick:) keyEquivalent:@""];
-        //            [renameItem setTarget:self];
-        //            [renameItem setTag:1004];
-        //            [menu addItem:renameItem];
-        //        }
+        NSMenuItem *renameItem = [menu itemWithTag:1004];
+        if (!renameItem)
+        {
+            renameItem = [[NSMenuItem alloc] initWithTitle:JKLocalizedString(@"Beautify Filename",nil) action:@selector(renameItemClick:) keyEquivalent:@""];
+            [renameItem setTarget:self];
+            [renameItem setTag:1004];
+            [menu addItem:renameItem];
+        }
     }
     if(menu == _mainMenu){
         NSMenuItem *refreshItem = [menu itemWithTag:2000];
@@ -428,25 +436,38 @@ static NSString *kColumnIdentifierCreateDate = @"creationDate";
     NSArray *activateFileURLs =[self activateFileURLs];
     [[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:activateFileURLs];
 }
-////beautify filename
-//- (void)renameItemClick:(id)sender{
-//    NSInteger index = [self.treeView clickedRow];
-//    ProfilesNode *node = [self.treeView itemAtRow:index];
-//    
-//    iAlert *alert = [iAlert alertWithTitle:JKLocalizedString(@"Warning",nil) message:JKLocalizedString(@"are you sure rename profile filename ?",nil) style:NSAlertStyleWarning];
-//    [alert addCommonButtonWithTitle:JKLocalizedString(@"Ok", nil) handler:^(iAlertItem *item) {
-//        
-//        if (index == -1) return;
-//        if ([self renameFileAtPath:node.filePath toName:node.type]) {
-//            [self.treeView beginUpdates];
-//            [self.treeView reloadItem:node];
-//            [self.treeView endUpdates];
-//        }
-//    }];
-//    
-//    [alert addButtonWithTitle:JKLocalizedString(@"Cancle", nil)];
-//    [alert show:self.view.window];
-//}
+//beautify filename
+- (void)renameItemClick:(id)sender{
+    NSInteger index = [self.treeView clickedRow];
+    ProfilesNode *node = [self.treeView itemAtRow:index];
+    
+    if([node.filePath.lastPathComponent hasPrefix:node.type]){
+        [iAlert showMessage:JKLocalizedString(@"The filename no need beautify",nil) window:self.view.window completionHandler:^(NSModalResponse returnCode) {
+            
+        }];
+        return;
+    }
+    
+ 
+    NSString *msg = JKLocalizedString(@"The profile installed by double click fileaname format is 'uuid+ext',it‘s very hard identify.\nare you sure rename profile filename? this will take 5 seconds！\nthe new filename is: ",nil);
+    
+    iAlert *alert = [iAlert alertWithTitle:JKLocalizedString(@"Warning",nil) message:[NSString stringWithFormat:@"%@%@",msg,node.type] style:NSAlertStyleWarning];
+    [alert addCommonButtonWithTitle:JKLocalizedString(@"Ok", nil) handler:^(iAlertItem *item) {
+        
+        if (index == -1) return;
+        NSString *newPath = [self renameFileAtPath:node.filePath toName:node.type];
+        if (newPath && newPath.length>0) {
+            node.filePath = newPath;
+            node.key = [newPath lastPathComponent];
+            [self.treeView beginUpdates];
+            [self.treeView reloadItem:node];
+            [self.treeView endUpdates];
+        }
+    }];
+    
+    [alert addButtonWithTitle:JKLocalizedString(@"Cancle", nil)];
+    [alert show:self.view.window];
+}
 //export Item to file
 - (void)exportItemClick:(id)sender {
     NSInteger index = [self.treeView clickedRow];
@@ -480,7 +501,7 @@ static NSString *kColumnIdentifierCreateDate = @"creationDate";
     NSOpenPanel *oPanel = [NSOpenPanel openPanel];
     [oPanel setCanChooseDirectories:YES];
     [oPanel setDirectoryURL:[NSURL URLWithString:NSHomeDirectory()]];
-    [oPanel setAllowedFileTypes:@[@"mobileprovision", @"MOBILEPROVISION"]];
+    [oPanel setAllowedFileTypes:@[@"mobileprovision", @"MOBILEPROVISION",@"provisionprofile"]];
     
     if ([oPanel runModal] == NSModalResponseOK) {
         NSString *path =[[[oPanel URLs] objectAtIndex:0] path];
@@ -542,25 +563,33 @@ static NSString *kColumnIdentifierCreateDate = @"creationDate";
     return result;
 }
 
-//-(BOOL)renameFileAtPath:(NSString *)oldPath toName:(NSString *)toName {
-//    BOOL result = NO;
-//    NSError * error = nil;
-//    NSString *toPath = [[[oldPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:toName] stringByAppendingPathExtension:@"mobileprovision"];
-//
-//    NSString *tempFolder = [[oldPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:@"temp"];
-//    if (![[NSFileManager defaultManager] fileExistsAtPath:tempFolder]) {
-//        [[NSFileManager defaultManager] createDirectoryAtPath:tempFolder withIntermediateDirectories:YES attributes:nil error:nil];
-//    }
-//    NSString *tempPath =  [tempFolder stringByAppendingPathComponent:oldPath.lastPathComponent];
-//
-//     result = [[NSFileManager defaultManager] copyItemAtURL:[NSURL fileURLWithPath:oldPath] toURL:[NSURL fileURLWithPath:tempPath] error:&error];
-//
-//    result = [[NSFileManager defaultManager] copyItemAtURL:[NSURL fileURLWithPath:tempPath] toURL:[NSURL fileURLWithPath:toPath] error:&error];
-//
-//    if (error){ NSLog(@"重命名失败：%@",[error localizedDescription]);
-//
-//    }
-//    return result;
-//}
+-(NSString *)renameFileAtPath:(NSString *)oldPath toName:(NSString *)toName {
+    BOOL result = NO;
+    NSError * error = nil;
+    
+    NSString *ext = oldPath.pathExtension;
+    
+    NSString *time = [[DateManager sharedManager] stringConvert_Y_M_D_H_M_FromDate:[NSDate date]];
+
+    
+    NSString *toPath = [[[_backupDir stringByAppendingPathComponent:toName] stringByAppendingString:time] stringByAppendingPathExtension:ext];
+
+    
+    NSString *newPath = [[_profileDir stringByAppendingPathComponent:toName] stringByAppendingPathExtension:ext];
+ 
+    result = [[NSFileManager defaultManager] moveItemAtPath:oldPath toPath:toPath error:&error];
+    //Provisioning Profiles文件比较特殊 直接改名会被系统自动删掉
+    sleep(5);
+    result = [[NSFileManager defaultManager] copyItemAtURL:[NSURL fileURLWithPath:toPath] toURL:[NSURL fileURLWithPath:newPath] error:&error];
+
+    if (error){
+        [iAlert showAlert:NSAlertStyleWarning title:@"" message:[error localizedDescription]];
+        NSLog(@"重命名失败：%@",[error localizedDescription]);
+    }
+    if(result){
+        return newPath;
+    }
+    return nil;
+}
 
 @end

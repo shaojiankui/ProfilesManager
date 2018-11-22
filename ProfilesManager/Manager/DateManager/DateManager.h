@@ -12,4 +12,5 @@
 @interface DateManager : NSObject
 + (DateManager *)sharedManager;
 - (NSString *)stringConvert_YMDHM_FromDate:(NSDate *)date;
+- (NSString *)stringConvert_Y_M_D_H_M_FromDate:(NSDate *)date;
 @end
