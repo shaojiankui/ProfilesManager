@@ -104,7 +104,14 @@
     }
 }
 - (void)installProvisionQL{
-    NSString *installURL = [[[NSFileManager defaultManager] realHomeDirectory] stringByAppendingPathComponent:@"/Library/QuickLook/ProvisionQL.qlgenerator"];
+    NSString *quickLook = [[[NSFileManager defaultManager] realHomeDirectory] stringByAppendingPathComponent:@"/Library/QuickLook"];
+
+    NSString *installURL = [quickLook stringByAppendingPathComponent:@"ProvisionQL.qlgenerator"];
+    
+    if(![[NSFileManager defaultManager] fileExistsAtPath:quickLook]){
+        [[NSFileManager defaultManager] createDirectoryAtPath:quickLook withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+    
     NSString *provisionQLURL = [[NSBundle mainBundle] pathForResource:@"ProvisionQL" ofType:@"qlgenerator"];
 
     NSString *function = JKLocalizedString(@"the plug-in can view the .ipa/.xcarchive/.appex/.mobileprovision/.provisionprofile files directly use the the blank space key.", nil);
