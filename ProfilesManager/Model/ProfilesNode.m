@@ -67,7 +67,7 @@
                 }
             }
             info = [dict copy];
-
+            
         }
         if ([info isKindOfClass:[NSDictionary class]]) {
             _type = @"Dictionary";
@@ -78,20 +78,38 @@
             _detail = [NSString stringWithFormat:@"%lu items", (unsigned long)[dict count]];
             _uuid = [dict objectForKey:@"UUID"];
             _filePath = [dict objectForKey:@"filePath"];
-            _expirationDate = [[DateManager sharedManager] stringConvert_YMDHM_FromDate:[dict objectForKey:@"ExpirationDate"]];
-            _expirationDate = [[DateManager sharedManager] stringConvert_YMDHM_FromDate:[dict objectForKey:@"ExpirationDate"]];
-            _creationDate= [[DateManager sharedManager] stringConvert_YMDHM_FromDate:[dict objectForKey:@"CreationDate"]];
             
             if(_uuid){
                 NSDate *expiration = [dict objectForKey:@"ExpirationDate"];
                 _detail =  [[NSDate date] compare:expiration] == NSOrderedDescending ?JKLocalizedString(@"Expired",nil):JKLocalizedString(@"Valid",nil);
                 _type  =  [dict objectForKey:@"Name"];
             }
-            
-            for (NSString *key in dict) {
-                ProfilesNode *child = [[ProfilesNode alloc]initWithRootNode:self originInfo:dict[key] key:key];
-                [children addObject:child];
+            if(rootNode){
+                //root
+                
+                _expirationDate = [dict objectForKey:@"ExpirationDate"];
+                _creationDate= [dict objectForKey:@"CreationDate"];
+                NSInteger days = [self getDaysFrom:[NSDate date] endDate:_expirationDate];
+                _days = [@(days) stringValue];
+                for (NSString *key in dict) {
+                    ProfilesNode *child = [[ProfilesNode alloc]initWithRootNode:self originInfo:dict[key] key:key];
+                    [children addObject:child];
+                }
+                
+            }else{
+                NSArray *keys = [dict allKeys];
+                for (int i=0;i<[keys count];i++) {
+                    NSString *key = [keys objectAtIndex:i];
+                    NSString *bundleID =  [[[dict objectForKey:key] objectForKey:@"Entitlements"] objectForKey:@"application-identifier"];
+                    
+                    ProfilesNode *child = [[ProfilesNode alloc]initWithRootNode:self originInfo:dict[key] key:bundleID];
+                    [children addObject:child];
+                }
+                [children sortUsingComparator:^NSComparisonResult(ProfilesNode *obj1, ProfilesNode *obj2) {
+                    return [obj2.expirationDate compare:obj1.expirationDate];
+                }];
             }
+            
             _childrenNodes = [NSArray arrayWithArray:children];
         }
         else if([info isKindOfClass:[NSArray class]]) {
@@ -124,16 +142,16 @@
                 _type = @"Data";
                 _detail = [info jk_base64EncodedString];
                 if ([self.rootNode.key isEqualToString:@"DeveloperCertificates"]) {
-                   NSDictionary *cerInfo =  [self parseCertificate:info];
+                    NSDictionary *cerInfo =  [self parseCertificate:info];
                     _extra = cerInfo;
                     _key  = [NSString stringWithFormat:@"%@",[cerInfo objectForKey:@"summary"]];
-//                    _name = [cerInfo  objectForKey:@"invalidity"];
+                    //                    _name = [cerInfo  objectForKey:@"invalidity"];
                     _type = @".cer";
                 }
-//                [info writeToFile:[@"/Users/Jakey/Downloads/" stringByAppendingPathComponent:@"info.cer"] atomically:YES];
-//                -----BEGIN CERTIFICATE-----
-//                  _detail
-//                -----END CERTIFICATE-----
+                //                [info writeToFile:[@"/Users/Jakey/Downloads/" stringByAppendingPathComponent:@"info.cer"] atomically:YES];
+                //                -----BEGIN CERTIFICATE-----
+                //                  _detail
+                //                -----END CERTIFICATE-----
             }
         }
         
@@ -191,7 +209,7 @@
                 else {
                     NSLog(@"No invalidity values in '%@' certificate, dictionary = %@", summary, valuesDict);
                     [detailsDict setObject:@"No invalidity values" forKey:devCertInvalidityDateKey];
-
+                    
                 }
                 
                 CFRelease(valuesDict);
@@ -208,7 +226,26 @@
         CFRelease(certificateRef);
     }
     return detailsDict;
-
+    
 }
+-(NSInteger)getDaysFrom:(NSDate *)date endDate:(NSDate *)endDate
+{
+    if(!date || !endDate){
+        return 0;
+    }
+    NSCalendar *gregorian = [[NSCalendar alloc]
+    initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    [gregorian setFirstWeekday:2];
+    NSDate *fromDate;
+    NSDate *toDate;
+    [gregorian rangeOfUnit:NSCalendarUnitDay startDate:&fromDate interval:NULL forDate:date];
+    [gregorian rangeOfUnit:NSCalendarUnitDay startDate:&toDate interval:NULL forDate:endDate];
+    NSDateComponents *dayComponents = [gregorian components:NSCalendarUnitDay fromDate:fromDate toDate:toDate options:0];
+    if(dayComponents.day<0){
+        return 0;
+    }
+    return dayComponents.day;
+}
+
 @end
 

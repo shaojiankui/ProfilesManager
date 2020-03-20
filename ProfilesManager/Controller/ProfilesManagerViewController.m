@@ -25,6 +25,7 @@ static NSString *kColumnIdentifierDetal = @"detail";
 //    static NSString *kColumnIdentifierUUID = @"uuid";
 static NSString *kColumnIdentifierExpirationDate = @"expirationDate";
 static NSString *kColumnIdentifierCreateDate = @"creationDate";
+static NSString *kColumnIdentifierCreateDays = @"days";
 
 @implementation ProfilesManagerViewController
 
@@ -83,12 +84,15 @@ static NSString *kColumnIdentifierCreateDate = @"creationDate";
     NSArray *profileNames =  [[[NSFileManager defaultManager] subpathsAtPath:_profileDir] pathsMatchingExtensions:@[@"mobileprovision", @"MOBILEPROVISION", @"provisionprofile", @"PROVISIONPROFILE"]];
 
     NSMutableDictionary *provisions = [NSMutableDictionary dictionary];
-    for (NSString *fileName in profileNames) {
+    for (NSUInteger i=0;i<[profileNames count];i++) {
+        NSString *fileName = [profileNames objectAtIndex:i];
+        
         NSString *plistString;
-        NSMutableDictionary *dic = (NSMutableDictionary *)[PlistManager readPlist:[_profileDir stringByAppendingString:fileName ? : @""] plistString:&plistString];
-        dic[@"filePath"] = [_profileDir stringByAppendingString:fileName ? : @""];
+        NSMutableDictionary *dic = (NSMutableDictionary *)[PlistManager readPlist:[_profileDir stringByAppendingString:fileName?:@""] plistString:&plistString];
+        dic[@"filePath"] = [_profileDir stringByAppendingString:fileName?:@""];
 
-        if (dic && fileName) {
+    
+         if (dic && fileName) {
             if ([searchWord lowercaseString] && searchWord.length > 0) {
                 if ([[plistString lowercaseString] rangeOfString:[searchWord lowercaseString]].location != NSNotFound) {
                     provisions[fileName] = dic;
@@ -139,9 +143,11 @@ static NSString *kColumnIdentifierCreateDate = @"creationDate";
     } else if ([[tableColumn identifier] isEqualToString:kColumnIdentifierDetal]) {
         return realItem.detail;
     } else if ([[tableColumn identifier] isEqualToString:kColumnIdentifierExpirationDate]) {
-        return realItem.expirationDate;
+        return  [[DateManager sharedManager] stringConvert_YMDHM_FromDate:realItem.expirationDate];
     } else if ([[tableColumn identifier] isEqualToString:kColumnIdentifierCreateDate]) {
-        return realItem.creationDate;
+        return [[DateManager sharedManager] stringConvert_YMDHM_FromDate:realItem.creationDate];
+    }else if ([[tableColumn identifier] isEqualToString:kColumnIdentifierCreateDays]) {
+        return realItem.days;
     }
     return @"";
 }
@@ -199,20 +205,6 @@ static NSString *kColumnIdentifierCreateDate = @"creationDate";
     sortedArray = [currChildren sortedArrayUsingDescriptors:@[sortDescriptor]];
     _rootNode.childrenNodes = sortedArray;
     [outlineView reloadData];
-    //    NSSortDescriptor *sortDescriptor;
-    //
-    //    NSString *key=[[[outlineView sortDescriptors] objectAtIndex:0] key];
-    //    BOOL isAscending=[[[outlineView sortDescriptors] objectAtIndex:0] ascending];
-    //
-    //    sortDescriptor = [[NSSortDescriptor alloc] initWithKey:key ascending:isAscending] ;
-    //    NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
-    //    NSArray *sortedArray;
-    //
-    //    NSMutableArray *currChildren= [_rootNode.childrenNodes mutableCopy];
-    //    sortedArray = [currChildren sortedArrayUsingDescriptors:sortDescriptors];
-    //    _rootNode.childrenNodes = sortedArray;
-    //    [outlineView reloadData];
-    //}
 }
 
 - (void)outlineViewSelectionDidChange:(NSNotification *)notification {

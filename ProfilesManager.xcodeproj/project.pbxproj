@@ -369,7 +369,7 @@
 			};
 			buildConfigurationList = A21193141AF1CA5B0064CA7D /* Build configuration list for PBXProject "ProfilesManager" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,

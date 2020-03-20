@@ -22,9 +22,10 @@
 @property (nonatomic, copy)NSString *uuid;
 @property (nonatomic, copy)NSString *filePath;
 @property (nonatomic, strong)NSDictionary *extra;
-@property (nonatomic, copy)NSString *expirationDate;
-@property (nonatomic, copy)NSString *creationDate;
-
+@property (nonatomic, strong)NSDate *expirationDate;
+@property (nonatomic, strong)NSDate *creationDate;
+ 
+@property (nonatomic, copy)NSString *days;
 - (id)initWithRootNode:(ProfilesNode *)rootNote originInfo:(id)info key:(NSString*)key;
 
 @end
