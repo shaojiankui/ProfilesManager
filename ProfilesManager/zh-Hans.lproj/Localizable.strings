@@ -13,6 +13,8 @@
 "Refresh Table" = "刷新列表";
 "Import Profile" = "导入Profile";
 "Export Certificate File"   = "导出证书文件";
+"Copy Certificate Name"   = "复制证书名称";
+
 "Expired"   = "过期";
 "Valid"   = "有效";
 "Ok"   = "确定";

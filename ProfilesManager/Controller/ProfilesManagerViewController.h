@@ -19,6 +19,7 @@
 
     NSMenu *_itemMenu;
     NSMenu *_certificateMenu;
+
     NSMenu *_mainMenu;
     
     ProfilesNode *_rootNode;

@@ -14,6 +14,8 @@
 "Refresh table" = "Refresh";
 "Import profile"  = "Import Profile";
 "Export Certificate File"   = "Export Certificate File";
+"Copy Certificate Name"   = "Copy Certificate Common Name";
+
 "Expired"   = "Expired";
 "Valid"   = "Valid";
 "Ok"   = "Ok";
