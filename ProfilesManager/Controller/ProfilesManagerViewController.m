@@ -314,6 +314,14 @@ static NSString *kColumnIdentifierCreateDays = @"days";
             [exportItem setTag:3001];
             [menu addItem:exportItem];
         }
+        
+        NSMenuItem *copyNameItem = [menu itemWithTag:3002];
+        if (!copyNameItem) {
+            copyNameItem = [[NSMenuItem alloc] initWithTitle:JKLocalizedString(@"Copy Certificate Name", nil) action:@selector(copyCertificateNameItemClick:) keyEquivalent:@""];
+            [copyNameItem setTarget:self];
+            [copyNameItem setTag:3002];
+            [menu addItem:copyNameItem];
+        }
     }
 }
 
@@ -415,11 +423,13 @@ static NSString *kColumnIdentifierCreateDays = @"days";
 //copyProfilePath
 - (void)copyProfilePath:(id)sender
 {
-    NSArray *activateFileURLs = [self activateFileURLs];
-    NSURL *url = activateFileURLs.firstObject;
-    NSPasteboard *paste = [NSPasteboard generalPasteboard];
-    [paste clearContents];
-    [paste setString:url.path forType:NSPasteboardTypeString];
+    NSArray *selectedItems = [_rootNode.childrenNodes objectsAtIndexes:[self selectedRowIndexes]];
+    if (selectedItems.count > 0) {
+        ProfilesNode *node = selectedItems.firstObject;
+        NSPasteboard *paste = [NSPasteboard generalPasteboard];
+        [paste clearContents];
+        [paste setString:node.filePath forType:NSPasteboardTypeString];
+    }
 }
 
 //showInFinder
@@ -529,6 +539,17 @@ static NSString *kColumnIdentifierCreateDays = @"days";
         }
     }
 }
+
+- (void)copyCertificateNameItemClick:(id)sender
+{
+    NSInteger index = [self.treeView clickedRow];
+    if (index == -1) return;
+    ProfilesNode *node = [self.treeView itemAtRow:index];
+    NSPasteboard *paste = [NSPasteboard generalPasteboard];
+    [paste clearContents];
+    [paste setString:node.key forType:NSPasteboardTypeString];
+}
+
 
 #pragma mark --filemanager
 
