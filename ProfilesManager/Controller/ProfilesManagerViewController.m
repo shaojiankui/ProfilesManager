@@ -55,7 +55,7 @@ static NSString *kColumnIdentifierCreateDays = @"days";
     //app第一次运行Column 最后一行自动宽等比增减，否则会有滚动条
     [self.treeView sizeToFit];
     self.treeView.allowsMultipleSelection = YES;
-
+    
     [self loadProfileFilesWithSearchWord:_searchWord];
     //drag file
     [self.treeView didDragEndBlock:^(NSArray *list, NSOutlineView *view) {
@@ -80,9 +80,9 @@ static NSString *kColumnIdentifierCreateDays = @"days";
 
 - (void)loadProfileFilesWithSearchWord:(NSString *)searchWord {
     _searchWord = searchWord;
-
+    
     NSArray *profileNames =  [[[NSFileManager defaultManager] subpathsAtPath:_profileDir] pathsMatchingExtensions:@[@"mobileprovision", @"MOBILEPROVISION", @"provisionprofile", @"PROVISIONPROFILE"]];
-
+    
     NSMutableDictionary *provisions = [NSMutableDictionary dictionary];
     for (NSUInteger i=0;i<[profileNames count];i++) {
         NSString *fileName = [profileNames objectAtIndex:i];
@@ -90,9 +90,9 @@ static NSString *kColumnIdentifierCreateDays = @"days";
         NSString *plistString;
         NSMutableDictionary *dic = (NSMutableDictionary *)[PlistManager readPlist:[_profileDir stringByAppendingString:fileName?:@""] plistString:&plistString];
         dic[@"filePath"] = [_profileDir stringByAppendingString:fileName?:@""];
-
-    
-         if (dic && fileName) {
+        
+        
+        if (dic && fileName) {
             if ([searchWord lowercaseString] && searchWord.length > 0) {
                 if ([[plistString lowercaseString] rangeOfString:[searchWord lowercaseString]].location != NSNotFound) {
                     provisions[fileName] = dic;
@@ -106,7 +106,7 @@ static NSString *kColumnIdentifierCreateDays = @"days";
     _rootNode = node;
     [self.treeView reloadData];
     [self updateStatus];
-
+    
     for (NSTableColumn *tableColumn in self.treeView.tableColumns) {
         NSSortDescriptor *sortStates = [NSSortDescriptor sortDescriptorWithKey:tableColumn.identifier
                                                                      ascending:NO comparator:^(id obj1, id obj2) {
@@ -135,7 +135,7 @@ static NSString *kColumnIdentifierCreateDays = @"days";
 
 - (id)outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(NSTableColumn *)tableColumn byItem:(id)item {
     ProfilesNode *realItem = item ? : _rootNode;
-
+    
     if ([[tableColumn identifier] isEqualToString:kColumnIdentifierKey]) {
         return realItem.key;
     } else if ([[tableColumn identifier] isEqualToString:kColumnIdentifierType]) {
@@ -161,7 +161,7 @@ static NSString *kColumnIdentifierCreateDays = @"days";
 
 - (void)outlineView:(NSOutlineView *)outlineView willDisplayCell:(NSTextFieldCell *)cell forTableColumn:(NSTableColumn *)tableColumn item:(id)item {
     ProfilesNode *realItem = item ? : _rootNode;
-
+    
     if ([outlineView parentForItem:item] == nil) {
         if ([[tableColumn identifier] isEqualToString:kColumnIdentifierType]) {
             cell.textColor = [NSColor blackColor];
@@ -183,7 +183,7 @@ static NSString *kColumnIdentifierCreateDays = @"days";
             [cell setMenu:nil];
         }
     }
-
+    
     if (cell.highlighted) {
         if ([[tableColumn identifier] isEqualToString:kColumnIdentifierDetal]) {
             if ([realItem.detail isEqualToString:@"Expired"] || [realItem.detail isEqualToString:@"过期"]) {
@@ -199,7 +199,7 @@ static NSString *kColumnIdentifierCreateDays = @"days";
 
 - (void)outlineView:(NSOutlineView *)outlineView sortDescriptorsDidChange:(NSArray<NSSortDescriptor *> *)oldDescriptors {
     NSSortDescriptor *sortDescriptor = [[outlineView sortDescriptors] objectAtIndex:0];
-
+    
     NSArray *sortedArray;
     NSMutableArray *currChildren = [_rootNode.childrenNodes mutableCopy];
     sortedArray = [currChildren sortedArrayUsingDescriptors:@[sortDescriptor]];
@@ -253,7 +253,7 @@ static NSString *kColumnIdentifierCreateDays = @"days";
             [copyPathItem setTag:1007];
             [menu addItem:copyPathItem];
         }
-
+        
         NSMenuItem *gotoItemName = [menu itemWithTag:1002];
         if (!gotoItemName) {
             gotoItemName = [[NSMenuItem alloc] initWithTitle:JKLocalizedString(@"Show in Finder", nil) action:@selector(showInFinder:) keyEquivalent:@""];
@@ -314,13 +314,21 @@ static NSString *kColumnIdentifierCreateDays = @"days";
             [exportItem setTag:3001];
             [menu addItem:exportItem];
         }
+      
         
-        NSMenuItem *copyNameItem = [menu itemWithTag:3002];
-        if (!copyNameItem) {
-            copyNameItem = [[NSMenuItem alloc] initWithTitle:JKLocalizedString(@"Copy Certificate Name", nil) action:@selector(copyCertificateNameItemClick:) keyEquivalent:@""];
-            [copyNameItem setTarget:self];
-            [copyNameItem setTag:3002];
-            [menu addItem:copyNameItem];
+        NSMenuItem *copySha1Item = [menu itemWithTag:3003];
+        if (!copySha1Item) {
+            copySha1Item = [[NSMenuItem alloc] initWithTitle:JKLocalizedString(@"Copy Certificate SHA1", nil) action:@selector(copyCertificateSha1ItemClick:) keyEquivalent:@""];
+            [copySha1Item setTarget:self];
+            [copySha1Item setTag:3003];
+            [menu addItem:copySha1Item];
+        }
+        NSMenuItem *copySha256Item = [menu itemWithTag:3004];
+        if (!copySha256Item) {
+            copySha256Item = [[NSMenuItem alloc] initWithTitle:JKLocalizedString(@"Copy Certificate SHA256", nil) action:@selector(copyCertificateSha256ItemClick:) keyEquivalent:@""];
+            [copySha256Item setTarget:self];
+            [copySha256Item setTag:3004];
+            [menu addItem:copySha256Item];
         }
     }
 }
@@ -363,18 +371,18 @@ static NSString *kColumnIdentifierCreateDays = @"days";
 {
     NSIndexSet *selectedRowIndexes = [self selectedRowIndexes];
     NSArray *selectedItems = [_rootNode.childrenNodes objectsAtIndexes:selectedRowIndexes];
-
+    
     NSMutableArray *selectedItemNames = [NSMutableArray array];
     for (ProfilesNode *node in selectedItems) {
         [selectedItemNames addObject:node.type ? : node.filePath];
     }
-
+    
     iAlert *alert = [iAlert alertWithTitle:JKLocalizedString(@"Are you sure delete selected items from disk? After delete operation can't rollback!", nil) message:[selectedItemNames componentsJoinedByString:@",\n"] style:NSAlertStyleWarning];
     [alert addCommonButtonWithTitle:JKLocalizedString(@"Ok", nil) handler:^(iAlertItem *item) {
         [self.treeView beginUpdates];
         [self.treeView removeItemsAtIndexes:selectedRowIndexes inParent:nil withAnimation:NSTableViewAnimationEffectFade];
         [self.treeView endUpdates];
-
+        
         for (ProfilesNode *node in selectedItems) {
             if ([self deleteProfile:node.filePath option:YES]) {
                 NSMutableArray *temp = [_rootNode.childrenNodes mutableCopy];
@@ -391,19 +399,19 @@ static NSString *kColumnIdentifierCreateDays = @"days";
 - (void)moveTrashItemClick:(id)sender {
     NSIndexSet *selectedRowIndexes = [self selectedRowIndexes];
     NSArray *selectedItems = [_rootNode.childrenNodes objectsAtIndexes:selectedRowIndexes];
-
+    
     NSMutableArray *selectedItemNames = [NSMutableArray array];
     for (ProfilesNode *node in selectedItems) {
         [selectedItemNames addObject:node.type ? : node.filePath];
     }
-
+    
     iAlert *alert = [iAlert alertWithTitle:JKLocalizedString(@"Are you sure move selected items to trash?", nil) message:[selectedItemNames componentsJoinedByString:@",\n"] style:NSAlertStyleWarning];
-
+    
     [alert addCommonButtonWithTitle:JKLocalizedString(@"Ok", nil) handler:^(iAlertItem *item) {
         [self.treeView beginUpdates];
         [self.treeView removeItemsAtIndexes:selectedRowIndexes inParent:nil withAnimation:NSTableViewAnimationEffectFade];
         [self.treeView endUpdates];
-
+        
         for (ProfilesNode *node in selectedItems) {
             if ([self deleteProfile:node.filePath option:NO]) {
                 NSMutableArray *temp = [_rootNode.childrenNodes mutableCopy];
@@ -412,10 +420,10 @@ static NSString *kColumnIdentifierCreateDays = @"days";
             }
         }
         [self updateStatus];
-
-//        [self loadProfileFilesWithSearchWord:_searchWord];
+        
+        //        [self loadProfileFilesWithSearchWord:_searchWord];
     }];
-
+    
     [alert addButtonWithTitle:JKLocalizedString(@"Cancle", nil)];
     [alert show:self.view.window];
 }
@@ -443,15 +451,15 @@ static NSString *kColumnIdentifierCreateDays = @"days";
 - (void)renameItemClick:(id)sender {
     NSInteger index = [self.treeView clickedRow];
     ProfilesNode *node = [self.treeView itemAtRow:index];
-
+    
     if ([node.filePath.lastPathComponent hasPrefix:node.type]) {
         [iAlert showMessage:JKLocalizedString(@"The filename no need beautify", nil) window:self.view.window completionHandler:^(NSModalResponse returnCode) {
         }];
         return;
     }
-
+    
     NSString *msg = JKLocalizedString(@"The profile installed by double click fileaname format is 'uuid+ext',it‘s very hard identify.\nare you sure rename profile filename? this will take 5 seconds！\nthe new filename is: ", nil);
-
+    
     iAlert *alert = [iAlert alertWithTitle:JKLocalizedString(@"Warning", nil) message:[NSString stringWithFormat:@"%@%@", msg, node.type] style:NSAlertStyleWarning];
     [alert addCommonButtonWithTitle:JKLocalizedString(@"Ok", nil) handler:^(iAlertItem *item) {
         if (index == -1) return;
@@ -464,7 +472,7 @@ static NSString *kColumnIdentifierCreateDays = @"days";
             [self.treeView endUpdates];
         }
     }];
-
+    
     [alert addButtonWithTitle:JKLocalizedString(@"Cancle", nil)];
     [alert show:self.view.window];
 }
@@ -474,12 +482,12 @@ static NSString *kColumnIdentifierCreateDays = @"days";
     NSInteger index = [self.treeView clickedRow];
     if (index == -1) return;
     ProfilesNode *node = [self.treeView itemAtRow:index];
-
+    
     NSSavePanel *savePanel = [NSSavePanel savePanel];
     savePanel.allowedFileTypes = @[@"mobileprovision", @"provisionprofile"];
     savePanel.nameFieldStringValue = node.type ? : node.key;
     savePanel.extensionHidden = NO;
-
+    
     [savePanel beginSheetModalForWindow:self.view.window completionHandler:^(NSInteger result) {
         NSString *savePath = savePanel.URL.path;
         if (result == NSFileHandlingPanelOKButton) {
@@ -503,10 +511,10 @@ static NSString *kColumnIdentifierCreateDays = @"days";
     [oPanel setCanChooseDirectories:YES];
     [oPanel setDirectoryURL:[NSURL URLWithString:NSHomeDirectory()]];
     [oPanel setAllowedFileTypes:@[@"mobileprovision", @"MOBILEPROVISION", @"provisionprofile"]];
-
+    
     if ([oPanel runModal] == NSModalResponseOK) {
         NSString *path = [[[oPanel URLs] objectAtIndex:0] path];
-
+        
         [[NSFileManager defaultManager]copyItemAtPath:path toPath:[_profileDir stringByAppendingString:[path lastPathComponent] ? : @""] error:&error];
     }
     if (error) {
@@ -529,9 +537,9 @@ static NSString *kColumnIdentifierCreateDays = @"days";
         if ([oPanel runModal] == NSModalResponseOK) {
             NSString *path = [[[oPanel URLs] objectAtIndex:0] path];
             NSString *savePath = [[path stringByAppendingPathComponent:[node.extra objectForKey:@"summary"] ]stringByAppendingPathExtension:@"cer"];
-
+            
             NSString *formaterCer = [NSString stringWithFormat:@"-----BEGIN CERTIFICATE-----\n%@\n-----END CERTIFICATE-----", node.detail];
-
+            
             BOOL haveCreate =  [[NSFileManager defaultManager]createFileAtPath:savePath contents:[formaterCer dataUsingEncoding:NSUTF8StringEncoding] attributes:nil];
             if (haveCreate) {
                 [[NSWorkspace sharedWorkspace] selectFile:savePath inFileViewerRootedAtPath:@""];
@@ -540,17 +548,23 @@ static NSString *kColumnIdentifierCreateDays = @"days";
     }
 }
 
-- (void)copyCertificateNameItemClick:(id)sender
-{
+- (void)copyCertificateSha1ItemClick:(id)sender{
+       NSInteger index = [self.treeView clickedRow];
+    if (index == -1) return;
+    ProfilesNode *node = [self.treeView itemAtRow:index];
+    NSPasteboard *paste = [NSPasteboard generalPasteboard];
+    [paste clearContents];
+    [paste setString:[node.extra objectForKey:@"sha1"]?:@"" forType:NSPasteboardTypeString];
+}
+
+- (void)copyCertificateSha256ItemClick:(id)sender{
     NSInteger index = [self.treeView clickedRow];
     if (index == -1) return;
     ProfilesNode *node = [self.treeView itemAtRow:index];
     NSPasteboard *paste = [NSPasteboard generalPasteboard];
     [paste clearContents];
-    [paste setString:node.key forType:NSPasteboardTypeString];
+    [paste setString:[node.extra objectForKey:@"sha256"]?:@"" forType:NSPasteboardTypeString];
 }
-
-
 #pragma mark --filemanager
 
 //delete and move
@@ -572,20 +586,20 @@ static NSString *kColumnIdentifierCreateDays = @"days";
 - (NSString *)renameFileAtPath:(NSString *)oldPath toName:(NSString *)toName {
     BOOL result = NO;
     NSError *error = nil;
-
+    
     NSString *ext = oldPath.pathExtension;
-
+    
     NSString *time = [[DateManager sharedManager] stringConvert_Y_M_D_H_M_FromDate:[NSDate date]];
-
+    
     NSString *toPath = [[[_backupDir stringByAppendingPathComponent:toName] stringByAppendingString:time] stringByAppendingPathExtension:ext];
-
+    
     NSString *newPath = [[_profileDir stringByAppendingPathComponent:toName] stringByAppendingPathExtension:ext];
-
+    
     result = [[NSFileManager defaultManager] moveItemAtPath:oldPath toPath:toPath error:&error];
     //Provisioning Profiles文件比较特殊 直接改名会被系统自动删掉
     sleep(5);
     result = [[NSFileManager defaultManager] copyItemAtURL:[NSURL fileURLWithPath:toPath] toURL:[NSURL fileURLWithPath:newPath] error:&error];
-
+    
     if (error) {
         [iAlert showAlert:NSAlertStyleWarning title:@"" message:[error localizedDescription]];
         NSLog(@"重命名失败：%@", [error localizedDescription]);

@@ -13,7 +13,8 @@
 "Refresh Table" = "刷新列表";
 "Import Profile" = "导入Profile";
 "Export Certificate File"   = "导出证书文件";
-"Copy Certificate Name"   = "复制证书名称";
+"Copy Certificate SHA1"   = "复制证书SHA-1";
+"Copy Certificate SHA256"   = "复制证书SHA-256";
 
 "Expired"   = "过期";
 "Valid"   = "有效";

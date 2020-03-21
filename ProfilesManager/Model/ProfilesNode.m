@@ -9,6 +9,7 @@
 #import "ProfilesNode.h"
 #import "NSData+JKBase64.h"
 #import "DateManager.h"
+#import <CommonCrypto/CommonDigest.h>
 @implementation ProfilesNode
 
 - (id)initWithRootNode:(ProfilesNode *)rootNode originInfo:(id)info key:(NSString*)key
@@ -162,11 +163,28 @@
     
     return self;
 }
--(NSDictionary*)parseCertificate:(NSData*)data {
+//https://stackoverflow.com/questions/7869278/get-ssl-certificate-details
+- (NSString*)sha1:(NSData*)certData {
+    unsigned char sha1Buffer[CC_SHA1_DIGEST_LENGTH];
+    CC_SHA1(certData.bytes, (CC_LONG)certData.length, sha1Buffer);
+    NSMutableString *fingerprint = [NSMutableString stringWithCapacity:CC_SHA1_DIGEST_LENGTH * 3];
+    for (int i = 0; i < CC_SHA1_DIGEST_LENGTH; ++i)
+        [fingerprint appendFormat:@"%02x ",sha1Buffer[i]];
+    return [[fingerprint stringByReplacingOccurrencesOfString:@" " withString:@""] uppercaseString];
+}
+- (NSString*)sha256:(NSData*)certData {
+    unsigned char sha256Buffer[CC_SHA256_DIGEST_LENGTH];
+    CC_SHA256(certData.bytes, (CC_LONG)certData.length, sha256Buffer);
+    NSMutableString *fingerprint = [NSMutableString stringWithCapacity:CC_SHA256_DIGEST_LENGTH * 3];
+    for (int i = 0; i < CC_SHA256_DIGEST_LENGTH; ++i)
+        [fingerprint appendFormat:@"%02x ",sha256Buffer[i]];
+    return [[fingerprint stringByReplacingOccurrencesOfString:@" " withString:@""] uppercaseString];
+}
+- (NSDictionary*)parseCertificate:(NSData*)data {
     static NSString *const devCertSummaryKey = @"summary";
     static NSString *const devCertInvalidityDateKey = @"invalidity";
     
-    NSMutableDictionary *detailsDict;
+    NSMutableDictionary *detailsDict = [NSMutableDictionary dictionary];
     SecCertificateRef certificateRef = SecCertificateCreateWithData(NULL, (__bridge CFDataRef)data);
     if (certificateRef) {
         CFStringRef summaryRef = SecCertificateCopySubjectSummary(certificateRef);
@@ -225,10 +243,12 @@
         
         CFRelease(certificateRef);
     }
+    [detailsDict setObject: [self sha1:data] forKey:@"sha1"];
+    [detailsDict setObject: [self sha256:data] forKey:@"sha256"];
     return detailsDict;
     
 }
--(NSInteger)getDaysFrom:(NSDate *)date endDate:(NSDate *)endDate
+- (NSInteger)getDaysFrom:(NSDate *)date endDate:(NSDate *)endDate
 {
     if(!date || !endDate){
         return 0;
