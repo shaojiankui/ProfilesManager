@@ -71,7 +71,7 @@
 - (IBAction)resetButtonTouched:(id)sender {
 //    rm ~/Library/Preferences/myapp.plist; sudo killall cfprefsd
 //    defaults delete ~/Library/Preferences/myapp.plist
-    [self.window setFrame:NSMakeRect(0, 0, 1000, 600) display:YES];
+    [self.window setFrame:NSMakeRect(0, 0, 1100, 700) display:YES];
     [self.window center];
 }
 - (IBAction)quickLookTouched:(id)sender {

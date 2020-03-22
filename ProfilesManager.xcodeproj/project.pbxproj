@@ -17,6 +17,7 @@
 		A244DCBA1AFA0A2E00EB7E61 /* ProfilesManagerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A244DCB31AFA0A2E00EB7E61 /* ProfilesManagerViewController.m */; };
 		A244DCBB1AFA0A2E00EB7E61 /* ProfilesManagerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A244DCB41AFA0A2E00EB7E61 /* ProfilesManagerViewController.xib */; };
 		A244DCBC1AFA0A2E00EB7E61 /* ProfilesNode.m in Sources */ = {isa = PBXBuildFile; fileRef = A244DCB71AFA0A2E00EB7E61 /* ProfilesNode.m */; };
+		A275FAAC2426FD3E00A044CC /* CertificateManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A275FAAB2426FD3E00A044CC /* CertificateManager.m */; };
 		A2A8FA8A1AFA43E10087DD68 /* DragOutlineView.m in Sources */ = {isa = PBXBuildFile; fileRef = A2A8FA881AFA43E10087DD68 /* DragOutlineView.m */; };
 		B804235B2192BD9100AD899F /* GitHubReleaseAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = B80423382192BD9000AD899F /* GitHubReleaseAsset.m */; };
 		B804235C2192BD9100AD899F /* Install.pdf in Resources */ = {isa = PBXBuildFile; fileRef = B804233C2192BD9000AD899F /* Install.pdf */; };
@@ -65,6 +66,8 @@
 		A244DCB41AFA0A2E00EB7E61 /* ProfilesManagerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfilesManagerViewController.xib; sourceTree = "<group>"; };
 		A244DCB61AFA0A2E00EB7E61 /* ProfilesNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfilesNode.h; sourceTree = "<group>"; };
 		A244DCB71AFA0A2E00EB7E61 /* ProfilesNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfilesNode.m; sourceTree = "<group>"; };
+		A275FAAA2426FD3E00A044CC /* CertificateManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CertificateManager.h; sourceTree = "<group>"; };
+		A275FAAB2426FD3E00A044CC /* CertificateManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CertificateManager.m; sourceTree = "<group>"; };
 		A2A8FA881AFA43E10087DD68 /* DragOutlineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DragOutlineView.m; sourceTree = "<group>"; };
 		A2A8FA891AFA43E10087DD68 /* DragOutlineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DragOutlineView.h; sourceTree = "<group>"; };
 		B80423382192BD9000AD899F /* GitHubReleaseAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GitHubReleaseAsset.m; sourceTree = "<group>"; };
@@ -228,6 +231,15 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		A275FAA92426FD2C00A044CC /* CertificateManger */ = {
+			isa = PBXGroup;
+			children = (
+				A275FAAA2426FD3E00A044CC /* CertificateManager.h */,
+				A275FAAB2426FD3E00A044CC /* CertificateManager.m */,
+			);
+			path = CertificateManger;
+			sourceTree = "<group>";
+		};
 		A2A8FA871AFA43DD0087DD68 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -313,6 +325,7 @@
 		B8FF31C021929EA40022C658 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
+				A275FAA92426FD2C00A044CC /* CertificateManger */,
 				B8FF31C121929EAF0022C658 /* DateManager */,
 				B8F694BD204D40250048F3E6 /* PlistManager */,
 			);
@@ -438,6 +451,7 @@
 				B80423612192BD9100AD899F /* Pair.m in Sources */,
 				A244DCBC1AFA0A2E00EB7E61 /* ProfilesNode.m in Sources */,
 				B8F694C0204D40380048F3E6 /* PlistManager.m in Sources */,
+				A275FAAC2426FD3E00A044CC /* CertificateManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

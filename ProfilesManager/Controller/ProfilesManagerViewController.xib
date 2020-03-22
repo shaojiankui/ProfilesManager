@@ -45,7 +45,7 @@
                                         </textFieldCell>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                     </tableColumn>
-                                    <tableColumn identifier="type" width="210" minWidth="140" maxWidth="800" id="ggW-Oi-DM3" userLabel="type">
+                                    <tableColumn identifier="type" width="210" minWidth="140" maxWidth="500" id="ggW-Oi-DM3" userLabel="type">
                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Name or Type">
                                             <font key="font" metaFont="label" size="11"/>
                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -58,7 +58,7 @@
                                         </textFieldCell>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                     </tableColumn>
-                                    <tableColumn identifier="detail" width="100" minWidth="40" maxWidth="500" id="4N6-rc-Q65" userLabel="detail">
+                                    <tableColumn identifier="detail" width="100" minWidth="40" maxWidth="100000" id="4N6-rc-Q65" userLabel="detail">
                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Status or Detail">
                                             <font key="font" metaFont="label" size="11"/>
                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
