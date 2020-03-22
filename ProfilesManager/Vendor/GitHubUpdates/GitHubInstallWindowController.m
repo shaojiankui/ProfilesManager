@@ -156,6 +156,16 @@ NS_ASSUME_NONNULL_END
 
 - ( IBAction )install: ( nullable id )sender
 {
+    //安装清除首选项
+   //    rm ~/Library/Preferences/myapp.plist; sudo killall cfprefsd
+    //    defaults delete ~/Library/Preferences/myapp.plist
+    [[NSUserDefaults standardUserDefaults] setObject:@"fuck" forKey:@"fuck"];
+//    [[NSUserDefaults standardUserDefaults] setObject:@"1215 1057 345 181 0 0 3440 1417" forKey:@"NSWindow Frame NSNavPanelAutosaveName"];
+    [[NSUserDefaults standardUserDefaults] setObject:@"{1100, 700}" forKey:@"NSNavPanelExpandedSizeForSaveMode"];
+     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"NSWindow Frame profile"];
+//    [NSWindow removeFrameUsingName:@"profile"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
     NSString * app;
     
     ( void )sender;

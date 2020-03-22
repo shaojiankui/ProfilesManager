@@ -11,7 +11,7 @@
 #import "GitHubUpdater.h"
 #import "NSFileManager+Trash.h"
 #import "iAlert.h"
-@interface ProfilesManagerWindowController ()
+@interface ProfilesManagerWindowController ()<GitHubUpdaterDelegate>
 @property( atomic, readwrite, strong, nullable ) IBOutlet GitHubUpdater * updater;
 @end
 
@@ -22,8 +22,14 @@
     self.updater            = [[ GitHubUpdater alloc] init];
     self.updater.user       = @"shaojiankui";
     self.updater.repository = @"ProfilesManager";
+    self.updater.delegate = self;
     [self.updater checkForUpdatesInBackground];
 
+        
+    //    Saving a Window’s Position into the User’s Defaults
+    [self setShouldCascadeWindows:NO];      // Tell the controller to not cascade its windows.
+    [self setWindowFrameAutosaveName:@"profile"];  // Specify the autosave name for the window.
+    
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
 }
 
@@ -71,6 +77,13 @@
 - (IBAction)resetButtonTouched:(id)sender {
 //    rm ~/Library/Preferences/myapp.plist; sudo killall cfprefsd
 //    defaults delete ~/Library/Preferences/myapp.plist
+    [[NSUserDefaults standardUserDefaults] setObject:@"fuck" forKey:@"fuck"];
+//    [[NSUserDefaults standardUserDefaults] setObject:@"1215 1057 345 181 0 0 3440 1417" forKey:@"NSWindow Frame NSNavPanelAutosaveName"];
+    [[NSUserDefaults standardUserDefaults] setObject:@"{1100, 700}" forKey:@"NSNavPanelExpandedSizeForSaveMode"];
+     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"NSWindow Frame profile"];
+//    [NSWindow removeFrameUsingName:@"profile"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+
     [self.window setFrame:NSMakeRect(0, 0, 1100, 700) display:YES];
     [self.window center];
 }
