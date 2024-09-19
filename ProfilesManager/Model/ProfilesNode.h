@@ -21,6 +21,7 @@
 @property (nonatomic, copy)NSString *type;
 @property (nonatomic, copy)NSString *uuid;
 @property (nonatomic, copy)NSString *filePath;
+@property (nonatomic, copy)NSString *baseDir;
 @property (nonatomic, strong)NSDictionary *extra;
 @property (nonatomic, strong)NSDate *expirationDate;
 @property (nonatomic, strong)NSDate *creationDate;

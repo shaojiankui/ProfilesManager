@@ -38,10 +38,13 @@ static NSString *kColumnIdentifierCreateDays = @"days";
 
 - (void)createDir {
     _profileDir = [NSString stringWithFormat:@"%@/Library/MobileDevice/Provisioning Profiles/", [[NSFileManager defaultManager] realHomeDirectory]];
+    _profileDir2 = [NSString stringWithFormat:@"%@/Library/Developer/Xcode/UserData/Provisioning Profiles/", [[NSFileManager defaultManager] realHomeDirectory]];
     _backupDir = [NSString stringWithFormat:@"%@/Library/MobileDevice/Provisioning Profiles Rename Backup/", [[NSFileManager defaultManager] realHomeDirectory]];
+
     if (![[NSFileManager defaultManager] fileExistsAtPath:_backupDir]) {
         [[NSFileManager defaultManager] createDirectoryAtPath:_backupDir withIntermediateDirectories:YES attributes:nil error:nil];
     }
+   
     if (![[NSFileManager defaultManager] fileExistsAtPath:_profileDir]) {
         [[NSFileManager defaultManager] createDirectoryAtPath:_profileDir withIntermediateDirectories:YES attributes:nil error:nil];
     }
@@ -77,20 +80,18 @@ static NSString *kColumnIdentifierCreateDays = @"days";
         }
     }];
 }
-
-- (void)loadProfileFilesWithSearchWord:(NSString *)searchWord {
-    _searchWord = searchWord;
-    
-    NSArray *profileNames =  [[[NSFileManager defaultManager] subpathsAtPath:_profileDir] pathsMatchingExtensions:@[@"mobileprovision", @"MOBILEPROVISION", @"provisionprofile", @"PROVISIONPROFILE"]];
-    
+-(NSDictionary *)scanProfiles:(NSString *)path searchWord:(NSString *)searchWord{
+    NSArray *profileNames =  [[[NSFileManager defaultManager] subpathsAtPath:path] pathsMatchingExtensions:@[@"mobileprovision", @"MOBILEPROVISION", @"provisionprofile", @"PROVISIONPROFILE"]];
     NSMutableDictionary *provisions = [NSMutableDictionary dictionary];
+
     for (NSUInteger i=0;i<[profileNames count];i++) {
         NSString *fileName = [profileNames objectAtIndex:i];
         
         NSString *plistString;
-        NSMutableDictionary *dic = (NSMutableDictionary *)[PlistManager readPlist:[_profileDir stringByAppendingString:fileName?:@""] plistString:&plistString];
-        dic[@"filePath"] = [_profileDir stringByAppendingString:fileName?:@""];
-        
+        NSMutableDictionary *dic = (NSMutableDictionary *)[PlistManager readPlist:[path stringByAppendingString:fileName?:@""] plistString:&plistString];
+        dic[@"filePath"] = [path stringByAppendingString:fileName?:@""];
+        dic[@"baseDir"] = path;
+
         
         if (dic && fileName) {
             if ([searchWord lowercaseString] && searchWord.length > 0) {
@@ -102,6 +103,20 @@ static NSString *kColumnIdentifierCreateDays = @"days";
             }
         }
     }
+    return provisions;
+}
+- (void)loadProfileFilesWithSearchWord:(NSString *)searchWord {
+    _searchWord = searchWord;
+    
+    
+    NSMutableDictionary *provisions = [NSMutableDictionary dictionary];
+    
+    NSDictionary *dic1 = [self scanProfiles:_profileDir searchWord:searchWord];
+    NSDictionary *dic2 = [self scanProfiles:_profileDir2 searchWord:searchWord];
+
+    [provisions addEntriesFromDictionary:dic1];
+    [provisions addEntriesFromDictionary:dic2];
+
     ProfilesNode *node = [[ProfilesNode alloc]initWithRootNode:nil originInfo:provisions key:@"Mobile Provisions"];
     _rootNode = node;
     [self.treeView reloadData];
@@ -463,7 +478,7 @@ static NSString *kColumnIdentifierCreateDays = @"days";
     iAlert *alert = [iAlert alertWithTitle:JKLocalizedString(@"Warning", nil) message:[NSString stringWithFormat:@"%@%@", msg, node.type] style:NSAlertStyleWarning];
     [alert addCommonButtonWithTitle:JKLocalizedString(@"Ok", nil) handler:^(iAlertItem *item) {
         if (index == -1) return;
-        NSString *newPath = [self renameFileAtPath:node.filePath toName:node.type];
+        NSString *newPath = [self renameFileAtPath:node.filePath toName:node.type basePath:node.baseDir];
         if (newPath && newPath.length > 0) {
             node.filePath = newPath;
             node.key = [newPath lastPathComponent];
@@ -583,7 +598,7 @@ static NSString *kColumnIdentifierCreateDays = @"days";
     return result;
 }
 
-- (NSString *)renameFileAtPath:(NSString *)oldPath toName:(NSString *)toName {
+- (NSString *)renameFileAtPath:(NSString *)oldPath toName:(NSString *)toName basePath:(NSString *)basePath{
     BOOL result = NO;
     NSError *error = nil;
     
@@ -593,7 +608,7 @@ static NSString *kColumnIdentifierCreateDays = @"days";
     
     NSString *toPath = [[[_backupDir stringByAppendingPathComponent:toName] stringByAppendingString:time] stringByAppendingPathExtension:ext];
     
-    NSString *newPath = [[_profileDir stringByAppendingPathComponent:toName] stringByAppendingPathExtension:ext];
+    NSString *newPath = [[basePath stringByAppendingPathComponent:toName] stringByAppendingPathExtension:ext];
     
     result = [[NSFileManager defaultManager] moveItemAtPath:oldPath toPath:toPath error:&error];
     //Provisioning Profiles文件比较特殊 直接改名会被系统自动删掉

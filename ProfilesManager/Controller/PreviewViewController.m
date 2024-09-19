@@ -66,7 +66,8 @@
                 _profileDict = (NSMutableDictionary*)[PlistManager readPlist:[_appPath stringByAppendingPathComponent:@"embedded.mobileprovision"] plistString:&plistString];
                 
                 _profileDict[@"filePath"] = _appPath;
-            
+                _profileDict[@"baseDir"] = _appPath;
+
                 
                 ProfilesNode *node = [[ProfilesNode alloc]initWithRootNode:nil originInfo:_profileDict key:@"Mobile Provisions"];
                 

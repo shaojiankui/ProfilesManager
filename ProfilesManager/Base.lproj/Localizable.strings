@@ -22,7 +22,7 @@
 "Delete this profie item permanently,can't rollback!"   = "Delete this profie item permanently,can't rollback!";
 "Warning" = "Warning";
 "Are you sure delete selected items from disk? After delete operation can't rollback!" = "Are you sure delete selected items from disk? After delete operation can't rollback!";
-"Are you sure move selected items to trash?"  = "Are you sure move selected items to trash?"
+"Are you sure move selected items to trash?"  = "Are you sure move selected items to trash?";
 "The profile installed by double click fileaname format is 'uuid+ext',it‘s very hard identify.\nare you sure rename profile filename? this will take 5 seconds！\nthe new filename is: " = "The profile installed by double click fileaname format is 'uuid+ext',it‘s very hard identify.\nare you sure rename profile filename? this will take 5 seconds！\nthe new filename is: ";
 "The filename no need beautify" = "the filename no need beautify";
 "Export" = "Export";

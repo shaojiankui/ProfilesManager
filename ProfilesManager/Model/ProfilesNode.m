@@ -80,7 +80,8 @@
             _detail = [NSString stringWithFormat:@"%lu items", (unsigned long)[dict count]];
             _uuid = [dict objectForKey:@"UUID"];
             _filePath = [dict objectForKey:@"filePath"];
-            
+            _baseDir = [dict objectForKey:@"baseDir"];
+
             if(_uuid){
                 NSDate *expiration = [dict objectForKey:@"ExpirationDate"];
                 _detail =  [[NSDate date] compare:expiration] == NSOrderedDescending ?JKLocalizedString(@"Expired",nil):JKLocalizedString(@"Valid",nil);
@@ -100,11 +101,19 @@
                 
             }else{
                 NSArray *keys = [dict allKeys];
+                NSString *bundleID = [[dict  objectForKey:@"Entitlements"] objectForKey:@"application-identifier"];
                 for (int i=0;i<[keys count];i++) {
                     NSString *key = [keys objectAtIndex:i];
-                    NSString *bundleID =  [[[dict objectForKey:key] objectForKey:@"Entitlements"] objectForKey:@"application-identifier"];
+                    NSString *realKey = key;
+
+                    if([key hasSuffix:@"mobileprovision"]){
+                        bundleID =  [[[dict objectForKey:key] objectForKey:@"Entitlements"] objectForKey:@"application-identifier"];
+                        realKey = bundleID;
+                    }else{
+                        realKey = key;
+                    }
                     
-                    ProfilesNode *child = [[ProfilesNode alloc]initWithRootNode:self originInfo:dict[key] key:bundleID];
+                    ProfilesNode *child = [[ProfilesNode alloc]initWithRootNode:self originInfo:dict[key] key:realKey];
                     [children addObject:child];
                 }
                 [children sortUsingComparator:^NSComparisonResult(ProfilesNode *obj1, ProfilesNode *obj2) {
