@@ -14,6 +14,7 @@
 #import "PreviewViewController.h"
 #import "PlistManager.h"
 #import "DateManager.h"
+#import <UniformTypeIdentifiers/UniformTypeIdentifiers.h>
 //#include <unistd.h>
 //#include <sys/types.h>
 //#include <pwd.h>
@@ -499,9 +500,26 @@ static NSString *kColumnIdentifierCreateDays = @"days";
     ProfilesNode *node = [self.treeView itemAtRow:index];
     
     NSSavePanel *savePanel = [NSSavePanel savePanel];
-    savePanel.allowedFileTypes = @[@"mobileprovision", @"provisionprofile"];
-    savePanel.nameFieldStringValue = node.type ? : node.key;
+    NSMutableArray<UTType *> *types = [NSMutableArray array];
+    UTType *mobileprovisionType = [UTType typeWithFilenameExtension:@"mobileprovision"];
+    UTType *provisionprofileType = [UTType typeWithFilenameExtension:@"provisionprofile"];
+    if (mobileprovisionType) {
+        [types addObject:mobileprovisionType];
+    }
+    if (provisionprofileType) {
+        [types addObject:provisionprofileType];
+    }
+    if (types.count > 0) {
+        savePanel.allowedContentTypes = types;
+    }
     savePanel.extensionHidden = NO;
+    NSString *defaultName = node.type ? : node.key;
+    NSString *ext = node.filePath.pathExtension.length > 0 ? node.filePath.pathExtension : @"mobileprovision";
+    if (defaultName.length > 0 && ![defaultName hasSuffix:[@"." stringByAppendingString:ext]]) {
+        // Profile names often contain dots; avoid stringByAppendingPathExtension which mis-parses them.
+        defaultName = [NSString stringWithFormat:@"%@.%@", defaultName, ext];
+    }
+    savePanel.nameFieldStringValue = defaultName;
     
     [savePanel beginSheetModalForWindow:self.view.window completionHandler:^(NSInteger result) {
         NSString *savePath = savePanel.URL.path;

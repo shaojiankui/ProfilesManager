@@ -600,7 +600,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = ProfilesManager/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 11;
 				MARKETING_VERSION = 2.6;
 				PRODUCT_BUNDLE_IDENTIFIER = org.skyfox.ProfilesManager;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -617,7 +617,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = ProfilesManager/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 11;
 				MARKETING_VERSION = 2.6;
 				PRODUCT_BUNDLE_IDENTIFIER = org.skyfox.ProfilesManager;
 				PRODUCT_NAME = "$(TARGET_NAME)";
